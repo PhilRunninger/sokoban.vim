@@ -211,6 +211,7 @@ function! <SID>LoadLevel(level)
       call <SID>SaveCurrentLevelToFile(a:level)
       set buftype=nofile
       set nomodifiable
+      set nolist nonumber
    else
       let b:level = 0
       call append(11, "Could not find file " . levelFile)
@@ -574,18 +575,18 @@ endfunction
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)
 function! <SID>SetupMaps()
-   map <buffer> h :call <SID>MoveLeft()<CR>
-   map <buffer> <Left> :call <SID>MoveLeft()<CR>
-   map <buffer> j :call <SID>MoveDown()<CR>
-   map <buffer> <Down> :call <SID>MoveDown()<CR>
-   map <buffer> k :call <SID>MoveUp()<CR>
-   map <buffer> <Up> :call <SID>MoveUp()<CR>
-   map <buffer> l :call <SID>MoveRight()<CR>
-   map <buffer> <Right> :call <SID>MoveRight()<CR>
-   map <buffer> u :call <SID>UndoMove()<CR>
-   map <buffer> r :call Sokoban("", b:level)<CR>
-   map <buffer> n :call Sokoban("", b:level + 1)<CR>
-   map <buffer> p :call Sokoban("", b:level - 1)<CR>
+   map <silent> <buffer> h :call <SID>MoveLeft()<CR>
+   map <silent> <buffer> <Left> :call <SID>MoveLeft()<CR>
+   map <silent> <buffer> j :call <SID>MoveDown()<CR>
+   map <silent> <buffer> <Down> :call <SID>MoveDown()<CR>
+   map <silent> <buffer> k :call <SID>MoveUp()<CR>
+   map <silent> <buffer> <Up> :call <SID>MoveUp()<CR>
+   map <silent> <buffer> l :call <SID>MoveRight()<CR>
+   map <silent> <buffer> <Right> :call <SID>MoveRight()<CR>
+   map <silent> <buffer> u :call <SID>UndoMove()<CR>
+   map <silent> <buffer> r :call Sokoban("", b:level)<CR>
+   map <silent> <buffer> n :call Sokoban("", b:level + 1)<CR>
+   map <silent> <buffer> p :call Sokoban("", b:level - 1)<CR>
 endfunction
 
 " Function : LoadScoresFile (PRIVATE)
