@@ -462,46 +462,6 @@ function! <SID>MakeMove(lineDelta, colDelta, moveDirection)   "{{{1
    endif
 endfunction
 
-function! <SID>MoveLeft()   "{{{1
-" About...   {{{2
-" Function : MoveLeft (PRIVATE
-" Purpose  : called when the man is moved left to handle the left move
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call <SID>MakeMove(0, -1, "l")
-endfunction
-
-function! <SID>MoveUp()   "{{{1
-" About...   {{{2
-" Function : MoveUp (PRIVATE
-" Purpose  : called when the man is moved up to handle the up move
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call <SID>MakeMove(-1, 0, "u")
-endfunction
-
-function! <SID>MoveDown()   "{{{1
-" About...   {{{2
-" Function : MoveDown (PRIVATE
-" Purpose  : called when the man is moved down to handle the down move
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call <SID>MakeMove(1, 0, "d")
-endfunction
-
-function! <SID>MoveRight()   "{{{1
-" About...   {{{2
-" Function : MoveRight (PRIVATE
-" Purpose  : called when the man is moved right to handle the right move
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call <SID>MakeMove(0, 1, "r")
-endfunction
-
 function! <SID>UndoMove()   "{{{1
 " About...   {{{2
 " Function : UndoMove (PRIVATE
@@ -584,18 +544,18 @@ function! <SID>SetupMaps()   "{{{1
 " Args     : none
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   map <silent> <buffer> h :call <SID>MoveLeft()<CR>
-   map <silent> <buffer> <Left> :call <SID>MoveLeft()<CR>
-   map <silent> <buffer> j :call <SID>MoveDown()<CR>
-   map <silent> <buffer> <Down> :call <SID>MoveDown()<CR>
-   map <silent> <buffer> k :call <SID>MoveUp()<CR>
-   map <silent> <buffer> <Up> :call <SID>MoveUp()<CR>
-   map <silent> <buffer> l :call <SID>MoveRight()<CR>
-   map <silent> <buffer> <Right> :call <SID>MoveRight()<CR>
-   map <silent> <buffer> u :call <SID>UndoMove()<CR>
-   map <silent> <buffer> r :call Sokoban("", b:level)<CR>
-   map <silent> <buffer> n :call Sokoban("", b:level + 1)<CR>
-   map <silent> <buffer> p :call Sokoban("", b:level - 1)<CR>
+   map <silent> <buffer> h       :call <SID>MakeMove(0, -1, "l")<CR>
+   map <silent> <buffer> <Left>  :call <SID>MakeMove(0, -1, "l")<CR>
+   map <silent> <buffer> j       :call <SID>MakeMove(1, 0, "d")<CR>
+   map <silent> <buffer> <Down>  :call <SID>MakeMove(1, 0, "d")<CR>
+   map <silent> <buffer> k       :call <SID>MakeMove(-1, 0, "u")<CR>
+   map <silent> <buffer> <Up>    :call <SID>MakeMove(-1, 0, "u")<CR>
+   map <silent> <buffer> l       :call <SID>MakeMove(0, 1, "r")<CR>
+   map <silent> <buffer> <Right> :call <SID>MakeMove(0, 1, "r")<CR>
+   map <silent> <buffer> u       :call <SID>UndoMove()<CR>
+   map <silent> <buffer> r       :call Sokoban("", b:level)<CR>
+   map <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
+   map <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
 endfunction
 
 function! <SID>LoadScoresFile()   "{{{1
