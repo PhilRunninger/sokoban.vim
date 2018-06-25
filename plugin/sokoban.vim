@@ -45,7 +45,7 @@
 "    directory it should be able to find the levels)
 "
 " Levels came from the xsokoban distribution which is in the public domain.
-" http://ysokoban.atspace.eu/sdb/xsokoban.html
+" http://www.cs.cornell.edu/andru/xsokoban.html
 "
 " Version: 1.0 initial release
 "          1.1 j/k mapping bug fixed
