@@ -73,31 +73,13 @@ endif
 let loaded_VimSokoban = 1
 
 " Allow the user to specify the location of the sokoban levels
-if (!exists("g:SokobanLevelDirectory"))
-   if (exists("$VIMSOKOBANDIR"))
-      let g:SokobanLevelDirectory = $VIMSOKOBANDIR
-   elseif (exists("$HOME"))
-      let g:SokobanLevelDirectory = $HOME . "/VimSokoban/"
-   elseif (has("win32") || has("win95") || has("dos32") || has("gui_win32"))
-      let g:SokobanLevelDirectory = "c:\\VimSokoban\\"
-   else 
-      let g:SokobanLevelDirectory = ""
-   endif
-
-   if (!isdirectory(g:SokobanLevelDirectory)) 
-      " finally default to the location where the script was sourced from
-      let g:SokobanLevelDirectory = expand("<sfile>:p:h") . "/VimSokoban/"
-      if (!isdirectory(g:SokobanLevelDirectory))
-         let g:SokobanLevelDirectory = expand("<sfile>:p:h") . "/"
-      endif
-   endif
+if !exists("g:SokobanLevelDirectory")
+    let g:SokobanLevelDirectory = expand("<sfile>:p:h") . "/../levels/"
 endif
 
 " The score file is in the home directory or the level directory
-if (exists("$HOME"))
-   let g:SokobanScoreFile = $HOME . "/.VimSokobanScores"
-else
-   let g:SokobanScoreFile = g:SokobanLevelDirectory . ".VimSokobanScores"
+if !exists("g:SokobanScoreFile")
+   let g:SokobanScoreFile = expand("<sfile>:p:h") . "/../.VimSokobanScores"
 endif
 
 " Function : ClearBuffer (PRIVATE)
