@@ -11,7 +11,7 @@
 
 " The goal of VimSokoban is to push all the packages ($) into
 " the  home area (.) of each level using hjkl keys or the arrow
-" keys. The arrow keys move the player (X) in the  corresponding
+" keys. The arrow keys move the player (X) in the corresponding
 " direction, pushing an object if it is in the way and there
 " is a clear space on the other side.
 "
@@ -99,15 +99,15 @@ endfunction
 " Author   : Michael Sharpe (feline@irendi.com)
 function! <SID>DisplayInitialHeader(level)
    call append(0, '                              VIM SOKOBAN')
-   call append(1, '                              ===========')
+   call append(1, '                              ═══════════')
    call append(2, 'Score                                        Key')
-   call append(3, '-----                                        ---')
-   call append(4, 'Level: ' . a:level . '	                            X = soko    # = wall')
-   call append(5, 'Moves: 0                                    $ = package . = home')
-   call append(6, 'Pushes: 0')
+   call append(3, '──────────────                               ──────────────────')
+   call append(4, 'Level:  ' . printf("%6d",a:level) . '                               X soko      # wall')
+   call append(5, 'Moves:       0                               $ package   . home')
+   call append(6, 'Pushes:      0')
    call append(7, ' ')
-   call append(8, 'Options: h(left),j(down),k(up),l(right),u(undo),r(restart),n(next),p(previous)')
-   call append(9, '--------------------------------------------------------------------------------')
+   call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
+   call append(9, '────────────────────────────────────────────────────────────────────────────────')
    call append(10, ' ')
    let s:endHeaderLine = 11
 endfunction
@@ -326,8 +326,8 @@ endfunction
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)
 function! <SID>UpdateHeader()
-   call setline(6, 'Moves: ' . b:moves . '	                            $ = package . = home')
-   call setline(7, 'Pushes: ' . b:pushes)
+   call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               $ package   . home')
+   call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
 " Function : UpdatePackageList (PRIVATE)
@@ -350,13 +350,14 @@ endfunction
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)
 function! <SID>DisplayLevelCompleteMessage()
-   call setline(14, "                                                     ")
-   call setline(15, "   *************************************************** ")
-   call setline(16, "                      LEVEL COMPLETE                   ")
-   call setline(17, "            " . b:moves . " moves		     " . b:pushes . " pushes               ")
-   call setline(18, "    (r)estart level, (p)revious level or (n)ext level  ")
-   call setline(19, "   *************************************************** ")
-   call setline(20, "                                                     ")
+   call setline(14, "")
+   call setline(15, "          ╭─────────────────────────────────────────────────────────╮")
+   call setline(16, "          │                       LEVEL COMPLETE                    │")
+   call setline(17, "          │                " . printf("%6d",b:moves) . " Moves  " . printf("%6d",b:pushes) . " Pushes              │")
+   call setline(18, "          ├─────────────────────────────────────────────────────────┤")
+   call setline(19, "          │ r - restart level   p - previous level   n - next level │")
+   call setline(20, "          ╰─────────────────────────────────────────────────────────╯")
+   call setline(21, "")
 endfunction
 
 " Function : AreAllPackagesHome (PRIVATE)
@@ -784,10 +785,10 @@ endfunction
 function! <SID>DisplayHighScores()
    if (b:highScoreByMoveStr != "")
       call append(line("$"), "")
-      call append(line("$"), '-------------------------------------------------------------------------------')
-      call append(line("$"), "Best Score by moves  - Moves: " .  b:highScoreByMoveMoves . " 	Pushes: " . b:highScoreByMovePushes)
+      call append(line("$"), '───────────────────────────────────────────────────────────────────────────────')
+      call append(line("$"),    "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
       if (b:highScoreByPushStr != "")
-         call append(line("$"), "Best Score by pushes - Moves: " .  b:highScoreByPushMoves . " 	Pushes: " . b:highScoreByPushPushes)
+         call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
       endif
    endif
 endfunction
