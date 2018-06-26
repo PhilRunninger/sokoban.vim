@@ -72,7 +72,12 @@ endif
 let g:VimSokoban_version = "1.4"
 
 " Allow the user to specify the location of the sokoban levels
-if !exists("g:SokobanLevelDirectory")
+if exists("g:SokobanLevelDirectory")
+    if !isdirectory("g:SokobanLevelDirectory")
+        echoerr "g:SokobanLevelDirectory contains an invalid path."
+        finish
+    endif
+else
     let g:SokobanLevelDirectory = expand("<sfile>:p:h") . "/../levels/"
 endif
 
