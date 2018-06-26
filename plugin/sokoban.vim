@@ -147,7 +147,7 @@ function! <SID>ProcessLevel()   "{{{1
    let l = s:endHeaderLine
    while (l <= eob)
       let currentLine = getline(l)
-      let eoc = strlen(currentLine)
+      let eoc = strchars(currentLine)
       let c = 1
       while (c <= eoc)
          let ch = currentLine[c]
@@ -223,8 +223,8 @@ function! <SID>SetCharInLine(theLine, theCol, char)   "{{{1
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
    let ln = getline(a:theLine)
-   let leftStr = strpart(ln, 0, a:theCol)
-   let rightStr = strpart(ln, a:theCol + 1)
+   let leftStr = strcharpart(ln, 0, a:theCol)
+   let rightStr = strcharpart(ln, a:theCol + 1)
    let ln = leftStr . a:char . rightStr
    call setline(a:theLine, ln)
 endfunction
@@ -239,13 +239,10 @@ function! <SID>IsInList(theList, line, column)   "{{{1
 "            column - the column coordinate
 " Returns  : 1 if the (line, column) pair is in the list, 0 otherwise
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let ret = 0
-   let str = "(" . a:line . "," . a:column . ")"
-   let idx = stridx(a:theList, str)
-   if (idx != -1)
-      let ret = 1
-   endif
-   return ret
+
+" TODO: switch to actual lists, not string representatives, and use the index() function.
+
+   return <SID>IsInList2(a:theList, "(" . a:line . "," . a:column . ")")
 endfunction
 
 function! <SID>IsInList2(theList, str)   "{{{1
@@ -257,12 +254,7 @@ function! <SID>IsInList2(theList, str)   "{{{1
 "            str - string representing the (line, column) pair
 " Returns  : 1 if the (line, column) pair is in the list, 0 otherwise
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let ret = 0
-   let idx = stridx(a:theList, a:str)
-   if (idx != -1)
-      let ret = 1
-   endif
-   return ret
+   return stridx(a:theList, a:str) != -1
 endfunction
 
 function! <SID>IsWall(line, column)   "{{{1
@@ -373,14 +365,14 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
 " Args     : none
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call setline(14, "")
-   call setline(15, "          ╭─────────────────────────────────────────────────────────╮")
-   call setline(16, "          │                       LEVEL COMPLETE                    │")
-   call setline(17, "          │                " . printf("%6d",b:moves) . " Moves  " . printf("%6d",b:pushes) . " Pushes              │")
-   call setline(18, "          ├─────────────────────────────────────────────────────────┤")
-   call setline(19, "          │ r - restart level   p - previous level   n - next level │")
-   call setline(20, "          ╰─────────────────────────────────────────────────────────╯")
-   call setline(21, "")
+   call setline(14, '                                                                                ')
+   call setline(15, '          ╭─────────────────────────────────────────────────────────╮           ')
+   call setline(16, '          │                       LEVEL COMPLETE                    │           ')
+   call setline(17, '          │                ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes              │           ')
+   call setline(18, '          ├─────────────────────────────────────────────────────────┤           ')
+   call setline(19, '          │ r - restart level   p - previous level   n - next level │           ')
+   call setline(20, '          ╰─────────────────────────────────────────────────────────╯           ')
+   call setline(21, '                                                                                ')
 endfunction
 
 function! <SID>AreAllPackagesHome()   "{{{1
@@ -396,7 +388,7 @@ function! <SID>AreAllPackagesHome()   "{{{1
       let startPos = endPos + 1
       let endPos = match(b:packageList, ":", startPos)
       if (endPos != -1)
-         let pkg = strpart(b:packageList, startPos, endPos - startPos)
+         let pkg = strcharpart(b:packageList, startPos, endPos - startPos)
          let pkgIsHome = <SID>IsInList2(b:homeList, pkg)
          if (pkgIsHome != 1)
             let allHome = 0
@@ -478,7 +470,7 @@ function! <SID>UndoMove()   "{{{1
       let endMove = match(b:undoList, ",", 0)
       if (endMove != -1)
          " get the last move so that it can be undone
-         let prevMove = strpart(b:undoList, 0, endMove)
+         let prevMove = strcharpart(b:undoList, 0, endMove)
          " determine which way the man has to move to undo the move
          if (prevMove[0] == "l")
             let lineDelta = 0
@@ -537,7 +529,7 @@ function! <SID>UndoMove()   "{{{1
             set nomodifiable
          endif
          " remove the move from the undo list
-         let b:undoList = strpart(b:undoList, endMove + 1, strlen(b:undoList))
+         let b:undoList = strcharpart(b:undoList, endMove + 1, strchars(b:undoList))
       endif
    endif
 endfunction
@@ -572,6 +564,10 @@ function! <SID>LoadScoresFile()   "{{{1
 " Args     : none
 " Returns  : the last level played.
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
+
+" TODO: Change b:scoreFileContents to a dictionary, and (de)serialize with the
+" code suggested in https://stackoverflow.com/questions/31348782/how-do-i-serialize-a-variable-in-vimscript
+
    let currentLevel = 0
    let scoreFileExists = filereadable(g:SokobanScoreFile)
    if (scoreFileExists)
@@ -584,7 +580,7 @@ function! <SID>LoadScoresFile()   "{{{1
          let endPos = match(b:scoreFileContents, ";", startPos)
          if (endPos != -1)
             let len = endPos - startPos
-            let currentLevel = strpart(b:scoreFileContents, startPos, len)
+            let currentLevel = strcharpart(b:scoreFileContents, startPos, len)
          endif
       endif
    else
@@ -623,7 +619,7 @@ function! <SID>ExtractNumberInStr(str, prefix, suffix)   "{{{1
    if (startPos != -1)
       let endPos = match(a:str, a:suffix)
       let len = endPos - startPos
-      let theNumber = strpart(a:str, startPos, len)
+      let theNumber = strcharpart(a:str, startPos, len)
    else
       let theNumber = 0
    endif
@@ -653,7 +649,7 @@ function! <SID>DetermineHighScores(level)   "{{{1
   if (startPos != -1)
      let endPos = match(b:scoreFileContents, ";", startPos)
      let len = endPos - startPos + 1
-     let scoreStr1 = strpart(b:scoreFileContents, startPos, len)
+     let scoreStr1 = strcharpart(b:scoreFileContents, startPos, len)
      let scoreMoves1 = <SID>ExtractNumberInStr(scoreStr1, "Moves = ", ",")
      let scorePushes1 = <SID>ExtractNumberInStr(scoreStr1, "Pushes = ", ";")
 
@@ -662,7 +658,7 @@ function! <SID>DetermineHighScores(level)   "{{{1
      if (startPos != -1)
         let endPos = match(b:scoreFileContents, ";", startPos)
         let len = endPos - startPos + 1
-        let scoreStr2 = strpart(b:scoreFileContents, startPos, len)
+        let scoreStr2 = strcharpart(b:scoreFileContents, startPos, len)
         let scoreMoves2 = <SID>ExtractNumberInStr(scoreStr2, "Moves = ", ",")
         let scorePushes2 = <SID>ExtractNumberInStr(scoreStr2, "Pushes = ", ";")
         if (scoreMoves1 < scoreMoves2)
