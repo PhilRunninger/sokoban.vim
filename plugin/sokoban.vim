@@ -86,6 +86,13 @@ if !exists("g:SokobanScoreFile")
    let g:SokobanScoreFile = expand("<sfile>:p:h") . "/../.VimSokobanScores"
 endif
 
+" Characters in level files, and their displayed counterparts.
+let s:soko = ['@','☺']
+let s:wall = ['#','▒']
+let s:pkg  = ['$','◘']
+let s:home = ['.','⋅']
+let s:home_pkg = ['*',s:pkg[1]]
+
 command! -nargs=? Sokoban call Sokoban("", <f-args>)
 command! -nargs=? SokobanH call Sokoban("h", <f-args>)
 command! -nargs=? SokobanV call Sokoban("v", <f-args>)
@@ -112,8 +119,8 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
    call append(1, '                              ═══════════')
    call append(2, 'Score                                        Key')
    call append(3, '──────────────                               ──────────────────')
-   call append(4, 'Level:  ' . printf("%6d",a:level) . '                               X soko      # wall')
-   call append(5, 'Moves:       0                               $ package   . home')
+   call append(4, 'Level:  ' . printf("%6d",a:level) . '                               '.s:soko[1].' soko      '.s:wall[1].' wall')
+   call append(5, 'Moves:       0                               '.s:pkg[1].' package   '.s:home[1].' home')
    call append(6, 'Pushes:      0')
    call append(7, ' ')
    call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
@@ -151,16 +158,16 @@ function! <SID>ProcessLevel()   "{{{1
       let c = 1
       while (c <= eoc)
          let ch = currentLine[c]
-         if (ch == '#')
+         if (ch == s:wall[0])
             let b:wallList = b:wallList . '(' . l . ',' . c . '):'
-         elseif (ch == '.')
+         elseif (ch == s:home[0])
             let b:homeList = b:homeList . '(' . l . ',' . c . '):'
-         elseif (ch == '*')
+         elseif (ch == s:home_pkg[0])
             let b:homeList = b:homeList . '(' . l . ',' . c . '):'
             let b:packageList = b:packageList . '(' . l . ',' . c . '):'
-         elseif (ch == '$')
+         elseif (ch == s:pkg[0])
             let b:packageList = b:packageList . '(' . l . ',' . c . '):'
-         elseif (ch == '@')
+         elseif (ch == s:soko[0])
             let b:manPosLine = l
             let b:manPosCol = c
          else
@@ -187,18 +194,21 @@ function! <SID>LoadLevel(level)   "{{{1
       silent! execute "11,$ s/^/           /g"
       call <SID>ProcessLevel()
       let b:level = a:level
-      silent! execute s:endHeaderLine . ",$ s/\*/$/g"
-      silent! execute s:endHeaderLine . ",$ s/@/X/g"
+      silent! execute s:endHeaderLine . ",$ s/\\V".s:soko[0]."/".s:soko[1]."/g"
+      silent! execute s:endHeaderLine . ",$ s/\\V".s:wall[0]."/".s:wall[1]."/g"
+      silent! execute s:endHeaderLine . ",$ s/\\V".s:pkg[0]."/".s:pkg[1]."/g"
+      silent! execute s:endHeaderLine . ",$ s/\\V".s:home[0]."/".s:home[1]."/g"
+      silent! execute s:endHeaderLine . ",$ s/\\V".s:home_pkg[0]."/".s:home_pkg[1]."/g"
       if has("syntax")
          syn clear
-         syn match SokobanPackage /\$/
-         syn match SokobanMan /X/
-         syn match SokobanWall /\#/
-         syn match SokobanHome /\./
-         highlight link SokobanPackage Comment
-         highlight link SokobanMan Error
-         highlight link SokobanWall Number
-         highlight link SokobanHome Keyword
+         execute 'syn match SokobanMan /'.s:soko[1].'/'
+         execute 'syn match SokobanPackage /'.s:pkg[1].'/'
+         execute 'syn match SokobanWall /'.s:wall[1].'/'
+         execute 'syn match SokobanHome /'.s:home[1].'/'
+         highlight link SokobanPackage String
+         highlight link SokobanMan Special
+         highlight link SokobanWall Comment
+         highlight link SokobanHome Statement
       endif
       call <SID>DetermineHighScores(a:level)
       call <SID>DisplayHighScores()
@@ -322,13 +332,13 @@ function! <SID>MoveMan(fromLine, fromCol, toLine, toCol, pkgLine, pkgCol)   "{{{
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
    let isHomePos = <SID>IsHome(a:fromLine, a:fromCol)
    if (isHomePos)
-      call <SID>SetCharInLine(a:fromLine, a:fromCol, '.')
+      call <SID>SetCharInLine(a:fromLine, a:fromCol, s:home[1])
    else
       call <SID>SetCharInLine(a:fromLine, a:fromCol, ' ')
    endif
-   call <SID>SetCharInLine(a:toLine, a:toCol, 'X')
+   call <SID>SetCharInLine(a:toLine, a:toCol, s:soko[1])
    if ((a:pkgLine != -1) && (a:pkgCol != -1))
-      call <SID>SetCharInLine(a:pkgLine, a:pkgCol, '$')
+      call <SID>SetCharInLine(a:pkgLine, a:pkgCol, s:pkg[1])
    endif
 endfunction
 
@@ -339,7 +349,7 @@ function! <SID>UpdateHeader()   "{{{1
 " Args     : none
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               $ package   . home')
+   call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               '.s:pkg[1].' package   '.s:home[1].' home')
    call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
@@ -368,7 +378,7 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
    call setline(14, '                                                                                ')
    call setline(15, '          ╭─────────────────────────────────────────────────────────╮           ')
    call setline(16, '          │                       LEVEL COMPLETE                    │           ')
-   call setline(17, '          │                ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes              │           ')
+   call setline(17, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
    call setline(18, '          ├─────────────────────────────────────────────────────────┤           ')
    call setline(19, '          │ r - restart level   p - previous level   n - next level │           ')
    call setline(20, '          ╰─────────────────────────────────────────────────────────╯           ')
