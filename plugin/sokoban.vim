@@ -251,7 +251,7 @@ function! <SID>LoadLevel(level)   "{{{1
     if (levelExists)
         setlocal modifiable
         execute "r " . levelFile
-        silent! execute "11,$ s/^/           /g"
+        silent! execute "10,$ s/^/           /g"
         call <SID>ProcessLevel()
         let b:level = a:level
         silent! execute s:endHeaderLine . ",$ s/\\V@/".g:charSoko."/g"
@@ -830,7 +830,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     if (a:0 == 0)
         let level = 1
     else
-        let level = a:1
+        let level = a:1 <= 0 ? 1 : a:1
     endif
     call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
     setlocal modifiable
