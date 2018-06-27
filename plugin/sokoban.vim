@@ -190,7 +190,7 @@ function! <SID>LoadLevel(level)   "{{{1
     let levelFile = g:SokobanLevelDirectory . "level" . a:level . ".sok"
     let levelExists = filereadable(levelFile)
     if (levelExists)
-        set modifiable
+        setlocal modifiable
         execute "r " . levelFile
         silent! execute "11,$ s/^/           /g"
         call <SID>ProcessLevel()
@@ -214,9 +214,9 @@ function! <SID>LoadLevel(level)   "{{{1
         call <SID>DetermineHighScores(a:level)
         call <SID>DisplayHighScores()
         call <SID>SaveCurrentLevelToFile(a:level)
-        set buftype=nofile
-        set nomodifiable
-        set nolist nonumber
+        setlocal buftype=nofile
+        setlocal nomodifiable
+        setlocal nolist nonumber
     else
         let b:level = 0
         call append(11, "Could not find file " . levelFile)
@@ -400,7 +400,7 @@ function! <SID>MakeMove(delta, moveDirection)   "{{{1
             " if the new position is a package check to see if the package moves
             let newPkgPos = <SID>AddVectors(newManPos, a:delta)
             if <SID>IsEmpty(newPkgPos)
-                set modifiable
+                setlocal modifiable
                 " the move is possible and we pushed a package
                 call <SID>MoveMan(b:manPos, newManPos, newPkgPos)
                 call <SID>UpdatePackageList(newManPos, newPkgPos)
@@ -416,17 +416,17 @@ function! <SID>MakeMove(delta, moveDirection)   "{{{1
                     call <SID>UpdateHighScores()
                     call <SID>SaveCurrentLevelToFile(b:level + 1)
                 endif
-                set nomodifiable
+                setlocal nomodifiable
             endif
         else
-            set modifiable
+            setlocal modifiable
             " the move is possible and no packages moved
             call <SID>MoveMan(b:manPos, newManPos, [])
             call insert(b:undoList, a:moveDirection)
             let b:moves = b:moves + 1
             let b:manPos = newManPos
             call <SID>UpdateHeader()
-            set nomodifiable
+            setlocal nomodifiable
         endif
     endif
 endfunction
@@ -469,13 +469,13 @@ function! <SID>UndoMove()   "{{{1
             let oldPkgPos = []
             let currPkgPos = b:manPos
         endif
-        set modifiable
+        setlocal modifiable
         " this is abusing this function a little :)
         call <SID>MoveMan(currPkgPos, newManPos, oldPkgPos)
         let b:manPos = newManPos
         let b:moves = b:moves - 1
         call <SID>UpdateHeader()
-        set nomodifiable
+        setlocal nomodifiable
     endif
 endfunction
 
@@ -806,7 +806,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
         let level = a:1
     endif
     call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
-    set modifiable
+    setlocal modifiable
     call <SID>ClearBuffer()
     if (!exists("b:scoresFileLoaded"))
         let savedLevel = <SID>LoadScoresFile()
@@ -818,7 +818,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     endif
     call <SID>DisplayInitialHeader(level)
     call <SID>LoadLevel(level)
-    set nomodifiable
+    setlocal nomodifiable
     call <SID>SetupMaps()
     " do something with the cursor....
     normal 1G
