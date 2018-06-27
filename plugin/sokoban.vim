@@ -443,6 +443,7 @@ function! <SID>MakeMove(delta, moveDirection)   "{{{1
                 " check to see if the level is complete. Only need to do this after
                 " each package push as each level must end with a package push
                 if <SID>AreAllPackagesHome()
+                    call <SID>SetupMaps(0)
                     call <SID>DisplayLevelCompleteMessage()
                     call <SID>UpdateHighScores()
                     call <SID>SaveCurrentLevelToFile(b:level + 1)
@@ -510,25 +511,37 @@ function! <SID>UndoMove()   "{{{1
     endif
 endfunction
 
-function! <SID>SetupMaps()   "{{{1
+function! <SID>SetupMaps(enable)   "{{{1
     " About...   {{{2
     " Function : SetupMaps (PRIVATE
     " Purpose  : Sets up the various maps to control the movement of the game
-    " Args     : none
+    " Args     : enable - if 0, turn off movement maps; otherwise, turn them on.
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    map <silent> <buffer> h       :call <SID>MakeMove([0, -1], "l")<CR>
-    map <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "l")<CR>
-    map <silent> <buffer> j       :call <SID>MakeMove([1, 0], "d")<CR>
-    map <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "d")<CR>
-    map <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "u")<CR>
-    map <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "u")<CR>
-    map <silent> <buffer> l       :call <SID>MakeMove([0, 1], "r")<CR>
-    map <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "r")<CR>
-    map <silent> <buffer> u       :call <SID>UndoMove()<CR>
-    map <silent> <buffer> r       :call Sokoban("", b:level)<CR>
-    map <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
-    map <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
+    if a:enable
+        nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], "l")<CR>
+        nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "l")<CR>
+        nnoremap <silent> <buffer> j       :call <SID>MakeMove([1, 0], "d")<CR>
+        nnoremap <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "d")<CR>
+        nnoremap <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "u")<CR>
+        nnoremap <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "u")<CR>
+        nnoremap <silent> <buffer> l       :call <SID>MakeMove([0, 1], "r")<CR>
+        nnoremap <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "r")<CR>
+        nnoremap <silent> <buffer> u       :call <SID>UndoMove()<CR>
+    else
+        nnoremap <buffer> h       <Nop>
+        nnoremap <buffer> <Left>  <Nop>
+        nnoremap <buffer> j       <Nop>
+        nnoremap <buffer> <Down>  <Nop>
+        nnoremap <buffer> k       <Nop>
+        nnoremap <buffer> <Up>    <Nop>
+        nnoremap <buffer> l       <Nop>
+        nnoremap <buffer> <Right> <Nop>
+        nnoremap <buffer> u       <Nop>
+    endif
+    nnoremap <silent> <buffer> r       :call Sokoban("", b:level)<CR>
+    nnoremap <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
+    nnoremap <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
 endfunction
 
 function! <SID>LoadScoresFile()   "{{{1
@@ -833,7 +846,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     call <SID>DisplayInitialHeader(level)
     call <SID>LoadLevel(level)
     setlocal nomodifiable
-    call <SID>SetupMaps()
+    call <SID>SetupMaps(1)
     " do something with the cursor....
     normal 1G
     normal 0
