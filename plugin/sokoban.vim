@@ -88,12 +88,27 @@ if !exists("g:SokobanScoreFile")
     let g:SokobanScoreFile = expand("<sfile>:p:h") . "/../.VimSokobanScores"
 endif
 
-" Characters in level files, and their displayed counterparts.
-let s:soko = ['@','☺']
-let s:wall = ['#','▓']
-let s:pkg  = ['$','◘']
-let s:home = ['.','⋅']
-let s:home_pkg = ['*',s:pkg[1]]
+" Characters used to draw the level on the screen.
+if exists("g:charSoko")
+    let g:charSoko = strcharpart(g:charSoko,0,1)
+else
+    let g:charSoko = '☺'  " replaces @ in level file
+endif
+if exists("g:charWall")
+    let g:charWall = strcharpart(g:charWall,0,1)
+else
+    let g:charWall = '▓'  " replaces # in level file
+endif
+if exists("g:charPkg")
+    let g:charPkg = strcharpart(g:charPkg,0,1)
+else
+    let g:charPkg  = '◘'  " replaces $ in level file
+endif
+if exists("g:charHome")
+    let g:charHome = strcharpart(g:charHome,0,1)
+else
+    let g:charHome = '⋅'  " replaces . and * in level file
+endif
 
 command! -nargs=? Sokoban call Sokoban("", <f-args>)
 command! -nargs=? SokobanH call Sokoban("h", <f-args>)
@@ -120,13 +135,13 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     call append(0, '                              VIM SOKOBAN')
     call append(1, '                              ═══════════')
     call append(2, 'Score                                        Key')
-    call append(3, '──────────────                               ──────────────────')
-    call append(4, 'Level:  ' . printf("%6d",a:level) . '                               '.s:soko[1].' soko      '.s:wall[1].' wall')
-    call append(5, 'Moves:       0                               '.s:pkg[1].' package   '.s:home[1].' home')
+    call append(3, '══════════════                               ══════════════════')
+    call append(4, 'Level:  ' . printf("%6d",a:level) . '                               '.g:charSoko.' soko      '.g:charWall.' wall')
+    call append(5, 'Moves:       0                               '.g:charPkg.' package   '.g:charHome.' home')
     call append(6, 'Pushes:      0')
     call append(7, ' ')
     call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call append(9, '────────────────────────────────────────────────────────────────────────────────')
+    call append(9, '════════════════════════════════════════════════════════════════════════════════')
     call append(10, ' ')
     let s:endHeaderLine = 11
 endfunction
@@ -160,16 +175,16 @@ function! <SID>ProcessLevel()   "{{{1
         let c = 1
         while (c <= eoc)
             let ch = currentLine[c]
-            if (ch == s:wall[0])
+            if (ch == '#')
                 call add(b:wallList, [l,c])
-            elseif (ch == s:home[0])
+            elseif (ch == '.')
                 call add(b:homeList, [l,c])
-            elseif (ch == s:home_pkg[0])
+            elseif (ch == '*')
                 call add(b:homeList, [l,c])
                 call add(b:packageList, [l,c])
-            elseif (ch == s:pkg[0])
+            elseif (ch == '$')
                 call add(b:packageList, [l,c])
-            elseif (ch == s:soko[0])
+            elseif (ch == '@')
                 let b:manPos = [l,c]
             else
             endif
@@ -195,17 +210,17 @@ function! <SID>LoadLevel(level)   "{{{1
         silent! execute "11,$ s/^/           /g"
         call <SID>ProcessLevel()
         let b:level = a:level
-        silent! execute s:endHeaderLine . ",$ s/\\V".s:soko[0]."/".s:soko[1]."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V".s:wall[0]."/".s:wall[1]."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V".s:pkg[0]."/".s:pkg[1]."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V".s:home[0]."/".s:home[1]."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V".s:home_pkg[0]."/".s:home_pkg[1]."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V@/".g:charSoko."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V#/".g:charWall."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V$/".g:charPkg."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V./".g:charHome."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPkg."/g"
         if has("syntax")
             syn clear
-            execute 'syn match SokobanMan /'.s:soko[1].'/'
-            execute 'syn match SokobanPackage /'.s:pkg[1].'/'
-            execute 'syn match SokobanWall /'.s:wall[1].'/'
-            execute 'syn match SokobanHome /'.s:home[1].'/'
+            execute 'syn match SokobanMan /'.g:charSoko.'/'
+            execute 'syn match SokobanPackage /'.g:charPkg.'/'
+            execute 'syn match SokobanWall /'.g:charWall.'/'
+            execute 'syn match SokobanHome /'.g:charHome.'/'
             highlight link SokobanPackage String
             highlight link SokobanMan Special
             highlight link SokobanWall Comment
@@ -294,13 +309,13 @@ function! <SID>MoveMan(from, to, package)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     if <SID>IsHome(a:from)
-        call <SID>SetCharInLine(a:from, s:home[1])
+        call <SID>SetCharInLine(a:from, g:charHome)
     else
         call <SID>SetCharInLine(a:from, ' ')
     endif
-    call <SID>SetCharInLine(a:to, s:soko[1])
+    call <SID>SetCharInLine(a:to, g:charSoko)
     if !empty(a:package)
-        call <SID>SetCharInLine(a:package, s:pkg[1])
+        call <SID>SetCharInLine(a:package, g:charPkg)
     endif
 endfunction
 
@@ -311,7 +326,7 @@ function! <SID>UpdateHeader()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               '.s:pkg[1].' package   '.s:home[1].' home')
+    call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPkg.' package   '.g:charHome.' home')
     call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
@@ -724,7 +739,7 @@ function! <SID>DisplayHighScores()   "{{{1
     " Author   : Michael Sharpe (feline@irendi.com) }}}
     if (b:highScoreByMoveStr != "")
         call append(line("$"), "")
-        call append(line("$"), "────────────────────────────────────────────────────────────────────────────────")
+        call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
         call append(line("$"), "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
         if (b:highScoreByPushStr != "")
             call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
