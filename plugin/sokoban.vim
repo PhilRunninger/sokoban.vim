@@ -1,4 +1,5 @@
-" Copyright (c) 1998-2018   {{{1
+" Boilerplate {{{1
+" Copyright (c) 1998-2018   {{{2
 " Michael Sharpe <feline@irendi.com>
 " Phil Runninger
 "
@@ -10,7 +11,7 @@
 " obligation to maintain or extend this software. It is provided on an
 " "as is" basis without any expressed or implied warranty.
 "
-" Objective:   {{{1
+" Objective:   {{{2
 " The goal of VimSokoban is to push all the packages ($) into
 " the  home area (.) of each level using hjkl keys or the arrow
 " keys. The arrow keys move the player (X) in the corresponding
@@ -20,7 +21,7 @@
 " Levels came from the xsokoban distribution which is in the public domain.
 " http://www.cs.cornell.edu/andru/xsokoban.html
 "
-" Commands / Maps:   {{{1
+" Commands / Maps:   {{{2
 "    :Sokoban - or -  :Sokoban <level>   -- Start sokoban in the current window
 "    :SokobanH - or - :SokobanH <level>  -- horiz split and start sokoban
 "    :SokobanV - or - :SokobanV <level>  -- vertical split and start sokoban
@@ -34,7 +35,7 @@
 "    p            - previous level
 "    u            - undo move
 "
-" Installation / Setup:   {{{1
+" Installation / Setup:   {{{2
 "
 " Install according to the directions found in any of the various Vim Plugin
 " managers, such as: pathogen, Vundle, vim-plug, etc.
@@ -44,7 +45,7 @@
 "   1) g:SokobanLevelDirectory defaults to the plugin's levels folder.
 "   2) g:SokobanScoreFile defaults to .VimSokobanScores in the plugin's root folder.
 "
-" Release Notes:   {{{1
+" Release Notes:   {{{2
 "    1.0  - initial release
 "    1.1  - j/k mapping bug fixed
 "         - added SokobanH, and SokobanV commands to control splitting
@@ -59,10 +60,11 @@
 "         - remember current level
 "         - best scores for each level
 "
-" Acknowledgements:   {{{1
+" Acknowledgements:   {{{2
 "    Dan Sharp - j/k key mappings were backwards.
 "    Bindu Wavell/Gergely Kontra - <sfile> expansion
 "    Gergely Kontra - set buftype suggestion, set nomodifiable
+" }}}
 " }}}
 
 " Do nothing if the script has already been loaded
@@ -168,8 +170,7 @@ function! <SID>ProcessLevel()   "{{{1
          elseif (ch == s:pkg[0])
              call add(b:packageList, [l,c])
          elseif (ch == s:soko[0])
-            let b:manPosLine = l
-            let b:manPosCol = c
+            let b:manPos = [l,c]
          else
          endif
          let c = c + 1
@@ -222,108 +223,85 @@ function! <SID>LoadLevel(level)   "{{{1
    endif
 endfunction
 
-function! <SID>SetCharInLine(theLine, theCol, char)   "{{{1
+function! <SID>SetCharInLine(cell, char)   "{{{1
 " About...   {{{2
 " Function : SetCharInLine (PRIVATE)
 " Purpose  : Puts a specified character at a specific position in the specified
 "            line
-" Args     : theLine - the line number to manipulate
-"            theCol - the column of the character to manipulate
+" Args     : cell - the cell to manipulate
 "            char - the character to set at the position
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let ln = getline(a:theLine)
-   let leftStr = strcharpart(ln, 0, a:theCol)
-   let rightStr = strcharpart(ln, a:theCol + 1)
+    let [theLine,theCol] = a:cell
+   let ln = getline(theLine)
+   let leftStr = strcharpart(ln, 0, theCol)
+   let rightStr = strcharpart(ln, theCol + 1)
    let ln = leftStr . a:char . rightStr
-   call setline(a:theLine, ln)
+   call setline(theLine, ln)
 endfunction
 
-function! <SID>IsInList(theList, item)   "{{{1
-" About...   {{{2
-" Function : IsInList (PRIVATE)
-" Purpose  : determines whether the specified item (an [l,c] pair) is in
-"            the specified list.
-" Args     : theList - the list to check
-"            line - the line coordinate
-"            column - the column coordinate
-" Returns  : 1 if the [l,c] pair is in the list, 0 otherwise
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-    return index(a:theList, a:item) >= 0
-endfunction
-
-function! <SID>IsWall(line, column)   "{{{1
+function! <SID>IsWall(cell)   "{{{1
 " About...   {{{2
 " Function : IsWall (PRIVATE)
-" Purpose  : determines whether the specified (line, column) pair corresponds
-"            to a wall
-" Args     : line - the line part of the pair
-"            column - the column part of the pair
-" Returns  : 1 if the (line, column) pair is a wall, 0 otherwise
+" Purpose  : determines whether the specified cell corresponds to a wall
+" Args     : cell - the location to check
+" Returns  : 1 if the cell is a wall, 0 otherwise
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return <SID>IsInList(b:wallList, [a:line, a:column])
+   return index(b:wallList, a:cell) >= 0
 endfunction
 
-function! <SID>IsHome(line, column)   "{{{1
+function! <SID>IsHome(cell)   "{{{1
 " About...   {{{2
 " Function : IsHome (PRIVATE)
 " Purpose  : determines whether the specified (line, column) pair corresponds
 "            to a home area
-" Args     : line - the line part of the pair
-"            column - the column part of the pair
-" Returns  : 1 if the (line, column) pair is a home area, 0 otherwise
+" Args     : cell - the location to check
+" Returns  : 1 if the cell is a home area, 0 otherwise
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return <SID>IsInList(b:homeList, [a:line, a:column])
+   return index(b:homeList, a:cell) >= 0
 endfunction
 
-function! <SID>IsPackage(line, column)   "{{{1
+function! <SID>IsPackage(cell)   "{{{1
 " About...   {{{2
 " Function : IsPackage (PRIVATE)
-" Purpose  : determines whether the specified (line, column) pair corresponds
-"            to a package
-" Args     : line - the line part of the pair
-"            column - the column part of the pair
-" Returns  : 1 if the (line, column) pair is a package, 0 otherwise
+" Purpose  : determines whether the specified cell corresponds to a package
+" Args     : cell - the location to check
+" Returns  : 1 if the cell is a package, 0 otherwise
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return <SID>IsInList(b:packageList, [a:line, a:column])
+   return index(b:packageList, a:cell) >= 0
 endfunction
 
-function! <SID>IsEmpty(line, column)   "{{{1
+function! <SID>IsEmpty(cell)   "{{{1
 " About...   {{{2
 " Function : IsEmpty (PRIVATE)
-" Purpose  : determines whether the specified (line, column) pair corresponds
-"            to empty space in the maze
-" Args     : line - the line part of the pair
-"            column - the column part of the pair
-" Returns  : 1 if the (line, column) pair is empty space, 0 otherwise
+" Purpose  : determines whether the specified cell corresponds to empty space in the maze
+" Args     : cell - the location to check
+" Returns  : 1 if the cell is an empty space, 0 otherwise
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return !<SID>IsWall(a:line, a:column) && !<SID>IsPackage(a:line, a:column)
+   return !<SID>IsWall(a:cell) && !<SID>IsPackage(a:cell)
 endfunction
 
-function! <SID>MoveMan(fromLine, fromCol, toLine, toCol, pkgLine, pkgCol)   "{{{1
+function! <SID>MoveMan(from, to, package)   "{{{1
 " About...   {{{2
 " Function : MoveMan (PRIVATE)
 " Purpose  : moves the man and possibly a package in the buffer. The package is
 "            assumed to move from where the man moves too. Home squares are
 "            handled correctly in this function too. Things are a little crazy
 "            for the undo'ing of a move.
-" Args     : fromLine - the line where the man is moving from
-"            fromCol - the column where the man is moving from
-"            toLine - the line where the man is moving to
-"            toCol - the column where the man is moving to
-"            pkgLine - the line of where a package is moving to
-"            pkgCol - the column of where a package is moving to
-" Returns  : 1 if the (line, column) pair is empty space, 0 otherwise
+" Args     : from - the cell where the man is moving from
+"            to - the cell where the man is moving to
+"            package - the cell where a package is moving to
+" Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let isHomePos = <SID>IsHome(a:fromLine, a:fromCol)
+   let isHomePos = <SID>IsHome(a:from)
    if (isHomePos)
-      call <SID>SetCharInLine(a:fromLine, a:fromCol, s:home[1])
+      call <SID>SetCharInLine(a:from, s:home[1])
    else
-      call <SID>SetCharInLine(a:fromLine, a:fromCol, ' ')
+      call <SID>SetCharInLine(a:from, ' ')
    endif
-   call <SID>SetCharInLine(a:toLine, a:toCol, s:soko[1])
-   if ((a:pkgLine != -1) && (a:pkgCol != -1))
-      call <SID>SetCharInLine(a:pkgLine, a:pkgCol, s:pkg[1])
+   call <SID>SetCharInLine(a:to, s:soko[1])
+   if !empty(a:package)
+      call <SID>SetCharInLine(a:package, s:pkg[1])
    endif
 endfunction
 
@@ -338,18 +316,16 @@ function! <SID>UpdateHeader()   "{{{1
    call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
-function! <SID>UpdatePackageList(oldLine, oldCol, newLine, newCol)   "{{{1
+function! <SID>UpdatePackageList(old, new)   "{{{1
 " About...   {{{2
 " Function : UpdatePackageList (PRIVATE)
 " Purpose  : updates the package list when a package is moved
-" Args     : oldLine - the line of the old package location
-"            oldCol - the column of the old package location
-"            newLine - the line of the package's new location
-"            newCol - the column of the package's new location
+" Args     : old - the cell of the old package location
+"            new - the cell of the package's new location
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call remove(b:packageList, index(b:packageList, [a:oldLine,a:oldCol]))
-    call add(b:packageList, [a:newLine,a:newCol])
+    call remove(b:packageList, index(b:packageList, a:old))
+    call add(b:packageList, a:new)
 endfunction
 
 function! <SID>DisplayLevelCompleteMessage()   "{{{1
@@ -377,52 +353,66 @@ function! <SID>AreAllPackagesHome()   "{{{1
     " Returns  : 1 if all packages are home (i.e. level complete), 0 otherwise
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     for pkg in b:packageList
-        if !<SID>IsInList(b:homeList, pkg)
+        if !<SID>IsHome(pkg)
             return 0
         endif
     endfor
     return 1
 endfunction
 
-function! <SID>MakeMove(lineDelta, colDelta, moveDirection)   "{{{1
+function! <SID>AddVectors(x, y)   "{{{1
+    " About...   {{{2
+    " Function : AddVectors (PRIVATE)
+    " Purpose  : Adds two vectors (lists) together.
+    " Args     : x - a list of 2 numbers
+    "            y - a list of 2 numbers
+    " Returns  : A new list, the sum of x and y
+    " Author   : Phil Runninger (philrunninger@gmail.com)   }}}
+    return [a:x[0]+a:y[0], a:x[1]+a:y[1]]
+endfunction
+
+function! <SID>SubtractVectors(x, y)   "{{{1
+    " About...   {{{2
+    " Function : SubtractVectors (PRIVATE)
+    " Purpose  : Subtracts two vectors (lists) together.
+    " Args     : x - a list of 2 numbers
+    "            y - a list of 2 numbers
+    " Returns  : A new list, the difference of x and y
+    " Author   : Phil Runninger (philrunninger@gmail.com)   }}}
+    return [a:x[0]-a:y[0], a:x[1]-a:y[1]]
+endfunction
+
+function! <SID>MakeMove(delta, moveDirection)   "{{{1
 " About...   {{{2
 " Function : MakeMove (PRIVATE)
 " Purpose  : This is the core function which is called when a move is made. It
 "            detemines if the move is legal, if packages have moved and takes
 "            care of updating the buffer to reflect the new position of
 "            everything.
-" Args     : lineDelta - indicates the direction the  man has moved in a line
-"            colDelta - indicates the direction the man has moved in a column
+" Args     : delta - indicates the direction the man has moved
 "            moveDirection - character to place in the undolist which
 "                            represents the move
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let newManPosLine = b:manPosLine + a:lineDelta
-   let newManPosCol = b:manPosCol + a:colDelta
-   let newManPosIsWall = <SID>IsWall(newManPosLine, newManPosCol)
-   if (!newManPosIsWall)
+   let newManPos = <SID>AddVectors(b:manPos, a:delta)
+   if !<SID>IsWall(newManPos)
       " if the location we want to move to is not a wall continue processing
-      let newManPosIsPackage = <SID>IsPackage(newManPosLine, newManPosCol)
-      if (newManPosIsPackage)
+      if <SID>IsPackage(newManPos)
          " if the new position is a package check to see if the package moves
-         let newPkgPosLine = newManPosLine + a:lineDelta
-         let newPkgPosCol = newManPosCol + a:colDelta
-         let newPkgPosIsEmpty = <SID>IsEmpty(newPkgPosLine, newPkgPosCol)
-         if (newPkgPosIsEmpty)
+         let newPkgPos = <SID>AddVectors(newManPos, a:delta)
+         if <SID>IsEmpty(newPkgPos)
             set modifiable
             " the move is possible and we pushed a package
-            call <SID>MoveMan(b:manPosLine, b:manPosCol, newManPosLine, newManPosCol, newPkgPosLine, newPkgPosCol)
-            call <SID>UpdatePackageList(newManPosLine, newManPosCol, newPkgPosLine, newPkgPosCol)
+            call <SID>MoveMan(b:manPos, newManPos, newPkgPos)
+            call <SID>UpdatePackageList(newManPos, newPkgPos)
             call insert(b:undoList, a:moveDirection . "p")
             let b:moves = b:moves + 1
             let b:pushes = b:pushes + 1
-            let b:manPosLine = newManPosLine
-            let b:manPosCol = newManPosCol
+            let b:manPos = newManPos
             call <SID>UpdateHeader()
             " check to see if the level is complete. Only need to do this after
             " each package push as each level must end with a package push
-            let levelIsComplete = <SID>AreAllPackagesHome()
-            if (levelIsComplete)
+            if <SID>AreAllPackagesHome()
                call <SID>DisplayLevelCompleteMessage()
                call <SID>UpdateHighScores()
                call <SID>SaveCurrentLevelToFile(b:level + 1)
@@ -432,11 +422,10 @@ function! <SID>MakeMove(lineDelta, colDelta, moveDirection)   "{{{1
       else
          set modifiable
          " the move is possible and no packages moved
-         call <SID>MoveMan(b:manPosLine, b:manPosCol, newManPosLine, newManPosCol, -1, -1)
+         call <SID>MoveMan(b:manPos, newManPos, [])
          call insert(b:undoList, a:moveDirection)
          let b:moves = b:moves + 1
-         let b:manPosLine = newManPosLine
-         let b:manPosCol = newManPosCol
+         let b:manPos = newManPos
          call <SID>UpdateHeader()
          set nomodifiable
       endif
@@ -456,48 +445,35 @@ function! <SID>UndoMove()   "{{{1
 
         " determine which way the man has to move to undo the move
         if prevMove =~ "^l"
-            let lineDelta = 0
-            let colDelta = 1
+            let delta = [0,1]
         elseif prevMove =~ "^r"
-            let lineDelta = 0
-            let colDelta = -1
+            let delta = [0,-1]
         elseif prevMove =~ "^u"
-            let lineDelta = 1
-            let colDelta = 0
+            let delta = [1,0]
         elseif prevMove =~ "^d"
-            let lineDelta = -1
-            let colDelta = 0
+            let delta = [-1,0]
         else
             return
         endif
 
         " old position of the man
-        let newManPosLine = b:manPosLine + lineDelta
-        let newManPosCol = b:manPosCol + colDelta
+        let newManPos = <SID>AddVectors(b:manPos, delta)
 
         " determine if the move had moved a package so that can be undone too.
         if prevMove =~ "p$"
-            " if we pushed a package, the position were the man was is where
-            " the package was
-            let oldPkgPosLine = b:manPosLine
-            let oldPkgPosCol = b:manPosCol
-
-            " the position where the package which was pushed is now
-            let currPkgOrManPosLine = b:manPosLine - lineDelta
-            let currPkgOrManPosCol = b:manPosCol - colDelta
+            " if we pushed a package, the man's position is where the package was
+            let oldPkgPos = b:manPos
+            let currPkgPos = <SID>SubtractVectors(b:manPos, delta)
             let b:pushes = b:pushes - 1
-            call <SID>UpdatePackageList(currPkgOrManPosLine, currPkgOrManPosCol, oldPkgPosLine, oldPkgPosCol)
+            call <SID>UpdatePackageList(currPkgPos, oldPkgPos)
         else
-            let oldPkgPosLine = 0
-            let oldPkgPosCol = 0
-            let currPkgOrManPosLine = b:manPosLine
-            let currPkgOrManPosCol = b:manPosCol
+            let oldPkgPos = []
+            let currPkgPos = b:manPos
         endif
         set modifiable
         " this is abusing this function a little :)
-        call <SID>MoveMan(currPkgOrManPosLine, currPkgOrManPosCol, newManPosLine, newManPosCol, oldPkgPosLine, oldPkgPosCol)
-        let b:manPosLine = newManPosLine
-        let b:manPosCol = newManPosCol
+        call <SID>MoveMan(currPkgPos, newManPos, oldPkgPos)
+        let b:manPos = newManPos
         let b:moves = b:moves - 1
         call <SID>UpdateHeader()
         set nomodifiable
@@ -511,14 +487,14 @@ function! <SID>SetupMaps()   "{{{1
 " Args     : none
 " Returns  : nothing
 " Author   : Michael Sharpe (feline@irendi.com)   }}}
-   map <silent> <buffer> h       :call <SID>MakeMove(0, -1, "l")<CR>
-   map <silent> <buffer> <Left>  :call <SID>MakeMove(0, -1, "l")<CR>
-   map <silent> <buffer> j       :call <SID>MakeMove(1, 0, "d")<CR>
-   map <silent> <buffer> <Down>  :call <SID>MakeMove(1, 0, "d")<CR>
-   map <silent> <buffer> k       :call <SID>MakeMove(-1, 0, "u")<CR>
-   map <silent> <buffer> <Up>    :call <SID>MakeMove(-1, 0, "u")<CR>
-   map <silent> <buffer> l       :call <SID>MakeMove(0, 1, "r")<CR>
-   map <silent> <buffer> <Right> :call <SID>MakeMove(0, 1, "r")<CR>
+   map <silent> <buffer> h       :call <SID>MakeMove([0, -1], "l")<CR>
+   map <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "l")<CR>
+   map <silent> <buffer> j       :call <SID>MakeMove([1, 0], "d")<CR>
+   map <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "d")<CR>
+   map <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "u")<CR>
+   map <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "u")<CR>
+   map <silent> <buffer> l       :call <SID>MakeMove([0, 1], "r")<CR>
+   map <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "r")<CR>
    map <silent> <buffer> u       :call <SID>UndoMove()<CR>
    map <silent> <buffer> r       :call Sokoban("", b:level)<CR>
    map <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
