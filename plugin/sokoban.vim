@@ -132,18 +132,17 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call append(0, '                              VIM SOKOBAN')
-    call append(1, '                              ═══════════')
-    call append(2, 'Score                                        Key')
-    call append(3, '══════════════                               ══════════════════')
-    call append(4, 'Level:  ' . printf("%6d",a:level) . '                               '.g:charSoko.' soko      '.g:charWall.' wall')
-    call append(5, 'Moves:       0                               '.g:charPkg.' package   '.g:charHome.' home')
-    call append(6, 'Pushes:      0')
-    call append(7, ' ')
-    call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call append(9, '════════════════════════════════════════════════════════════════════════════════')
-    call append(10, ' ')
-    let s:endHeaderLine = 11
+    call append(0, '                        VIM SOKOBAN')
+    call append(1, 'Score                   ═══════════          Key')
+    call append(2, '══════════════                               ══════════════════')
+    call append(3, 'Level:  ' . printf("%6d",a:level) . '                               '.g:charSoko.' soko      '.g:charWall.' wall')
+    call append(4, 'Moves:       0                               '.g:charPkg.' package   '.g:charHome.' home')
+    call append(5, 'Pushes:      0')
+    call append(6, ' ')
+    call append(7, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
+    call append(8, '════════════════════════════════════════════════════════════════════════════════')
+    call append(9, ' ')
+    let s:endHeaderLine = 10
 endfunction
 
 function! <SID>ProcessLevel()   "{{{1
@@ -234,7 +233,7 @@ function! <SID>LoadLevel(level)   "{{{1
         setlocal nolist nonumber
     else
         let b:level = 0
-        call append(11, "Could not find file " . levelFile)
+        call append(10, "Could not find file " . levelFile)
     endif
 endfunction
 
@@ -326,8 +325,8 @@ function! <SID>UpdateHeader()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPkg.' package   '.g:charHome.' home')
-    call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
+    call setline(5, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPkg.' package   '.g:charHome.' home')
+    call setline(6, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
 function! <SID>UpdatePackageList(old, new)   "{{{1
@@ -349,14 +348,14 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(14, '                                                                                ')
-    call setline(15, '          ╭─────────────────────────────────────────────────────────╮           ')
-    call setline(16, '          │                       LEVEL COMPLETE                    │           ')
-    call setline(17, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
-    call setline(18, '          ├─────────────────────────────────────────────────────────┤           ')
-    call setline(19, '          │ r - restart level   p - previous level   n - next level │           ')
-    call setline(20, '          ╰─────────────────────────────────────────────────────────╯           ')
-    call setline(21, '                                                                                ')
+    call setline(13, '                                                                                ')
+    call setline(14, '          ╭─────────────────────────────────────────────────────────╮           ')
+    call setline(15, '          │                       LEVEL COMPLETE                    │           ')
+    call setline(16, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
+    call setline(17, '          ├─────────────────────────────────────────────────────────┤           ')
+    call setline(18, '          │ r - restart level   p - previous level   n - next level │           ')
+    call setline(19, '          ╰─────────────────────────────────────────────────────────╯           ')
+    call setline(20, '                                                                                ')
 endfunction
 
 function! <SID>AreAllPackagesHome()   "{{{1
