@@ -85,7 +85,7 @@ endif
 
 " Allow the user to specify the location of the score file.
 if !exists("g:SokobanScoreFile")
-   let g:SokobanScoreFile = expand("<sfile>:p:h") . "/../.VimSokobanScores"
+    let g:SokobanScoreFile = expand("<sfile>:p:h") . "/../.VimSokobanScores"
 endif
 
 " Characters in level files, and their displayed counterparts.
@@ -100,249 +100,248 @@ command! -nargs=? SokobanH call Sokoban("h", <f-args>)
 command! -nargs=? SokobanV call Sokoban("v", <f-args>)
 
 function! <SID>ClearBuffer()   "{{{1
-" About...   {{{2
-" Function : ClearBuffer (PRIVATE
-" Purpose  : clears the buffer of all characters
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   normal 1G
-   normal dG
+    " About...   {{{2
+    " Function : ClearBuffer (PRIVATE
+    " Purpose  : clears the buffer of all characters
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    normal 1G
+    normal dG
 endfunction
 
 function! <SID>DisplayInitialHeader(level)   "{{{1
-" About...   {{{2
-" Function : DisplayInitialHeader (PRIVATE)
-" Purpose  : Displays the header of the sokoban screen
-" Args     : level - the current level number
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call append(0, '                              VIM SOKOBAN')
-   call append(1, '                              ═══════════')
-   call append(2, 'Score                                        Key')
-   call append(3, '──────────────                               ──────────────────')
-   call append(4, 'Level:  ' . printf("%6d",a:level) . '                               '.s:soko[1].' soko      '.s:wall[1].' wall')
-   call append(5, 'Moves:       0                               '.s:pkg[1].' package   '.s:home[1].' home')
-   call append(6, 'Pushes:      0')
-   call append(7, ' ')
-   call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-   call append(9, '────────────────────────────────────────────────────────────────────────────────')
-   call append(10, ' ')
-   let s:endHeaderLine = 11
+    " About...   {{{2
+    " Function : DisplayInitialHeader (PRIVATE)
+    " Purpose  : Displays the header of the sokoban screen
+    " Args     : level - the current level number
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    call append(0, '                              VIM SOKOBAN')
+    call append(1, '                              ═══════════')
+    call append(2, 'Score                                        Key')
+    call append(3, '──────────────                               ──────────────────')
+    call append(4, 'Level:  ' . printf("%6d",a:level) . '                               '.s:soko[1].' soko      '.s:wall[1].' wall')
+    call append(5, 'Moves:       0                               '.s:pkg[1].' package   '.s:home[1].' home')
+    call append(6, 'Pushes:      0')
+    call append(7, ' ')
+    call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
+    call append(9, '────────────────────────────────────────────────────────────────────────────────')
+    call append(10, ' ')
+    let s:endHeaderLine = 11
 endfunction
 
 function! <SID>ProcessLevel()   "{{{1
-" About...   {{{2
-" Function : ProcessLevel (PRIVATE
-" Purpose  : processes a level which has been loaded and populates the object
-"            lists and sokoban man position.
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   " list of the locations of all walls
-   let b:wallList = []
-   " list of the locations of all home squares
-   let b:homeList = []
-   " list of the locations of all packages
-   let b:packageList = []
-   " list of current moves (used for the undo move feature)
-   let b:undoList = []
-   " counter of number of moves made
-   let b:moves = 0
-   " counter of number of pushes made
-   let b:pushes = 0
+    " About...   {{{2
+    " Function : ProcessLevel (PRIVATE
+    " Purpose  : processes a level which has been loaded and populates the object
+    "            lists and sokoban man position.
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    " list of the locations of all walls
+    let b:wallList = []
+    " list of the locations of all home squares
+    let b:homeList = []
+    " list of the locations of all packages
+    let b:packageList = []
+    " list of current moves (used for the undo move feature)
+    let b:undoList = []
+    " counter of number of moves made
+    let b:moves = 0
+    " counter of number of pushes made
+    let b:pushes = 0
 
-   let eob = line('$')
-   let l = s:endHeaderLine
-   while (l <= eob)
-      let currentLine = getline(l)
-      let eoc = strchars(currentLine)
-      let c = 1
-      while (c <= eoc)
-         let ch = currentLine[c]
-         if (ch == s:wall[0])
-             call add(b:wallList, [l,c])
-         elseif (ch == s:home[0])
-             call add(b:homeList, [l,c])
-         elseif (ch == s:home_pkg[0])
-             call add(b:homeList, [l,c])
-             call add(b:packageList, [l,c])
-         elseif (ch == s:pkg[0])
-             call add(b:packageList, [l,c])
-         elseif (ch == s:soko[0])
-            let b:manPos = [l,c]
-         else
-         endif
-         let c = c + 1
-      endwhile
-      let l = l + 1
-   endwhile
+    let eob = line('$')
+    let l = s:endHeaderLine
+    while (l <= eob)
+        let currentLine = getline(l)
+        let eoc = strchars(currentLine)
+        let c = 1
+        while (c <= eoc)
+            let ch = currentLine[c]
+            if (ch == s:wall[0])
+                call add(b:wallList, [l,c])
+            elseif (ch == s:home[0])
+                call add(b:homeList, [l,c])
+            elseif (ch == s:home_pkg[0])
+                call add(b:homeList, [l,c])
+                call add(b:packageList, [l,c])
+            elseif (ch == s:pkg[0])
+                call add(b:packageList, [l,c])
+            elseif (ch == s:soko[0])
+                let b:manPos = [l,c]
+            else
+            endif
+            let c = c + 1
+        endwhile
+        let l = l + 1
+    endwhile
 endfunction
 
 function! <SID>LoadLevel(level)   "{{{1
-" About...   {{{2
-" Function : LoadLevel (PRIVATE)
-" Purpose  : loads the level and sets up the syntax highlighting for the file
-" Args     : level - the level to load
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   normal dG
-   let levelFile = g:SokobanLevelDirectory . "level" . a:level . ".sok"
-   let levelExists = filereadable(levelFile)
-   if (levelExists)
-      set modifiable
-      execute "r " . levelFile
-      silent! execute "11,$ s/^/           /g"
-      call <SID>ProcessLevel()
-      let b:level = a:level
-      silent! execute s:endHeaderLine . ",$ s/\\V".s:soko[0]."/".s:soko[1]."/g"
-      silent! execute s:endHeaderLine . ",$ s/\\V".s:wall[0]."/".s:wall[1]."/g"
-      silent! execute s:endHeaderLine . ",$ s/\\V".s:pkg[0]."/".s:pkg[1]."/g"
-      silent! execute s:endHeaderLine . ",$ s/\\V".s:home[0]."/".s:home[1]."/g"
-      silent! execute s:endHeaderLine . ",$ s/\\V".s:home_pkg[0]."/".s:home_pkg[1]."/g"
-      if has("syntax")
-         syn clear
-         execute 'syn match SokobanMan /'.s:soko[1].'/'
-         execute 'syn match SokobanPackage /'.s:pkg[1].'/'
-         execute 'syn match SokobanWall /'.s:wall[1].'/'
-         execute 'syn match SokobanHome /'.s:home[1].'/'
-         highlight link SokobanPackage String
-         highlight link SokobanMan Special
-         highlight link SokobanWall Comment
-         highlight link SokobanHome Statement
-      endif
-      call <SID>DetermineHighScores(a:level)
-      call <SID>DisplayHighScores()
-      call <SID>SaveCurrentLevelToFile(a:level)
-      set buftype=nofile
-      set nomodifiable
-      set nolist nonumber
-   else
-      let b:level = 0
-      call append(11, "Could not find file " . levelFile)
-   endif
+    " About...   {{{2
+    " Function : LoadLevel (PRIVATE)
+    " Purpose  : loads the level and sets up the syntax highlighting for the file
+    " Args     : level - the level to load
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    normal dG
+    let levelFile = g:SokobanLevelDirectory . "level" . a:level . ".sok"
+    let levelExists = filereadable(levelFile)
+    if (levelExists)
+        set modifiable
+        execute "r " . levelFile
+        silent! execute "11,$ s/^/           /g"
+        call <SID>ProcessLevel()
+        let b:level = a:level
+        silent! execute s:endHeaderLine . ",$ s/\\V".s:soko[0]."/".s:soko[1]."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V".s:wall[0]."/".s:wall[1]."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V".s:pkg[0]."/".s:pkg[1]."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V".s:home[0]."/".s:home[1]."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V".s:home_pkg[0]."/".s:home_pkg[1]."/g"
+        if has("syntax")
+            syn clear
+            execute 'syn match SokobanMan /'.s:soko[1].'/'
+            execute 'syn match SokobanPackage /'.s:pkg[1].'/'
+            execute 'syn match SokobanWall /'.s:wall[1].'/'
+            execute 'syn match SokobanHome /'.s:home[1].'/'
+            highlight link SokobanPackage String
+            highlight link SokobanMan Special
+            highlight link SokobanWall Comment
+            highlight link SokobanHome Statement
+        endif
+        call <SID>DetermineHighScores(a:level)
+        call <SID>DisplayHighScores()
+        call <SID>SaveCurrentLevelToFile(a:level)
+        set buftype=nofile
+        set nomodifiable
+        set nolist nonumber
+    else
+        let b:level = 0
+        call append(11, "Could not find file " . levelFile)
+    endif
 endfunction
 
 function! <SID>SetCharInLine(cell, char)   "{{{1
-" About...   {{{2
-" Function : SetCharInLine (PRIVATE)
-" Purpose  : Puts a specified character at a specific position in the specified
-"            line
-" Args     : cell - the cell to manipulate
-"            char - the character to set at the position
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
+    " About...   {{{2
+    " Function : SetCharInLine (PRIVATE)
+    " Purpose  : Puts a specified character at a specific position in the specified
+    "            line
+    " Args     : cell - the cell to manipulate
+    "            char - the character to set at the position
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
     let [theLine,theCol] = a:cell
-   let ln = getline(theLine)
-   let leftStr = strcharpart(ln, 0, theCol)
-   let rightStr = strcharpart(ln, theCol + 1)
-   let ln = leftStr . a:char . rightStr
-   call setline(theLine, ln)
+    let ln = getline(theLine)
+    let leftStr = strcharpart(ln, 0, theCol)
+    let rightStr = strcharpart(ln, theCol + 1)
+    let ln = leftStr . a:char . rightStr
+    call setline(theLine, ln)
 endfunction
 
 function! <SID>IsWall(cell)   "{{{1
-" About...   {{{2
-" Function : IsWall (PRIVATE)
-" Purpose  : determines whether the specified cell corresponds to a wall
-" Args     : cell - the location to check
-" Returns  : 1 if the cell is a wall, 0 otherwise
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return index(b:wallList, a:cell) >= 0
+    " About...   {{{2
+    " Function : IsWall (PRIVATE)
+    " Purpose  : determines whether the specified cell corresponds to a wall
+    " Args     : cell - the location to check
+    " Returns  : 1 if the cell is a wall, 0 otherwise
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    return index(b:wallList, a:cell) >= 0
 endfunction
 
 function! <SID>IsHome(cell)   "{{{1
-" About...   {{{2
-" Function : IsHome (PRIVATE)
-" Purpose  : determines whether the specified (line, column) pair corresponds
-"            to a home area
-" Args     : cell - the location to check
-" Returns  : 1 if the cell is a home area, 0 otherwise
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return index(b:homeList, a:cell) >= 0
+    " About...   {{{2
+    " Function : IsHome (PRIVATE)
+    " Purpose  : determines whether the specified (line, column) pair corresponds
+    "            to a home area
+    " Args     : cell - the location to check
+    " Returns  : 1 if the cell is a home area, 0 otherwise
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    return index(b:homeList, a:cell) >= 0
 endfunction
 
 function! <SID>IsPackage(cell)   "{{{1
-" About...   {{{2
-" Function : IsPackage (PRIVATE)
-" Purpose  : determines whether the specified cell corresponds to a package
-" Args     : cell - the location to check
-" Returns  : 1 if the cell is a package, 0 otherwise
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return index(b:packageList, a:cell) >= 0
+    " About...   {{{2
+    " Function : IsPackage (PRIVATE)
+    " Purpose  : determines whether the specified cell corresponds to a package
+    " Args     : cell - the location to check
+    " Returns  : 1 if the cell is a package, 0 otherwise
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    return index(b:packageList, a:cell) >= 0
 endfunction
 
 function! <SID>IsEmpty(cell)   "{{{1
-" About...   {{{2
-" Function : IsEmpty (PRIVATE)
-" Purpose  : determines whether the specified cell corresponds to empty space in the maze
-" Args     : cell - the location to check
-" Returns  : 1 if the cell is an empty space, 0 otherwise
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   return !<SID>IsWall(a:cell) && !<SID>IsPackage(a:cell)
+    " About...   {{{2
+    " Function : IsEmpty (PRIVATE)
+    " Purpose  : determines whether the specified cell corresponds to empty space in the maze
+    " Args     : cell - the location to check
+    " Returns  : 1 if the cell is an empty space, 0 otherwise
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    return !<SID>IsWall(a:cell) && !<SID>IsPackage(a:cell)
 endfunction
 
 function! <SID>MoveMan(from, to, package)   "{{{1
-" About...   {{{2
-" Function : MoveMan (PRIVATE)
-" Purpose  : moves the man and possibly a package in the buffer. The package is
-"            assumed to move from where the man moves too. Home squares are
-"            handled correctly in this function too. Things are a little crazy
-"            for the undo'ing of a move.
-" Args     : from - the cell where the man is moving from
-"            to - the cell where the man is moving to
-"            package - the cell where a package is moving to
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let isHomePos = <SID>IsHome(a:from)
-   if (isHomePos)
-      call <SID>SetCharInLine(a:from, s:home[1])
-   else
-      call <SID>SetCharInLine(a:from, ' ')
-   endif
-   call <SID>SetCharInLine(a:to, s:soko[1])
-   if !empty(a:package)
-      call <SID>SetCharInLine(a:package, s:pkg[1])
-   endif
+    " About...   {{{2
+    " Function : MoveMan (PRIVATE)
+    " Purpose  : moves the man and possibly a package in the buffer. The package is
+    "            assumed to move from where the man moves too. Home squares are
+    "            handled correctly in this function too. Things are a little crazy
+    "            for the undo'ing of a move.
+    " Args     : from - the cell where the man is moving from
+    "            to - the cell where the man is moving to
+    "            package - the cell where a package is moving to
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    if <SID>IsHome(a:from)
+        call <SID>SetCharInLine(a:from, s:home[1])
+    else
+        call <SID>SetCharInLine(a:from, ' ')
+    endif
+    call <SID>SetCharInLine(a:to, s:soko[1])
+    if !empty(a:package)
+        call <SID>SetCharInLine(a:package, s:pkg[1])
+    endif
 endfunction
 
 function! <SID>UpdateHeader()   "{{{1
-" About...   {{{2
-" Function : UpdateHeader (PRIVATE
-" Purpose  : updates the moves and the pushes scores in the header
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               '.s:pkg[1].' package   '.s:home[1].' home')
-   call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
+    " About...   {{{2
+    " Function : UpdateHeader (PRIVATE
+    " Purpose  : updates the moves and the pushes scores in the header
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    call setline(6, 'Moves:  ' . printf("%6d",b:moves) . '                               '.s:pkg[1].' package   '.s:home[1].' home')
+    call setline(7, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
 function! <SID>UpdatePackageList(old, new)   "{{{1
-" About...   {{{2
-" Function : UpdatePackageList (PRIVATE)
-" Purpose  : updates the package list when a package is moved
-" Args     : old - the cell of the old package location
-"            new - the cell of the package's new location
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
+    " About...   {{{2
+    " Function : UpdatePackageList (PRIVATE)
+    " Purpose  : updates the package list when a package is moved
+    " Args     : old - the cell of the old package location
+    "            new - the cell of the package's new location
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
     call remove(b:packageList, index(b:packageList, a:old))
     call add(b:packageList, a:new)
 endfunction
 
 function! <SID>DisplayLevelCompleteMessage()   "{{{1
-" About...   {{{2
-" Function : DisplayLevelCompleteMessage (PRIVATE
-" Purpose  : Display the message indicating that the level has been completed
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   call setline(14, '                                                                                ')
-   call setline(15, '          ╭─────────────────────────────────────────────────────────╮           ')
-   call setline(16, '          │                       LEVEL COMPLETE                    │           ')
-   call setline(17, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
-   call setline(18, '          ├─────────────────────────────────────────────────────────┤           ')
-   call setline(19, '          │ r - restart level   p - previous level   n - next level │           ')
-   call setline(20, '          ╰─────────────────────────────────────────────────────────╯           ')
-   call setline(21, '                                                                                ')
+    " About...   {{{2
+    " Function : DisplayLevelCompleteMessage (PRIVATE
+    " Purpose  : Display the message indicating that the level has been completed
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    call setline(14, '                                                                                ')
+    call setline(15, '          ╭─────────────────────────────────────────────────────────╮           ')
+    call setline(16, '          │                       LEVEL COMPLETE                    │           ')
+    call setline(17, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
+    call setline(18, '          ├─────────────────────────────────────────────────────────┤           ')
+    call setline(19, '          │ r - restart level   p - previous level   n - next level │           ')
+    call setline(20, '          ╰─────────────────────────────────────────────────────────╯           ')
+    call setline(21, '                                                                                ')
 endfunction
 
 function! <SID>AreAllPackagesHome()   "{{{1
@@ -383,53 +382,53 @@ function! <SID>SubtractVectors(x, y)   "{{{1
 endfunction
 
 function! <SID>MakeMove(delta, moveDirection)   "{{{1
-" About...   {{{2
-" Function : MakeMove (PRIVATE)
-" Purpose  : This is the core function which is called when a move is made. It
-"            detemines if the move is legal, if packages have moved and takes
-"            care of updating the buffer to reflect the new position of
-"            everything.
-" Args     : delta - indicates the direction the man has moved
-"            moveDirection - character to place in the undolist which
-"                            represents the move
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let newManPos = <SID>AddVectors(b:manPos, a:delta)
-   if !<SID>IsWall(newManPos)
-      " if the location we want to move to is not a wall continue processing
-      if <SID>IsPackage(newManPos)
-         " if the new position is a package check to see if the package moves
-         let newPkgPos = <SID>AddVectors(newManPos, a:delta)
-         if <SID>IsEmpty(newPkgPos)
+    " About...   {{{2
+    " Function : MakeMove (PRIVATE)
+    " Purpose  : This is the core function which is called when a move is made. It
+    "            detemines if the move is legal, if packages have moved and takes
+    "            care of updating the buffer to reflect the new position of
+    "            everything.
+    " Args     : delta - indicates the direction the man has moved
+    "            moveDirection - character to place in the undolist which
+    "                            represents the move
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    let newManPos = <SID>AddVectors(b:manPos, a:delta)
+    if !<SID>IsWall(newManPos)
+        " if the location we want to move to is not a wall continue processing
+        if <SID>IsPackage(newManPos)
+            " if the new position is a package check to see if the package moves
+            let newPkgPos = <SID>AddVectors(newManPos, a:delta)
+            if <SID>IsEmpty(newPkgPos)
+                set modifiable
+                " the move is possible and we pushed a package
+                call <SID>MoveMan(b:manPos, newManPos, newPkgPos)
+                call <SID>UpdatePackageList(newManPos, newPkgPos)
+                call insert(b:undoList, a:moveDirection . "p")
+                let b:moves = b:moves + 1
+                let b:pushes = b:pushes + 1
+                let b:manPos = newManPos
+                call <SID>UpdateHeader()
+                " check to see if the level is complete. Only need to do this after
+                " each package push as each level must end with a package push
+                if <SID>AreAllPackagesHome()
+                    call <SID>DisplayLevelCompleteMessage()
+                    call <SID>UpdateHighScores()
+                    call <SID>SaveCurrentLevelToFile(b:level + 1)
+                endif
+                set nomodifiable
+            endif
+        else
             set modifiable
-            " the move is possible and we pushed a package
-            call <SID>MoveMan(b:manPos, newManPos, newPkgPos)
-            call <SID>UpdatePackageList(newManPos, newPkgPos)
-            call insert(b:undoList, a:moveDirection . "p")
+            " the move is possible and no packages moved
+            call <SID>MoveMan(b:manPos, newManPos, [])
+            call insert(b:undoList, a:moveDirection)
             let b:moves = b:moves + 1
-            let b:pushes = b:pushes + 1
             let b:manPos = newManPos
             call <SID>UpdateHeader()
-            " check to see if the level is complete. Only need to do this after
-            " each package push as each level must end with a package push
-            if <SID>AreAllPackagesHome()
-               call <SID>DisplayLevelCompleteMessage()
-               call <SID>UpdateHighScores()
-               call <SID>SaveCurrentLevelToFile(b:level + 1)
-            endif
             set nomodifiable
-         endif
-      else
-         set modifiable
-         " the move is possible and no packages moved
-         call <SID>MoveMan(b:manPos, newManPos, [])
-         call insert(b:undoList, a:moveDirection)
-         let b:moves = b:moves + 1
-         let b:manPos = newManPos
-         call <SID>UpdateHeader()
-         set nomodifiable
-      endif
-   endif
+        endif
+    endif
 endfunction
 
 function! <SID>UndoMove()   "{{{1
@@ -481,349 +480,349 @@ function! <SID>UndoMove()   "{{{1
 endfunction
 
 function! <SID>SetupMaps()   "{{{1
-" About...   {{{2
-" Function : SetupMaps (PRIVATE
-" Purpose  : Sets up the various maps to control the movement of the game
-" Args     : none
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   map <silent> <buffer> h       :call <SID>MakeMove([0, -1], "l")<CR>
-   map <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "l")<CR>
-   map <silent> <buffer> j       :call <SID>MakeMove([1, 0], "d")<CR>
-   map <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "d")<CR>
-   map <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "u")<CR>
-   map <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "u")<CR>
-   map <silent> <buffer> l       :call <SID>MakeMove([0, 1], "r")<CR>
-   map <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "r")<CR>
-   map <silent> <buffer> u       :call <SID>UndoMove()<CR>
-   map <silent> <buffer> r       :call Sokoban("", b:level)<CR>
-   map <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
-   map <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
+    " About...   {{{2
+    " Function : SetupMaps (PRIVATE
+    " Purpose  : Sets up the various maps to control the movement of the game
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    map <silent> <buffer> h       :call <SID>MakeMove([0, -1], "l")<CR>
+    map <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "l")<CR>
+    map <silent> <buffer> j       :call <SID>MakeMove([1, 0], "d")<CR>
+    map <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "d")<CR>
+    map <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "u")<CR>
+    map <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "u")<CR>
+    map <silent> <buffer> l       :call <SID>MakeMove([0, 1], "r")<CR>
+    map <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "r")<CR>
+    map <silent> <buffer> u       :call <SID>UndoMove()<CR>
+    map <silent> <buffer> r       :call Sokoban("", b:level)<CR>
+    map <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
+    map <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
 endfunction
 
 function! <SID>LoadScoresFile()   "{{{1
-" About...   {{{2
-" Function : LoadScoresFile (PRIVATE
-" Purpose  : loads the highscores file if it exists. Determines the last
-"            level played. The contents of the highscore file end up in the
-"            b:scoreFileContents variable.
-" Args     : none
-" Returns  : the last level played.
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
+    " About...   {{{2
+    " Function : LoadScoresFile (PRIVATE
+    " Purpose  : loads the highscores file if it exists. Determines the last
+    "            level played. The contents of the highscore file end up in the
+    "            b:scoreFileContents variable.
+    " Args     : none
+    " Returns  : the last level played.
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
 
-" TODO: Change b:scoreFileContents to a dictionary, and (de)serialize with the
-" code suggested in https://stackoverflow.com/questions/31348782/how-do-i-serialize-a-variable-in-vimscript
+    " TODO: Change b:scoreFileContents to a dictionary, and (de)serialize with the
+    " code suggested in https://stackoverflow.com/questions/31348782/how-do-i-serialize-a-variable-in-vimscript
 
-   let currentLevel = 0
-   let scoreFileExists = filereadable(g:SokobanScoreFile)
-   if (scoreFileExists)
-      execute ":r " . g:SokobanScoreFile
-      normal 1G
-      normal dG
-      let b:scoreFileContents = @"
-      let startPos = matchend(b:scoreFileContents, "CurrentLevel = ")
-      if (startPos != -1)
-         let endPos = match(b:scoreFileContents, ";", startPos)
-         if (endPos != -1)
-            let len = endPos - startPos
-            let currentLevel = strcharpart(b:scoreFileContents, startPos, len)
-         endif
-      endif
-   else
-      let b:scoreFileContents = ""
-   endif
-   let b:scoresFileLoaded = 1
-   return currentLevel
+    let currentLevel = 0
+    let scoreFileExists = filereadable(g:SokobanScoreFile)
+    if (scoreFileExists)
+        execute ":r " . g:SokobanScoreFile
+        normal 1G
+        normal dG
+        let b:scoreFileContents = @"
+        let startPos = matchend(b:scoreFileContents, "CurrentLevel = ")
+        if (startPos != -1)
+            let endPos = match(b:scoreFileContents, ";", startPos)
+            if (endPos != -1)
+                let len = endPos - startPos
+                let currentLevel = strcharpart(b:scoreFileContents, startPos, len)
+            endif
+        endif
+    else
+        let b:scoreFileContents = ""
+    endif
+    let b:scoresFileLoaded = 1
+    return currentLevel
 endfunction
 
 function! <SID>SaveScoresToFile()   "{{{1
-" About...   {{{2
-" Function : SaveScoresToFile (PRIVATE
-" Purpose  : saves the current scores to the highscores file.
-" Args     : none
-" Returns  : nothing
-" Notes    : call by silent! call SaveScoresToFile()
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   " newline characters keep creeping into the file. The sub below attempts to
-   " control that
-   let b:scoreFileContents = substitute(b:scoreFileContents, "\n\n", "\n", "g")
-   execute 'redir! > ' . g:SokobanScoreFile
-   echo b:scoreFileContents
-   redir END
+    " About...   {{{2
+    " Function : SaveScoresToFile (PRIVATE
+    " Purpose  : saves the current scores to the highscores file.
+    " Args     : none
+    " Returns  : nothing
+    " Notes    : call by silent! call SaveScoresToFile()
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    " newline characters keep creeping into the file. The sub below attempts to
+    " control that
+    let b:scoreFileContents = substitute(b:scoreFileContents, "\n\n", "\n", "g")
+    execute 'redir! > ' . g:SokobanScoreFile
+    echo b:scoreFileContents
+    redir END
 endfunction
 
 function! <SID>ExtractNumberInStr(str, prefix, suffix)   "{{{1
-" About...   {{{2
-" Function : ExtractNumberInStr (PRIVATE)
-" Purpose  : extracts the number in a string which is between prefix and suffix
-" Args     : str - the string containing the prefix, number and suffix
-"            prefix - the text before the number
-"            suffix - the text after the number
-" Returns  : the extracted number
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let startPos = matchend(a:str, a:prefix)
-   if (startPos != -1)
-      let endPos = match(a:str, a:suffix)
-      let len = endPos - startPos
-      let theNumber = strcharpart(a:str, startPos, len)
-   else
-      let theNumber = 0
-   endif
-   return theNumber
+    " About...   {{{2
+    " Function : ExtractNumberInStr (PRIVATE)
+    " Purpose  : extracts the number in a string which is between prefix and suffix
+    " Args     : str - the string containing the prefix, number and suffix
+    "            prefix - the text before the number
+    "            suffix - the text after the number
+    " Returns  : the extracted number
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    let startPos = matchend(a:str, a:prefix)
+    if (startPos != -1)
+        let endPos = match(a:str, a:suffix)
+        let len = endPos - startPos
+        let theNumber = strcharpart(a:str, startPos, len)
+    else
+        let theNumber = 0
+    endif
+    return theNumber
 endfunction
 
 function! <SID>DetermineHighScores(level)   "{{{1
-" About...   {{{2
-" Function : DetermineHighScores (PRIVATE)
-" Purpose  : determines the high scores for a particular level. This is a
-"            little tricky as there are two high scores possible for each
-"            level. One for the pushes and one for the moves. This function
-"            detemines both and maintains the information for both
-" Args     : level - the level to determine the high scores
-" Returns  : nothing, sets alot of buffer variables though
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-  let b:highScoreByMoveMoves = -1
-  let b:highScoreByMovePushes = -1
-  let b:highScoreByMoveStr = ""
-  let b:highScoreByPushMoves = -1
-  let b:highScoreByPushPushes = -1
-  let b:highScoreByPushStr = ""
+    " About...   {{{2
+    " Function : DetermineHighScores (PRIVATE)
+    " Purpose  : determines the high scores for a particular level. This is a
+    "            little tricky as there are two high scores possible for each
+    "            level. One for the pushes and one for the moves. This function
+    "            detemines both and maintains the information for both
+    " Args     : level - the level to determine the high scores
+    " Returns  : nothing, sets alot of buffer variables though
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    let b:highScoreByMoveMoves = -1
+    let b:highScoreByMovePushes = -1
+    let b:highScoreByMoveStr = ""
+    let b:highScoreByPushMoves = -1
+    let b:highScoreByPushPushes = -1
+    let b:highScoreByPushStr = ""
 
-  let levelStr = "Level " . a:level . ": "
-  " determine the first highscore
-  let startPos = match(b:scoreFileContents, levelStr)
-  if (startPos != -1)
-     let endPos = match(b:scoreFileContents, ";", startPos)
-     let len = endPos - startPos + 1
-     let scoreStr1 = strcharpart(b:scoreFileContents, startPos, len)
-     let scoreMoves1 = <SID>ExtractNumberInStr(scoreStr1, "Moves = ", ",")
-     let scorePushes1 = <SID>ExtractNumberInStr(scoreStr1, "Pushes = ", ";")
-
-     " look for the second highscore
-     let startPos = match(b:scoreFileContents,levelStr, endPos + 1)
-     if (startPos != -1)
+    let levelStr = "Level " . a:level . ": "
+    " determine the first highscore
+    let startPos = match(b:scoreFileContents, levelStr)
+    if (startPos != -1)
         let endPos = match(b:scoreFileContents, ";", startPos)
         let len = endPos - startPos + 1
-        let scoreStr2 = strcharpart(b:scoreFileContents, startPos, len)
-        let scoreMoves2 = <SID>ExtractNumberInStr(scoreStr2, "Moves = ", ",")
-        let scorePushes2 = <SID>ExtractNumberInStr(scoreStr2, "Pushes = ", ";")
-        if (scoreMoves1 < scoreMoves2)
-           " the first set of scores has the lowest moves
-           let b:highScoreByMoveMoves = scoreMoves1
-           let b:highScoreByMovePushes = scorePushes1
-           let b:highScoreByMoveStr = scoreStr1
-           let b:highScoreByPushMoves = scoreMoves2
-           let b:highScoreByPushPushes = scorePushes2
-           let b:highScoreByPushStr = scoreStr2
+        let scoreStr1 = strcharpart(b:scoreFileContents, startPos, len)
+        let scoreMoves1 = <SID>ExtractNumberInStr(scoreStr1, "Moves = ", ",")
+        let scorePushes1 = <SID>ExtractNumberInStr(scoreStr1, "Pushes = ", ";")
+
+        " look for the second highscore
+        let startPos = match(b:scoreFileContents,levelStr, endPos + 1)
+        if (startPos != -1)
+            let endPos = match(b:scoreFileContents, ";", startPos)
+            let len = endPos - startPos + 1
+            let scoreStr2 = strcharpart(b:scoreFileContents, startPos, len)
+            let scoreMoves2 = <SID>ExtractNumberInStr(scoreStr2, "Moves = ", ",")
+            let scorePushes2 = <SID>ExtractNumberInStr(scoreStr2, "Pushes = ", ";")
+            if (scoreMoves1 < scoreMoves2)
+                " the first set of scores has the lowest moves
+                let b:highScoreByMoveMoves = scoreMoves1
+                let b:highScoreByMovePushes = scorePushes1
+                let b:highScoreByMoveStr = scoreStr1
+                let b:highScoreByPushMoves = scoreMoves2
+                let b:highScoreByPushPushes = scorePushes2
+                let b:highScoreByPushStr = scoreStr2
+            else
+                " the first set of scores has the lowest pushes
+                let b:highScoreByMoveMoves = scoreMoves2
+                let b:highScoreByMovePushes = scorePushes2
+                let b:highScoreByMoveStr = scoreStr2
+                let b:highScoreByPushMoves = scoreMoves1
+                let b:highScoreByPushPushes = scorePushes1
+                let b:highScoreByPushStr = scoreStr1
+            endif
         else
-           " the first set of scores has the lowest pushes
-           let b:highScoreByMoveMoves = scoreMoves2
-           let b:highScoreByMovePushes = scorePushes2
-           let b:highScoreByMoveStr = scoreStr2
-           let b:highScoreByPushMoves = scoreMoves1
-           let b:highScoreByPushPushes = scorePushes1
-           let b:highScoreByPushStr = scoreStr1
+            let b:highScoreByMoveMoves = scoreMoves1
+            let b:highScoreByMovePushes = scorePushes1
+            let b:highScoreByMoveStr = scoreStr1
+            let b:highScoreByPushMoves = -1
+            let b:highScoreByPushPushes = -1
+            let b:highScoreByPushStr = ""
         endif
-     else
-        let b:highScoreByMoveMoves = scoreMoves1
-        let b:highScoreByMovePushes = scorePushes1
-        let b:highScoreByMoveStr = scoreStr1
-        let b:highScoreByPushMoves = -1
-        let b:highScoreByPushPushes = -1
-        let b:highScoreByPushStr = ""
-     endif
-  endif
+    endif
 endfunction
 
 function! <SID>UpdateHighScores()   "{{{1
-" About...   {{{2
-" Function : UpdateHighScores (PRIVATE
-" Purpose  : Determines if a highscore has been beaten, and if so saves it to
-"            the highscores file
-" Args     : none.
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let updateMoveRecord = 0
-   let updatePushRecord = 0
+    " About...   {{{2
+    " Function : UpdateHighScores (PRIVATE
+    " Purpose  : Determines if a highscore has been beaten, and if so saves it to
+    "            the highscores file
+    " Args     : none.
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    let updateMoveRecord = 0
+    let updatePushRecord = 0
 
-   let newScoreStr = "Level " . b:level . ": Moves = " . b:moves . ", Pushes = " . b:pushes . ";"
+    let newScoreStr = "Level " . b:level . ": Moves = " . b:moves . ", Pushes = " . b:pushes . ";"
 
-   if (b:moves < b:highScoreByMoveMoves)
-      let updateMoveRecord = 1
-   endif
+    if (b:moves < b:highScoreByMoveMoves)
+        let updateMoveRecord = 1
+    endif
 
-   if ((b:moves == b:highScoreByMoveMoves) && (b:pushes < b:highScoreByMovePushes))
-      let updateMoveRecord = 1
-   endif
+    if ((b:moves == b:highScoreByMoveMoves) && (b:pushes < b:highScoreByMovePushes))
+        let updateMoveRecord = 1
+    endif
 
-   if (b:pushes < b:highScoreByPushPushes)
-      let updatePushRecord = 1
-   endif
+    if (b:pushes < b:highScoreByPushPushes)
+        let updatePushRecord = 1
+    endif
 
-   if ((b:pushes == b:highScoreByPushPushes) && (b:moves < b:highScoreByPushMoves))
-      let updatePushRecord = 1
-   endif
+    if ((b:pushes == b:highScoreByPushPushes) && (b:moves < b:highScoreByPushMoves))
+        let updatePushRecord = 1
+    endif
 
-   if (b:highScoreByMoveStr == "")
-      let updateMoveRecord = 1
-   endif
+    if (b:highScoreByMoveStr == "")
+        let updateMoveRecord = 1
+    endif
 
-   if (b:highScoreByPushStr == "" && b:highScoreByMoveStr != newScoreStr)
-      let updatePushRecord = 1
-   endif
+    if (b:highScoreByPushStr == "" && b:highScoreByMoveStr != newScoreStr)
+        let updatePushRecord = 1
+    endif
 
-   if (updateMoveRecord && updatePushRecord)
-      "this record beats both high scores
-      if (b:highScoreByMoveStr != "")
-         let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByMoveStr, newScoreStr, "")
-      else
-         let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
-      endif
-      if (b:highScoreByPushStr != "")
-         let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByPushStr, "", "")
-      endif
-   elseif (updateMoveRecord)
-      if (b:highScoreByMoveStr != "")
-         let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByMoveStr, newScoreStr, "")
-      else
-         let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
-      endif
-   elseif (updatePushRecord)
-      if (b:highScoreByPushStr != "")
-         let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByPushStr, newScoreStr, "")
-      else
-         let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
-      endif
-   endif
-   if (updateMoveRecord || updatePushRecord)
-      silent! call <SID>SaveScoresToFile()
-   endif
+    if (updateMoveRecord && updatePushRecord)
+        "this record beats both high scores
+        if (b:highScoreByMoveStr != "")
+            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByMoveStr, newScoreStr, "")
+        else
+            let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
+        endif
+        if (b:highScoreByPushStr != "")
+            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByPushStr, "", "")
+        endif
+    elseif (updateMoveRecord)
+        if (b:highScoreByMoveStr != "")
+            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByMoveStr, newScoreStr, "")
+        else
+            let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
+        endif
+    elseif (updatePushRecord)
+        if (b:highScoreByPushStr != "")
+            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByPushStr, newScoreStr, "")
+        else
+            let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
+        endif
+    endif
+    if (updateMoveRecord || updatePushRecord)
+        silent! call <SID>SaveScoresToFile()
+    endif
 endfunction
 
 function! <SID>SaveCurrentLevelToFile(level)   "{{{1
-" About...   {{{2
-" Function : SaveCurrentLevelToFile (PRIVATE)
-" Purpose  : saves the current level to the high scores file.
-" Args     : level - the level number to save to the file
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   let idx = match(b:scoreFileContents, "CurrentLevel")
-   if (idx != -1)
-      let b:scoreFileContents = substitute(b:scoreFileContents, "CurrentLevel = [0-9]*;", "CurrentLevel = " . a:level . ";", "")
-   else
-      let b:scoreFileContents = "CurrentLevel = " . a:level . ";\n" .  b:scoreFileContents
-   endif
-   silent! call <SID>SaveScoresToFile()
+    " About...   {{{2
+    " Function : SaveCurrentLevelToFile (PRIVATE)
+    " Purpose  : saves the current level to the high scores file.
+    " Args     : level - the level number to save to the file
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    let idx = match(b:scoreFileContents, "CurrentLevel")
+    if (idx != -1)
+        let b:scoreFileContents = substitute(b:scoreFileContents, "CurrentLevel = [0-9]*;", "CurrentLevel = " . a:level . ";", "")
+    else
+        let b:scoreFileContents = "CurrentLevel = " . a:level . ";\n" .  b:scoreFileContents
+    endif
+    silent! call <SID>SaveScoresToFile()
 endfunction
 
 function! <SID>DisplayHighScores()   "{{{1
-" About...   {{{2
-" Function : DisplayHighScores (PRIVATE)
-" Purpose  : Displays the high scores for a level under the level when it is
-"            loaded.
-" Args     : none
-" Author   : Michael Sharpe (feline@irendi.com) }}}
-   if (b:highScoreByMoveStr != "")
-      call append(line("$"), "")
-      call append(line("$"), "────────────────────────────────────────────────────────────────────────────────")
-      call append(line("$"), "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
-      if (b:highScoreByPushStr != "")
-         call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
-      endif
-   endif
+    " About...   {{{2
+    " Function : DisplayHighScores (PRIVATE)
+    " Purpose  : Displays the high scores for a level under the level when it is
+    "            loaded.
+    " Args     : none
+    " Author   : Michael Sharpe (feline@irendi.com) }}}
+    if (b:highScoreByMoveStr != "")
+        call append(line("$"), "")
+        call append(line("$"), "────────────────────────────────────────────────────────────────────────────────")
+        call append(line("$"), "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
+        if (b:highScoreByPushStr != "")
+            call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
+        endif
+    endif
 endfunction
 
 function! <SID>FindOrCreateBuffer(filename, doSplit)   "{{{1
-" About...   {{{2
-" Function : FindOrCreateBuffer (PRIVATE)
-"            found, checks the window list for the buffer. If the buffer is in
-"            an already open window, it switches to the window. If the buffer
-"            was not in a window, it switches to that buffer. If the buffer did
-"            not exist, it creates it.
-" Args     : filename (IN) -- the name of the file
-"            doSplit (IN) -- indicates whether the window should be split
-"                            ("v", "h", "")
-" Returns  : nothing
-" Author   : Michael Sharpe <feline@irendi.com>   }}}
-  " Check to see if the buffer is already open before re-opening it.
-  let bufName = bufname(a:filename)
-  if (bufName == "")
-     " Buffer did not exist....create it
-     if (a:doSplit == "h")
-        execute ":split " . a:filename
-     elseif (a:doSplit == "v")
-        execute ":vsplit " . a:filename
-     else
-        execute ":e " . a:filename
-     endif
-  else
-     " Buffer was already open......check to see if it is in a window
-     let bufWindow = bufwinnr(a:filename)
-     if (bufWindow == -1)
+    " About...   {{{2
+    " Function : FindOrCreateBuffer (PRIVATE)
+    "            found, checks the window list for the buffer. If the buffer is in
+    "            an already open window, it switches to the window. If the buffer
+    "            was not in a window, it switches to that buffer. If the buffer did
+    "            not exist, it creates it.
+    " Args     : filename (IN) -- the name of the file
+    "            doSplit (IN) -- indicates whether the window should be split
+    "                            ("v", "h", "")
+    " Returns  : nothing
+    " Author   : Michael Sharpe <feline@irendi.com>   }}}
+    " Check to see if the buffer is already open before re-opening it.
+    let bufName = bufname(a:filename)
+    if (bufName == "")
+        " Buffer did not exist....create it
         if (a:doSplit == "h")
-           execute ":sbuffer " . a:filename
+            execute ":split " . a:filename
         elseif (a:doSplit == "v")
-           execute ":vert sbuffer " . a:filename
+            execute ":vsplit " . a:filename
         else
-           execute ":buffer " . a:filename
+            execute ":e " . a:filename
         endif
-     else
-        " search the windows for the target window
-        if bufWindow != winnr()
-           " only search if the current window does not contain the buffer
-           execute "normal \<C-W>b"
-           let winNum = winnr()
-           while (winNum != bufWindow && winNum > 0)
-              execute "normal \<C-W>k"
-              let winNum = winNum - 1
-           endwhile
-           if (0 == winNum)
-              " something wierd happened...open the buffer
-              if (a:doSplit == "h")
-                 execute ":split " . a:filename
-              elseif (a:doSplit == "v")
-                 execute ":vsplit " . a:filename
-              else
-                 execute ":e " . a:filename
-              endif
-           endif
+    else
+        " Buffer was already open......check to see if it is in a window
+        let bufWindow = bufwinnr(a:filename)
+        if (bufWindow == -1)
+            if (a:doSplit == "h")
+                execute ":sbuffer " . a:filename
+            elseif (a:doSplit == "v")
+                execute ":vert sbuffer " . a:filename
+            else
+                execute ":buffer " . a:filename
+            endif
+        else
+            " search the windows for the target window
+            if bufWindow != winnr()
+                " only search if the current window does not contain the buffer
+                execute "normal \<C-W>b"
+                let winNum = winnr()
+                while (winNum != bufWindow && winNum > 0)
+                    execute "normal \<C-W>k"
+                    let winNum = winNum - 1
+                endwhile
+                if (0 == winNum)
+                    " something wierd happened...open the buffer
+                    if (a:doSplit == "h")
+                        execute ":split " . a:filename
+                    elseif (a:doSplit == "v")
+                        execute ":vsplit " . a:filename
+                    else
+                        execute ":e " . a:filename
+                    endif
+                endif
+            endif
         endif
-     endif
-  endif
+    endif
 endfunction
 
 function! Sokoban(splitWindow, ...)   "{{{1
-" About...   {{{2
-" Function : Sokoban (PUBLIC)
-" Purpose  : This is the entry point to the game. It create the buffer, loads
-"            the level, and sets the game up.
-" Args     : splitWindow - indicates how to split the window
-"            level (optional) - specifies the start level
-" Returns  : nothing
-" Author   : Michael Sharpe (feline@irendi.com)   }}}
-   if (a:0 == 0)
-      let level = 1
-   else
-      let level = a:1
-   endif
-   call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
-   set modifiable
-   call <SID>ClearBuffer()
-   if (!exists("b:scoresFileLoaded"))
-      let savedLevel = <SID>LoadScoresFile()
-      call <SID>ClearBuffer()
-      " if there was a saved level and the level was not specified use it now
-      if (a:0 == 0 && savedLevel != 0)
-         let level = savedLevel
-      endif
-   endif
-   call <SID>DisplayInitialHeader(level)
-   call <SID>LoadLevel(level)
-   set nomodifiable
-   call <SID>SetupMaps()
-   " do something with the cursor....
-   normal 1G
-   normal 0
+    " About...   {{{2
+    " Function : Sokoban (PUBLIC)
+    " Purpose  : This is the entry point to the game. It create the buffer, loads
+    "            the level, and sets the game up.
+    " Args     : splitWindow - indicates how to split the window
+    "            level (optional) - specifies the start level
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    if (a:0 == 0)
+        let level = 1
+    else
+        let level = a:1
+    endif
+    call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
+    set modifiable
+    call <SID>ClearBuffer()
+    if (!exists("b:scoresFileLoaded"))
+        let savedLevel = <SID>LoadScoresFile()
+        call <SID>ClearBuffer()
+        " if there was a saved level and the level was not specified use it now
+        if (a:0 == 0 && savedLevel != 0)
+            let level = savedLevel
+        endif
+    endif
+    call <SID>DisplayInitialHeader(level)
+    call <SID>LoadLevel(level)
+    set nomodifiable
+    call <SID>SetupMaps()
+    " do something with the cursor....
+    normal 1G
+    normal 0
 endfunction
 
 " vim: foldmethod=marker
