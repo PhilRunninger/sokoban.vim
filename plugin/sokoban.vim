@@ -145,6 +145,51 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     let s:endHeaderLine = 10
 endfunction
 
+function! <SID>UpdateHeader()   "{{{1
+    " About...   {{{2
+    " Function : UpdateHeader (PRIVATE
+    " Purpose  : updates the moves and the pushes scores in the header
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    call setline(5, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPkg.' package   '.g:charHome.' home')
+    call setline(6, 'Pushes: ' . printf("%6d",b:pushes))
+endfunction
+
+function! <SID>DisplayHighScores()   "{{{1
+    " About...   {{{2
+    " Function : DisplayHighScores (PRIVATE)
+    " Purpose  : Displays the high scores for a level under the level when it is
+    "            loaded.
+    " Args     : none
+    " Author   : Michael Sharpe (feline@irendi.com) }}}
+    if (b:highScoreByMoveStr != "")
+        call append(line("$"), "")
+        call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
+        call append(line("$"), "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
+        if (b:highScoreByPushStr != "")
+            call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
+        endif
+    endif
+endfunction
+
+function! <SID>DisplayLevelCompleteMessage()   "{{{1
+    " About...   {{{2
+    " Function : DisplayLevelCompleteMessage (PRIVATE
+    " Purpose  : Display the message indicating that the level has been completed
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    call setline(13, '                                                                                ')
+    call setline(14, '          ╭─────────────────────────────────────────────────────────╮           ')
+    call setline(15, '          │                       LEVEL COMPLETE                    │           ')
+    call setline(16, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
+    call setline(17, '          ├─────────────────────────────────────────────────────────┤           ')
+    call setline(18, '          │ r - restart level   p - previous level   n - next level │           ')
+    call setline(19, '          ╰─────────────────────────────────────────────────────────╯           ')
+    call setline(20, '                                                                                ')
+endfunction
+
 function! <SID>ProcessLevel()   "{{{1
     " About...   {{{2
     " Function : ProcessLevel (PRIVATE
@@ -318,17 +363,6 @@ function! <SID>MoveMan(from, to, package)   "{{{1
     endif
 endfunction
 
-function! <SID>UpdateHeader()   "{{{1
-    " About...   {{{2
-    " Function : UpdateHeader (PRIVATE
-    " Purpose  : updates the moves and the pushes scores in the header
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(5, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPkg.' package   '.g:charHome.' home')
-    call setline(6, 'Pushes: ' . printf("%6d",b:pushes))
-endfunction
-
 function! <SID>UpdatePackageList(old, new)   "{{{1
     " About...   {{{2
     " Function : UpdatePackageList (PRIVATE)
@@ -339,23 +373,6 @@ function! <SID>UpdatePackageList(old, new)   "{{{1
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     call remove(b:packageList, index(b:packageList, a:old))
     call add(b:packageList, a:new)
-endfunction
-
-function! <SID>DisplayLevelCompleteMessage()   "{{{1
-    " About...   {{{2
-    " Function : DisplayLevelCompleteMessage (PRIVATE
-    " Purpose  : Display the message indicating that the level has been completed
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(13, '                                                                                ')
-    call setline(14, '          ╭─────────────────────────────────────────────────────────╮           ')
-    call setline(15, '          │                       LEVEL COMPLETE                    │           ')
-    call setline(16, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
-    call setline(17, '          ├─────────────────────────────────────────────────────────┤           ')
-    call setline(18, '          │ r - restart level   p - previous level   n - next level │           ')
-    call setline(19, '          ╰─────────────────────────────────────────────────────────╯           ')
-    call setline(20, '                                                                                ')
 endfunction
 
 function! <SID>AreAllPackagesHome()   "{{{1
@@ -727,23 +744,6 @@ function! <SID>SaveCurrentLevelToFile(level)   "{{{1
         let b:scoreFileContents = "CurrentLevel = " . a:level . ";\n" .  b:scoreFileContents
     endif
     silent! call <SID>SaveScoresToFile()
-endfunction
-
-function! <SID>DisplayHighScores()   "{{{1
-    " About...   {{{2
-    " Function : DisplayHighScores (PRIVATE)
-    " Purpose  : Displays the high scores for a level under the level when it is
-    "            loaded.
-    " Args     : none
-    " Author   : Michael Sharpe (feline@irendi.com) }}}
-    if (b:highScoreByMoveStr != "")
-        call append(line("$"), "")
-        call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
-        call append(line("$"), "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
-        if (b:highScoreByPushStr != "")
-            call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
-        endif
-    endif
 endfunction
 
 function! <SID>FindOrCreateBuffer(filename, doSplit)   "{{{1
