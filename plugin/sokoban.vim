@@ -45,6 +45,14 @@
 "   1) g:SokobanLevelDirectory defaults to the plugin's levels folder.
 "   2) g:SokobanScoreFile defaults to .VimSokobanScores in the plugin's root folder.
 "
+" The characters used to display the level are configurable. By default, they
+" are set to some Unicode characters, so if your terminal is incompatible, you
+" should change them. The variables are:
+"   g:charSoko
+"   g:charWall
+"   g:charPackage
+"   g:charHome
+"
 " Release Notes:   {{{2
 "    1.0  - initial release
 "    1.1  - j/k mapping bug fixed
@@ -67,6 +75,7 @@
 " }}}
 " }}}
 
+" Initial setup   {{{1
 " Do nothing if the script has already been loaded
 if (exists("g:VimSokoban_version"))
     finish
@@ -99,15 +108,15 @@ if exists("g:charWall")
 else
     let g:charWall = '▓'  " replaces # in level file
 endif
-if exists("g:charPkg")
-    let g:charPkg = strcharpart(g:charPkg,0,1)
+if exists("g:charPackage")
+    let g:charPackage = strcharpart(g:charPackage,0,1)
 else
-    let g:charPkg  = '◘'  " replaces $ in level file
+    let g:charPackage  = '✠'  " replaces $ in level file
 endif
 if exists("g:charHome")
     let g:charHome = strcharpart(g:charHome,0,1)
 else
-    let g:charHome = '⋅'  " replaces . and * in level file
+    let g:charHome = '○'  " replaces . and * in level file
 endif
 
 command! -nargs=? Sokoban call Sokoban("", <f-args>)
@@ -136,7 +145,7 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     call append(1, 'Score                   ═══════════          Key')
     call append(2, '══════════════                               ══════════════════')
     call append(3, 'Level:  ' . printf("%6d",a:level) . '                               '.g:charSoko.' soko      '.g:charWall.' wall')
-    call append(4, 'Moves:       0                               '.g:charPkg.' package   '.g:charHome.' home')
+    call append(4, 'Moves:       0                               '.g:charPackage.' package   '.g:charHome.' home')
     call append(5, 'Pushes:      0')
     call append(6, ' ')
     call append(7, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
@@ -152,7 +161,7 @@ function! <SID>UpdateHeader()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(5, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPkg.' package   '.g:charHome.' home')
+    call setline(5, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPackage.' package   '.g:charHome.' home')
     call setline(6, 'Pushes: ' . printf("%6d",b:pushes))
 endfunction
 
@@ -163,13 +172,18 @@ function! <SID>DisplayHighScores()   "{{{1
     "            loaded.
     " Args     : none
     " Author   : Michael Sharpe (feline@irendi.com) }}}
-    if (b:highScoreByMoveStr != "")
+    if has_key(b:scores,b:level)
+        let best = b:scores[b:level]
+        let fewestMoves = '('.best['fewestMoves']['moves'].', '.best['fewestMoves']['pushes'].')'
+        let fewestPushes = ''
+        if has_key(best,'fewestPushes')
+            let fewestPushes = '('.best['fewestPushes']['moves'].', '.best['fewestPushes']['pushes'].')'
+        endif
+
         call append(line("$"), "")
         call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
-        call append(line("$"), "Best Score - by Moves:    " . printf("%6d",b:highScoreByMoveMoves) . " moves      " . printf("%6d",b:highScoreByMovePushes) . " pushes")
-        if (b:highScoreByPushStr != "")
-            call append(line("$"), "           - by Pushes:   " . printf("%6d",b:highScoreByPushMoves) . " moves      " . printf("%6d",b:highScoreByPushPushes) . " pushes")
-        endif
+        call append(line("$"), "Best Scores:      fewest moves: ".fewestMoves."    fewest pushes: ".fewestPushes)
+        call append(line("$"), "  The sequence of moves is stored in the scores file.")
     endif
 endfunction
 
@@ -198,18 +212,12 @@ function! <SID>ProcessLevel()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    " list of the locations of all walls
-    let b:wallList = []
-    " list of the locations of all home squares
-    let b:homeList = []
-    " list of the locations of all packages
-    let b:packageList = []
-    " list of current moves (used for the undo move feature)
-    let b:undoList = []
-    " counter of number of moves made
-    let b:moves = 0
-    " counter of number of pushes made
-    let b:pushes = 0
+    let b:wallList = []    " list of all wall locations
+    let b:homeList = []    " list of all home square locations
+    let b:packageList = [] " list of all package locations
+    let b:undoList = []    " list of current moves (used for the undo move feature)
+    let b:moves = 0        " counter of number of moves made
+    let b:pushes = 0       " counter of number of pushes made
 
     let eob = line('$')
     let l = s:endHeaderLine
@@ -247,22 +255,24 @@ function! <SID>LoadLevel(level)   "{{{1
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     normal dG
     let levelFile = g:SokobanLevelDirectory . "level" . a:level . ".sok"
-    let levelExists = filereadable(levelFile)
-    if (levelExists)
+    if filereadable(levelFile)
         setlocal modifiable
         execute "r " . levelFile
         silent! execute "10,$ s/^/           /g"
         call <SID>ProcessLevel()
         let b:level = a:level
+
+        " Replace placeholder text (level file) with appropriate characters.
         silent! execute s:endHeaderLine . ",$ s/\\V@/".g:charSoko."/g"
         silent! execute s:endHeaderLine . ",$ s/\\V#/".g:charWall."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V$/".g:charPkg."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V$/".g:charPackage."/g"
         silent! execute s:endHeaderLine . ",$ s/\\V./".g:charHome."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPkg."/g"
+        silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPackage."/g"
+
         if has("syntax")
             syn clear
             execute 'syn match SokobanMan /'.g:charSoko.'/'
-            execute 'syn match SokobanPackage /'.g:charPkg.'/'
+            execute 'syn match SokobanPackage /'.g:charPackage.'/'
             execute 'syn match SokobanWall /'.g:charWall.'/'
             execute 'syn match SokobanHome /'.g:charHome.'/'
             highlight link SokobanPackage String
@@ -270,7 +280,6 @@ function! <SID>LoadLevel(level)   "{{{1
             highlight link SokobanWall Comment
             highlight link SokobanHome Statement
         endif
-        call <SID>DetermineHighScores(a:level)
         call <SID>DisplayHighScores()
         call <SID>SaveCurrentLevelToFile(a:level)
         setlocal buftype=nofile
@@ -359,7 +368,7 @@ function! <SID>MoveMan(from, to, package)   "{{{1
     endif
     call <SID>SetCharInLine(a:to, g:charSoko)
     if !empty(a:package)
-        call <SID>SetCharInLine(a:package, g:charPkg)
+        call <SID>SetCharInLine(a:package, g:charPackage)
     endif
 endfunction
 
@@ -549,34 +558,17 @@ function! <SID>LoadScoresFile()   "{{{1
     " Function : LoadScoresFile (PRIVATE
     " Purpose  : loads the highscores file if it exists. Determines the last
     "            level played. The contents of the highscore file end up in the
-    "            b:scoreFileContents variable.
+    "            b:scores variable.
     " Args     : none
     " Returns  : the last level played.
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-
-    " TODO: Change b:scoreFileContents to a dictionary, and (de)serialize with the
-    " code suggested in https://stackoverflow.com/questions/31348782/how-do-i-serialize-a-variable-in-vimscript
-
-    let currentLevel = 0
-    let scoreFileExists = filereadable(g:SokobanScoreFile)
-    if (scoreFileExists)
-        execute ":r " . g:SokobanScoreFile
-        normal 1G
-        normal dG
-        let b:scoreFileContents = @"
-        let startPos = matchend(b:scoreFileContents, "CurrentLevel = ")
-        if (startPos != -1)
-            let endPos = match(b:scoreFileContents, ";", startPos)
-            if (endPos != -1)
-                let len = endPos - startPos
-                let currentLevel = strcharpart(b:scoreFileContents, startPos, len)
-            endif
-        endif
+    if filereadable(g:SokobanScoreFile)
+        execute "let b:scores = " . readfile(g:SokobanScoreFile)[0]
+        return b:scores['current']
     else
-        let b:scoreFileContents = ""
+        let b:scores = {}
+        return 0
     endif
-    let b:scoresFileLoaded = 1
-    return currentLevel
 endfunction
 
 function! <SID>SaveScoresToFile()   "{{{1
@@ -587,95 +579,7 @@ function! <SID>SaveScoresToFile()   "{{{1
     " Returns  : nothing
     " Notes    : call by silent! call SaveScoresToFile()
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    " newline characters keep creeping into the file. The sub below attempts to
-    " control that
-    let b:scoreFileContents = substitute(b:scoreFileContents, "\n\n", "\n", "g")
-    execute 'redir! > ' . g:SokobanScoreFile
-    echo b:scoreFileContents
-    redir END
-endfunction
-
-function! <SID>ExtractNumberInStr(str, prefix, suffix)   "{{{1
-    " About...   {{{2
-    " Function : ExtractNumberInStr (PRIVATE)
-    " Purpose  : extracts the number in a string which is between prefix and suffix
-    " Args     : str - the string containing the prefix, number and suffix
-    "            prefix - the text before the number
-    "            suffix - the text after the number
-    " Returns  : the extracted number
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    let startPos = matchend(a:str, a:prefix)
-    if (startPos != -1)
-        let endPos = match(a:str, a:suffix)
-        let len = endPos - startPos
-        let theNumber = strcharpart(a:str, startPos, len)
-    else
-        let theNumber = 0
-    endif
-    return theNumber
-endfunction
-
-function! <SID>DetermineHighScores(level)   "{{{1
-    " About...   {{{2
-    " Function : DetermineHighScores (PRIVATE)
-    " Purpose  : determines the high scores for a particular level. This is a
-    "            little tricky as there are two high scores possible for each
-    "            level. One for the pushes and one for the moves. This function
-    "            detemines both and maintains the information for both
-    " Args     : level - the level to determine the high scores
-    " Returns  : nothing, sets alot of buffer variables though
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    let b:highScoreByMoveMoves = -1
-    let b:highScoreByMovePushes = -1
-    let b:highScoreByMoveStr = ""
-    let b:highScoreByPushMoves = -1
-    let b:highScoreByPushPushes = -1
-    let b:highScoreByPushStr = ""
-
-    let levelStr = "Level " . a:level . ": "
-    " determine the first highscore
-    let startPos = match(b:scoreFileContents, levelStr)
-    if (startPos != -1)
-        let endPos = match(b:scoreFileContents, ";", startPos)
-        let len = endPos - startPos + 1
-        let scoreStr1 = strcharpart(b:scoreFileContents, startPos, len)
-        let scoreMoves1 = <SID>ExtractNumberInStr(scoreStr1, "Moves = ", ",")
-        let scorePushes1 = <SID>ExtractNumberInStr(scoreStr1, "Pushes = ", ";")
-
-        " look for the second highscore
-        let startPos = match(b:scoreFileContents,levelStr, endPos + 1)
-        if (startPos != -1)
-            let endPos = match(b:scoreFileContents, ";", startPos)
-            let len = endPos - startPos + 1
-            let scoreStr2 = strcharpart(b:scoreFileContents, startPos, len)
-            let scoreMoves2 = <SID>ExtractNumberInStr(scoreStr2, "Moves = ", ",")
-            let scorePushes2 = <SID>ExtractNumberInStr(scoreStr2, "Pushes = ", ";")
-            if (scoreMoves1 < scoreMoves2)
-                " the first set of scores has the lowest moves
-                let b:highScoreByMoveMoves = scoreMoves1
-                let b:highScoreByMovePushes = scorePushes1
-                let b:highScoreByMoveStr = scoreStr1
-                let b:highScoreByPushMoves = scoreMoves2
-                let b:highScoreByPushPushes = scorePushes2
-                let b:highScoreByPushStr = scoreStr2
-            else
-                " the first set of scores has the lowest pushes
-                let b:highScoreByMoveMoves = scoreMoves2
-                let b:highScoreByMovePushes = scorePushes2
-                let b:highScoreByMoveStr = scoreStr2
-                let b:highScoreByPushMoves = scoreMoves1
-                let b:highScoreByPushPushes = scorePushes1
-                let b:highScoreByPushStr = scoreStr1
-            endif
-        else
-            let b:highScoreByMoveMoves = scoreMoves1
-            let b:highScoreByMovePushes = scorePushes1
-            let b:highScoreByMoveStr = scoreStr1
-            let b:highScoreByPushMoves = -1
-            let b:highScoreByPushPushes = -1
-            let b:highScoreByPushStr = ""
-        endif
-    endif
+    call writefile([string(b:scores)], g:SokobanScoreFile)
 endfunction
 
 function! <SID>UpdateHighScores()   "{{{1
@@ -686,61 +590,34 @@ function! <SID>UpdateHighScores()   "{{{1
     " Args     : none.
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    let updateMoveRecord = 0
-    let updatePushRecord = 0
-
-    let newScoreStr = "Level " . b:level . ": Moves = " . b:moves . ", Pushes = " . b:pushes . ";"
-
-    if (b:moves < b:highScoreByMoveMoves)
-        let updateMoveRecord = 1
+    if !has_key(b:scores,b:level)
+        let b:scores[b:level] = {}
+    endif
+    if !has_key(b:scores[b:level],'fewestMoves')
+        let b:scores[b:level]['fewestMoves'] = {'seq':'','moves':999999999,'pushes':999999999}
+    endif
+    if !has_key(b:scores[b:level],'fewestPushes')
+        let b:scores[b:level]['fewestPushes'] = {'seq':'','moves':999999999,'pushes':999999999}
+    endif
+    let sequence = substitute(join(reverse(copy(b:undoList)),''),'p','','g')
+    if (b:moves < b:scores[b:level]['fewestMoves']['moves']) ||
+     \ (b:moves == b:scores[b:level]['fewestMoves']['moves'] && b:pushes < b:scores[b:level]['fewestMoves']['pushes'])
+        let b:scores[b:level]['fewestMoves']['moves'] = b:moves
+        let b:scores[b:level]['fewestMoves']['pushes'] = b:pushes
+        let b:scores[b:level]['fewestMoves']['seq'] = sequence
     endif
 
-    if ((b:moves == b:highScoreByMoveMoves) && (b:pushes < b:highScoreByMovePushes))
-        let updateMoveRecord = 1
+    if (b:pushes < b:scores[b:level]['fewestPushes']['pushes']) ||
+     \ (b:pushes == b:scores[b:level]['fewestPushes']['pushes'] && b:moves < b:scores[b:level]['fewestPushes']['moves'])
+        let b:scores[b:level]['fewestPushes']['moves'] = b:moves
+        let b:scores[b:level]['fewestPushes']['pushes'] = b:pushes
+        let b:scores[b:level]['fewestPushes']['seq'] = sequence
     endif
 
-    if (b:pushes < b:highScoreByPushPushes)
-        let updatePushRecord = 1
+    if b:scores[b:level]['fewestMoves'] == b:scores[b:level]['fewestPushes']
+        call remove(b:scores[b:level], 'fewestPushes')
     endif
-
-    if ((b:pushes == b:highScoreByPushPushes) && (b:moves < b:highScoreByPushMoves))
-        let updatePushRecord = 1
-    endif
-
-    if (b:highScoreByMoveStr == "")
-        let updateMoveRecord = 1
-    endif
-
-    if (b:highScoreByPushStr == "" && b:highScoreByMoveStr != newScoreStr)
-        let updatePushRecord = 1
-    endif
-
-    if (updateMoveRecord && updatePushRecord)
-        "this record beats both high scores
-        if (b:highScoreByMoveStr != "")
-            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByMoveStr, newScoreStr, "")
-        else
-            let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
-        endif
-        if (b:highScoreByPushStr != "")
-            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByPushStr, "", "")
-        endif
-    elseif (updateMoveRecord)
-        if (b:highScoreByMoveStr != "")
-            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByMoveStr, newScoreStr, "")
-        else
-            let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
-        endif
-    elseif (updatePushRecord)
-        if (b:highScoreByPushStr != "")
-            let b:scoreFileContents = substitute(b:scoreFileContents, b:highScoreByPushStr, newScoreStr, "")
-        else
-            let b:scoreFileContents = b:scoreFileContents . "\n" . newScoreStr
-        endif
-    endif
-    if (updateMoveRecord || updatePushRecord)
-        silent! call <SID>SaveScoresToFile()
-    endif
+    call <SID>SaveScoresToFile()
 endfunction
 
 function! <SID>SaveCurrentLevelToFile(level)   "{{{1
@@ -750,20 +627,15 @@ function! <SID>SaveCurrentLevelToFile(level)   "{{{1
     " Args     : level - the level number to save to the file
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    let idx = match(b:scoreFileContents, "CurrentLevel")
-    if (idx != -1)
-        let b:scoreFileContents = substitute(b:scoreFileContents, "CurrentLevel = [0-9]*;", "CurrentLevel = " . a:level . ";", "")
-    else
-        let b:scoreFileContents = "CurrentLevel = " . a:level . ";\n" .  b:scoreFileContents
-    endif
-    silent! call <SID>SaveScoresToFile()
+    let b:scores['current'] = a:level
+    call <SID>SaveScoresToFile()
 endfunction
 
 function! <SID>FindOrCreateBuffer(filename, doSplit)   "{{{1
     " About...   {{{2
     " Function : FindOrCreateBuffer (PRIVATE)
-    "            found, checks the window list for the buffer. If the buffer is in
-    "            an already open window, it switches to the window. If the buffer
+    "            Checks the window list for the buffer. If the buffer is in an
+    "            already open window, it switches to the window. If the buffer
     "            was not in a window, it switches to that buffer. If the buffer did
     "            not exist, it creates it.
     " Args     : filename (IN) -- the name of the file
@@ -835,7 +707,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
     setlocal modifiable
     call <SID>ClearBuffer()
-    if (!exists("b:scoresFileLoaded"))
+    if (!exists("b:scores"))
         let savedLevel = <SID>LoadScoresFile()
         call <SID>ClearBuffer()
         " if there was a saved level and the level was not specified use it now
