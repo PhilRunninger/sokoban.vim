@@ -144,8 +144,8 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     call append(0, '                            VIM SOKOBAN')
     call append(1, '                        <<<<=<<=<=>=>>=>>>>')
     call append(2, 'Score                                                         Key')
-    call append(3, '==============     Low Scores (moves,pushes)                  ==================')
-    call append(4, printf('Level:  %6d     =========================                  %s soko      %s wall', a:level,g:charSoko,g:charWall))
+    call append(3, '==============   Best (moves,pushes)                          ==================')
+    call append(4, printf('Level:  %6d   ===================                          %s soko      %s wall', a:level,g:charSoko,g:charWall))
     call append(5, '')
     call append(6, '')
     call <SID>UpdateHeader()  " Fill in those two blank lines I just made.
@@ -163,8 +163,8 @@ function! <SID>UpdateHeader()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(6, printf("Moves:  %6d     %-43s%s package   %s home",b:moves,b:fewestMoves,g:charPackage,g:charHome))
-    call setline(7, printf("Pushes: %6d     %-43s", b:pushes,b:fewestPushes))
+    call setline(6, printf("Moves:  %6d   %19s                          %s package   %s home",b:moves,b:fewestMoves,g:charPackage,g:charHome))
+    call setline(7, printf("Pushes: %6d   %19s", b:pushes,b:fewestPushes))
 endfunction
 
 function! <SID>DisplayLevelCompleteMessage()   "{{{1
@@ -577,9 +577,9 @@ function! <SID>GetCurrentHighScores(level)   "{{{1
     let b:fewestPushes = ''
     if has_key(b:scores,a:level)
         let best = b:scores[a:level]
-        let b:fewestMoves = '(*'.best['fewestMoves']['moves'].'*, '.best['fewestMoves']['pushes'].')'
+        let b:fewestMoves = '*'.best['fewestMoves']['moves'].'*, '.best['fewestMoves']['pushes']
         if has_key(best,'fewestPushes')
-            let fewestPushes = '('.best['fewestPushes']['moves'].', *'.best['fewestPushes']['pushes'].'*)'
+            let fewestPushes = best['fewestPushes']['moves'].', *'.best['fewestPushes']['pushes'].'*'
         endif
     endif
 endfunction
