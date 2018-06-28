@@ -89,7 +89,7 @@ if exists("g:SokobanLevelDirectory")
         finish
     endif
 else
-    let g:SokobanLevelDirectory = expand("<sfile>:p:h") . "/../levels/"
+    let g:SokobanLevelDirectory = fnamemodify(expand("<sfile>:p:h") . "/../levels/","p:")
 endif
 
 " Allow the user to specify the location of the score file.
@@ -141,17 +141,19 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call append(0, '                        VIM SOKOBAN')
-    call append(1, 'Score                  =============         Key')
-    call append(2, '==============                               ==================')
-    call append(3, 'Level:  ' . printf("%6d",a:level) . '                               '.g:charSoko.' soko      '.g:charWall.' wall')
-    call append(4, 'Moves:       0                               '.g:charPackage.' package   '.g:charHome.' home')
-    call append(5, 'Pushes:      0')
-    call append(6, ' ')
-    call append(7, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call append(8, '================================================================================')
-    call append(9, ' ')
-    let s:endHeaderLine = 10
+    call append(0, '                            VIM SOKOBAN')
+    call append(1, '                        <<<<=<<=<=>=>>=>>>>')
+    call append(2, 'Score                                                         Key')
+    call append(3, '==============     Low Scores (moves,pushes)                  ==================')
+    call append(4, printf('Level:  %6d     =========================                  %s soko      %s wall', a:level,g:charSoko,g:charWall))
+    call append(5, '')
+    call append(6, '')
+    call <SID>UpdateHeader()  " Fill in those two blank lines I just made.
+    call append(7, ' ')
+    call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
+    call append(9, '================================================================================')
+    call append(10, ' ')
+    let s:endHeaderLine = 11
 endfunction
 
 function! <SID>UpdateHeader()   "{{{1
@@ -161,30 +163,8 @@ function! <SID>UpdateHeader()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(5, 'Moves:  ' . printf("%6d",b:moves) . '                               '.g:charPackage.' package   '.g:charHome.' home')
-    call setline(6, 'Pushes: ' . printf("%6d",b:pushes))
-endfunction
-
-function! <SID>DisplayHighScores()   "{{{1
-    " About...   {{{2
-    " Function : DisplayHighScores (PRIVATE)
-    " Purpose  : Displays the high scores for a level under the level when it is
-    "            loaded.
-    " Args     : none
-    " Author   : Michael Sharpe (feline@irendi.com) }}}
-    if has_key(b:scores,b:level)
-        let best = b:scores[b:level]
-        let fewestMoves = '('.best['fewestMoves']['moves'].', '.best['fewestMoves']['pushes'].')'
-        let fewestPushes = ''
-        if has_key(best,'fewestPushes')
-            let fewestPushes = '('.best['fewestPushes']['moves'].', '.best['fewestPushes']['pushes'].')'
-        endif
-
-        call append(line("$"), "")
-        call append(line("$"), '================================================================================')
-        call append(line("$"), "Best Scores:      fewest moves: ".fewestMoves."    fewest pushes: ".fewestPushes)
-        call append(line("$"), "  The sequence of moves is stored in the scores file.")
-    endif
+    call setline(6, printf("Moves:  %6d     %-43s%s package   %s home",b:moves,b:fewestMoves,g:charPackage,g:charHome))
+    call setline(7, printf("Pushes: %6d     %-43s", b:pushes,b:fewestPushes))
 endfunction
 
 function! <SID>DisplayLevelCompleteMessage()   "{{{1
@@ -194,14 +174,14 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(13, "                                                                                ")
-    call setline(14, "          .---------------------------------------------------------.           ")
-    call setline(15, "          |                       LEVEL COMPLETE                    |           ")
-    call setline(16, "          |              " . printf("%6d",b:moves) . " Moves  " . printf("%6d",b:pushes) . " Pushes                |           ")
-    call setline(17, "          |---------------------------------------------------------|           ")
-    call setline(18, "          | r - restart level   p - previous level   n - next level |           ")
-    call setline(19, "          `---------------------------------------------------------'           ")
-    call setline(20, "                                                                                ")
+    call setline(14, "          |                                                         |           ")
+    call setline(15, "        --+---------------------------------------------------------+--         ")
+    call setline(16, "          |                       LEVEL COMPLETE                    |           ")
+    call setline(17, printf("          |              %6d Moves  %6d Pushes                |           ", b:moves,b:pushes))
+    call setline(18, "          |---------------------------------------------------------|           ")
+    call setline(19, "          | r - restart level   p - previous level   n - next level |           ")
+    call setline(20, "        --+---------------------------------------------------------+--         ")
+    call setline(21, "          |                                                         |           ")
 endfunction
 
 function! <SID>ProcessLevel()   "{{{1
@@ -216,8 +196,6 @@ function! <SID>ProcessLevel()   "{{{1
     let b:homeList = []    " list of all home square locations
     let b:packageList = [] " list of all package locations
     let b:undoList = []    " list of current moves (used for the undo move feature)
-    let b:moves = 0        " counter of number of moves made
-    let b:pushes = 0       " counter of number of pushes made
 
     let eob = line('$')
     let l = s:endHeaderLine
@@ -258,7 +236,7 @@ function! <SID>LoadLevel(level)   "{{{1
     if filereadable(levelFile)
         setlocal modifiable
         execute "r " . levelFile
-        silent! execute "10,$ s/^/           /g"
+        silent! execute s:endHeaderLine.",$ s/^/           /g"
         call <SID>ProcessLevel()
         let b:level = a:level
 
@@ -268,6 +246,10 @@ function! <SID>LoadLevel(level)   "{{{1
         silent! execute s:endHeaderLine . ",$ s/\\V$/".g:charPackage."/g"
         silent! execute s:endHeaderLine . ",$ s/\\V./".g:charHome."/g"
         silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPackage."/g"
+
+        call append(line("$"), "")
+        call append(line("$"), '================================================================================')
+        call append(line("$"), "The sequence of moves is stored in the scores file.")
 
         if has("syntax")
             syn clear
@@ -280,7 +262,6 @@ function! <SID>LoadLevel(level)   "{{{1
             highlight link SokobanWall Comment
             highlight link SokobanHome Statement
         endif
-        call <SID>DisplayHighScores()
         call <SID>SaveCurrentLevelToFile(a:level)
         setlocal buftype=nofile
         setlocal nomodifiable
@@ -582,6 +563,27 @@ function! <SID>SaveScoresToFile()   "{{{1
     call writefile([string(b:scores)], g:SokobanScoreFile)
 endfunction
 
+function! <SID>GetCurrentHighScores(level)   "{{{1
+    " About...   {{{2
+    " Function : GetCurrentHighScores (PRIVATE)
+    " Purpose  : determines the high scores for a particular level. This is a
+    "            little tricky as there are two high scores possible for each
+    "            level. One for the pushes and one for the moves. This function
+    "            detemines both and maintains the information for both
+    " Args     : level - the level to determine the high scores
+    " Returns  : nothing, sets alot of buffer variables though
+    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+    let b:fewestMoves = ''
+    let b:fewestPushes = ''
+    if has_key(b:scores,a:level)
+        let best = b:scores[a:level]
+        let b:fewestMoves = '(*'.best['fewestMoves']['moves'].'*, '.best['fewestMoves']['pushes'].')'
+        if has_key(best,'fewestPushes')
+            let fewestPushes = '('.best['fewestPushes']['moves'].', *'.best['fewestPushes']['pushes'].'*)'
+        endif
+    endif
+endfunction
+
 function! <SID>UpdateHighScores()   "{{{1
     " About...   {{{2
     " Function : UpdateHighScores (PRIVATE
@@ -599,6 +601,7 @@ function! <SID>UpdateHighScores()   "{{{1
     if !has_key(b:scores[b:level],'fewestPushes')
         let b:scores[b:level]['fewestPushes'] = {'seq':'','moves':999999999,'pushes':999999999}
     endif
+
     let sequence = substitute(join(reverse(copy(b:undoList)),''),'p','','g')
     if (b:moves < b:scores[b:level]['fewestMoves']['moves']) ||
      \ (b:moves == b:scores[b:level]['fewestMoves']['moves'] && b:pushes < b:scores[b:level]['fewestMoves']['pushes'])
@@ -708,14 +711,14 @@ function! Sokoban(splitWindow, ...)   "{{{1
     call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
     setlocal modifiable
     call <SID>ClearBuffer()
-    if (!exists("b:scores"))
-        let savedLevel = <SID>LoadScoresFile()
-        call <SID>ClearBuffer()
-        " if there was a saved level and the level was not specified use it now
-        if (a:0 == 0 && savedLevel != 0)
-            let level = savedLevel
-        endif
+    let savedLevel = <SID>LoadScoresFile()
+    " if there was a saved level and the level was not specified use it now
+    if (a:0 == 0 && savedLevel != 0)
+        let level = savedLevel
     endif
+    let b:moves = 0        " counter of number of moves made
+    let b:pushes = 0       " counter of number of pushes made
+    call <SID>GetCurrentHighScores(level)
     call <SID>DisplayInitialHeader(level)
     call <SID>LoadLevel(level)
     setlocal nomodifiable
