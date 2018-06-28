@@ -484,13 +484,13 @@ function! <SID>UndoMove()   "{{{1
         call remove(b:undoList, 0)
 
         " determine which way the man has to move to undo the move
-        if prevMove =~ "^l"
+        if prevMove =~ "^h"
             let delta = [0,1]
-        elseif prevMove =~ "^r"
+        elseif prevMove =~ "^l"
             let delta = [0,-1]
-        elseif prevMove =~ "^u"
+        elseif prevMove =~ "^k"
             let delta = [1,0]
-        elseif prevMove =~ "^d"
+        elseif prevMove =~ "^j"
             let delta = [-1,0]
         else
             return
@@ -528,14 +528,14 @@ function! <SID>SetupMaps(enable)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     if a:enable
-        nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], "l")<CR>
-        nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "l")<CR>
-        nnoremap <silent> <buffer> j       :call <SID>MakeMove([1, 0], "d")<CR>
-        nnoremap <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "d")<CR>
-        nnoremap <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "u")<CR>
-        nnoremap <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "u")<CR>
-        nnoremap <silent> <buffer> l       :call <SID>MakeMove([0, 1], "r")<CR>
-        nnoremap <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "r")<CR>
+        nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], "h")<CR>
+        nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "h")<CR>
+        nnoremap <silent> <buffer> j       :call <SID>MakeMove([1, 0], "j")<CR>
+        nnoremap <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "j")<CR>
+        nnoremap <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "k")<CR>
+        nnoremap <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "k")<CR>
+        nnoremap <silent> <buffer> l       :call <SID>MakeMove([0, 1], "l")<CR>
+        nnoremap <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "l")<CR>
         nnoremap <silent> <buffer> u       :call <SID>UndoMove()<CR>
     else
         nnoremap <buffer> h       <Nop>
