@@ -614,7 +614,8 @@ function! <SID>UpdateHighScores()   "{{{1
         let b:scores[b:level]['fewestPushes']['seq'] = sequence
     endif
 
-    if b:scores[b:level]['fewestMoves'] == b:scores[b:level]['fewestPushes']
+    if b:scores[b:level]['fewestMoves']['moves'] == b:scores[b:level]['fewestPushes']['moves'] &&
+     \ b:scores[b:level]['fewestMoves']['pushes'] == b:scores[b:level]['fewestPushes']['pushes']
         call remove(b:scores[b:level], 'fewestPushes')
     endif
     call <SID>SaveScoresToFile()
