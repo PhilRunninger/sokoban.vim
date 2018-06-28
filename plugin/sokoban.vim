@@ -142,14 +142,14 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     call append(0, '                        VIM SOKOBAN')
-    call append(1, 'Score                   ═══════════          Key')
-    call append(2, '══════════════                               ══════════════════')
+    call append(1, 'Score                  =============         Key')
+    call append(2, '==============                               ==================')
     call append(3, 'Level:  ' . printf("%6d",a:level) . '                               '.g:charSoko.' soko      '.g:charWall.' wall')
     call append(4, 'Moves:       0                               '.g:charPackage.' package   '.g:charHome.' home')
     call append(5, 'Pushes:      0')
     call append(6, ' ')
     call append(7, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call append(8, '════════════════════════════════════════════════════════════════════════════════')
+    call append(8, '================================================================================')
     call append(9, ' ')
     let s:endHeaderLine = 10
 endfunction
@@ -181,7 +181,7 @@ function! <SID>DisplayHighScores()   "{{{1
         endif
 
         call append(line("$"), "")
-        call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
+        call append(line("$"), '================================================================================')
         call append(line("$"), "Best Scores:      fewest moves: ".fewestMoves."    fewest pushes: ".fewestPushes)
         call append(line("$"), "  The sequence of moves is stored in the scores file.")
     endif
@@ -194,14 +194,14 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(13, '                                                                                ')
-    call setline(14, '          ╭─────────────────────────────────────────────────────────╮           ')
-    call setline(15, '          │                       LEVEL COMPLETE                    │           ')
-    call setline(16, '          │              ' . printf('%6d',b:moves) . ' Moves  ' . printf('%6d',b:pushes) . ' Pushes                │           ')
-    call setline(17, '          ├─────────────────────────────────────────────────────────┤           ')
-    call setline(18, '          │ r - restart level   p - previous level   n - next level │           ')
-    call setline(19, '          ╰─────────────────────────────────────────────────────────╯           ')
-    call setline(20, '                                                                                ')
+    call setline(13, "                                                                                ")
+    call setline(14, "          .---------------------------------------------------------.           ")
+    call setline(15, "          |                       LEVEL COMPLETE                    |           ")
+    call setline(16, "          |              " . printf("%6d",b:moves) . " Moves  " . printf("%6d",b:pushes) . " Pushes                |           ")
+    call setline(17, "          |---------------------------------------------------------|           ")
+    call setline(18, "          | r - restart level   p - previous level   n - next level |           ")
+    call setline(19, "          `---------------------------------------------------------'           ")
+    call setline(20, "                                                                                ")
 endfunction
 
 function! <SID>ProcessLevel()   "{{{1
