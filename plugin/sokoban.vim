@@ -141,8 +141,8 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call append(0, '                            VIM SOKOBAN')
-    call append(1, '                        <<<<=<<=<=>=>>=>>>>')
+    call append(0, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VIM SOKOBAN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    call append(1, '')
     call append(2, 'Score                                                         Key')
     call append(3, '==============   Best (moves,pushes)                          ==================')
     call append(4, printf('Level:  %6d   =================================            %s soko      %s wall', a:level,g:charSoko,g:charWall))
@@ -174,14 +174,14 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(14, "          |                                                         |           ")
-    call setline(15, "        --+---------------------------------------------------------+--         ")
+    call setline(14, "                                                                                ")
+    call setline(15, "          .---------------------------------------------------------.           ")
     call setline(16, "          |                       LEVEL COMPLETE                    |           ")
     call setline(17, printf("          |              %6d Moves  %6d Pushes                |           ", b:moves,b:pushes))
     call setline(18, "          |---------------------------------------------------------|           ")
     call setline(19, "          | r - restart level   p - previous level   n - next level |           ")
-    call setline(20, "        --+---------------------------------------------------------+--         ")
-    call setline(21, "          |                                                         |           ")
+    call setline(20, "          '---------------------------------------------------------'           ")
+    call setline(21, "                                                                                ")
 endfunction
 
 function! <SID>ProcessLevel()   "{{{1
@@ -612,13 +612,13 @@ function! <SID>UpdateHighScores()   "{{{1
                    \ 'seq':substitute(join(reverse(copy(b:undoList)),''),'p','','g'),
                    \ 'date':strftime("%Y-%m-%d %T") }
 
-    if (b:moves < b:scores[b:level]['fewestMoves']['moves']) ||
-     \ (b:moves == b:scores[b:level]['fewestMoves']['moves'] && b:pushes < b:scores[b:level]['fewestMoves']['pushes'])
+    if (b:moves <= b:scores[b:level]['fewestMoves']['moves']) ||
+     \ (b:moves == b:scores[b:level]['fewestMoves']['moves'] && b:pushes <= b:scores[b:level]['fewestMoves']['pushes'])
         let b:scores[b:level]['fewestMoves'] = thisGame
     endif
 
-    if (b:pushes < b:scores[b:level]['fewestPushes']['pushes']) ||
-     \ (b:pushes == b:scores[b:level]['fewestPushes']['pushes'] && b:moves < b:scores[b:level]['fewestPushes']['moves'])
+    if (b:pushes <= b:scores[b:level]['fewestPushes']['pushes']) ||
+     \ (b:pushes == b:scores[b:level]['fewestPushes']['pushes'] && b:moves <= b:scores[b:level]['fewestPushes']['moves'])
         let b:scores[b:level]['fewestPushes'] = thisGame
     endif
 
