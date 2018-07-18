@@ -101,7 +101,7 @@ endif
 if exists("g:charSoko")
     let g:charSoko = strcharpart(g:charSoko,0,1)
 else
-    let g:charSoko = '☺'  " replaces @ in level file
+    let g:charSoko = '◆'  " replaces @ in level file
 endif
 if exists("g:charWall")
     let g:charWall = strcharpart(g:charWall,0,1)
@@ -111,12 +111,12 @@ endif
 if exists("g:charPackage")
     let g:charPackage = strcharpart(g:charPackage,0,1)
 else
-    let g:charPackage  = '✠'  " replaces $ in level file
+    let g:charPackage  = '☻'  " replaces $ and * in level file
 endif
 if exists("g:charHome")
     let g:charHome = strcharpart(g:charHome,0,1)
 else
-    let g:charHome = '○'  " replaces . and * in level file
+    let g:charHome = '○'  " replaces . in level file
 endif
 
 command! -nargs=? Sokoban call Sokoban("", <f-args>)
@@ -235,7 +235,7 @@ function! <SID>LoadLevel(level)   "{{{1
     let levelFile = g:SokobanLevelDirectory . "level" . a:level . ".sok"
     if filereadable(levelFile)
         setlocal modifiable
-        execute "r " . levelFile
+        silent! execute "r " . levelFile
         silent! execute s:endHeaderLine.",$ s/^/           /g"
         call <SID>ProcessLevel()
         let b:level = a:level
