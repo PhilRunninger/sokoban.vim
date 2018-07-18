@@ -143,12 +143,12 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     call append(0, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VIM SOKOBAN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     call append(1, '')
-    call append(2, 'Score                                                         Key')
-    call append(3, '==============   Best (moves,pushes)                          ==================')
-    call append(4, printf('Level:  %6d   =================================            %s soko      %s wall', a:level,g:charSoko,g:charWall))
+    call append(2, 'Score            Fewest Moves         Fewest Pushes           Key')
+    call append(3, '==============   ========================================     ==================')
+    call append(4, '')
     call append(5, '')
     call append(6, '')
-    call <SID>UpdateHeader()  " Fill in those two blank lines I just made.
+    call <SID>UpdateHeader(a:level)  " Fill in those two blank lines I just made.
     call append(7, ' ')
     call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
     call append(9, '================================================================================')
@@ -156,15 +156,16 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     let s:endHeaderLine = 11
 endfunction
 
-function! <SID>UpdateHeader()   "{{{1
+function! <SID>UpdateHeader(level)   "{{{1
     " About...   {{{2
     " Function : UpdateHeader (PRIVATE
     " Purpose  : updates the moves and the pushes scores in the header
-    " Args     : none
+    " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(6, printf("Moves:  %6d   %-40s     %s package   %s home",b:moves,b:fewestMoves,g:charPackage,g:charHome))
-    call setline(7, printf("Pushes: %6d   %-40s", b:pushes,b:fewestPushes))
+    call setline(5, printf('Level:  %6d   %19s  %19s     %s soko      %s wall', a:level,b:fewestMovesDate,b:fewestPushesDate,g:charSoko,g:charWall))
+    call setline(6, printf("Moves:  %6d   %10s           %10s              %s package   %s home",b:moves,b:fewestMovesMoves,b:fewestPushesMoves,g:charPackage,g:charHome))
+    call setline(7, printf("Pushes: %6d   %10s           %10s", b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
 endfunction
 
 function! <SID>DisplayLevelCompleteMessage()   "{{{1
@@ -429,7 +430,7 @@ function! <SID>MakeMove(delta, moveDirection)   "{{{1
                 let b:moves = b:moves + 1
                 let b:pushes = b:pushes + 1
                 let b:manPos = newManPos
-                call <SID>UpdateHeader()
+                call <SID>UpdateHeader(b:level)
                 " check to see if the level is complete. Only need to do this after
                 " each package push as each level must end with a package push
                 if <SID>AreAllPackagesHome()
@@ -447,7 +448,7 @@ function! <SID>MakeMove(delta, moveDirection)   "{{{1
             call insert(b:undoList, a:moveDirection)
             let b:moves = b:moves + 1
             let b:manPos = newManPos
-            call <SID>UpdateHeader()
+            call <SID>UpdateHeader(b:level)
             setlocal nomodifiable
         endif
     endif
@@ -496,7 +497,7 @@ function! <SID>UndoMove()   "{{{1
         call <SID>MoveMan(currPkgPos, newManPos, oldPkgPos)
         let b:manPos = newManPos
         let b:moves = b:moves - 1
-        call <SID>UpdateHeader()
+        call <SID>UpdateHeader(b:level)
         setlocal nomodifiable
     endif
 endfunction
@@ -573,18 +574,24 @@ function! <SID>GetCurrentHighScores(level)   "{{{1
     " Args     : level - the level to determine the high scores
     " Returns  : nothing, sets alot of buffer variables though
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    let b:fewestMoves = ''
-    let b:fewestPushes = ''
+    let b:fewestMovesDate = ''
+    let b:fewestMovesMoves = ''
+    let b:fewestMovesPushes = ''
+    let b:fewestPushesDate = ''
+    let b:fewestPushesMoves = ''
+    let b:fewestPushesPushes = ''
     if has_key(b:scores,a:level)
         let best = b:scores[a:level]
-        let b:fewestMoves = '*'.best['fewestMoves']['moves'].', '.best['fewestMoves']['pushes'].' '
+        let b:fewestMovesMoves = best['fewestMoves']['moves']
+        let b:fewestMovesPushes = best['fewestMoves']['pushes']
         if has_key(best['fewestMoves'],'date')
-            let b:fewestMoves = b:fewestMoves.'  '.best['fewestMoves']['date']
+            let b:fewestMovesDate = best['fewestMoves']['date']
         endif
         if has_key(best,'fewestPushes')
-            let b:fewestPushes = ' '.best['fewestPushes']['moves'].', '.best['fewestPushes']['pushes'].'*'
+        let b:fewestPushesMoves = best['fewestPushes']['moves']
+        let b:fewestPushesPushes = best['fewestPushes']['pushes']
             if has_key(best['fewestPushes'],'date')
-                let b:fewestPushes = b:fewestPushes.'  '.best['fewestPushes']['date']
+                let b:fewestPushesDate = best['fewestPushes']['date']
             endif
         endif
     endif
