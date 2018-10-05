@@ -141,10 +141,10 @@ function! s:DisplayInitialHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call append(0, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VIM SOKOBAN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    call append(0, 'VIM SOKOBAN, v1.4 -~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~')
     call append(1, '')
-    call append(2, 'Score            Fewest Moves         Fewest Pushes           Key')
-    call append(3, '==============   ========================================     ==================')
+    call append(2, 'Score           Fewest Moves         Fewest Pushes            Key')
+    call append(3, '--------------  -------------------  -------------------      ------------------')
     call append(4, '')
     call append(5, '')
     call append(6, '')
@@ -163,9 +163,9 @@ function! s:UpdateHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(5, printf('Level:  %6d   %19s  %19s     %s soko      %s wall', a:level,b:fewestMovesDate,b:fewestPushesDate,g:charSoko,g:charWall))
-    call setline(6, printf("Moves:  %6d   %10s           %10s              %s package   %s home",b:moves,b:fewestMovesMoves,b:fewestPushesMoves,g:charPackage,g:charHome))
-    call setline(7, printf("Pushes: %6d   %10s           %10s", b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
+    call setline(5, printf('Level:  %6d  %19s  %19s      %s soko      %s wall', a:level,b:fewestMovesDate,b:fewestPushesDate,g:charSoko,g:charWall))
+    call setline(6, printf("Moves:  %6d  %10s           %10s               %s package   %s home",b:moves,b:fewestMovesMoves,b:fewestPushesMoves,g:charPackage,g:charHome))
+    call setline(7, printf("Pushes: %6d  %10s           %10s", b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
 endfunction
 
 function! s:DisplayLevelCompleteMessage()   "{{{1
