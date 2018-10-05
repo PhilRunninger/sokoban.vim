@@ -123,7 +123,7 @@ command! -nargs=? Sokoban call Sokoban("", <f-args>)
 command! -nargs=? SokobanH call Sokoban("h", <f-args>)
 command! -nargs=? SokobanV call Sokoban("v", <f-args>)
 
-function! <SID>ClearBuffer()   "{{{1
+function! s:ClearBuffer()   "{{{1
     " About...   {{{2
     " Function : ClearBuffer (PRIVATE
     " Purpose  : clears the buffer of all characters
@@ -134,7 +134,7 @@ function! <SID>ClearBuffer()   "{{{1
     normal dG
 endfunction
 
-function! <SID>DisplayInitialHeader(level)   "{{{1
+function! s:DisplayInitialHeader(level)   "{{{1
     " About...   {{{2
     " Function : DisplayInitialHeader (PRIVATE)
     " Purpose  : Displays the header of the sokoban screen
@@ -148,7 +148,7 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     call append(4, '')
     call append(5, '')
     call append(6, '')
-    call <SID>UpdateHeader(a:level)  " Fill in those two blank lines I just made.
+    call s:UpdateHeader(a:level)  " Fill in those two blank lines I just made.
     call append(7, ' ')
     call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
     call append(9, '================================================================================')
@@ -156,7 +156,7 @@ function! <SID>DisplayInitialHeader(level)   "{{{1
     let s:endHeaderLine = 11
 endfunction
 
-function! <SID>UpdateHeader(level)   "{{{1
+function! s:UpdateHeader(level)   "{{{1
     " About...   {{{2
     " Function : UpdateHeader (PRIVATE
     " Purpose  : updates the moves and the pushes scores in the header
@@ -168,7 +168,7 @@ function! <SID>UpdateHeader(level)   "{{{1
     call setline(7, printf("Pushes: %6d   %10s           %10s", b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
 endfunction
 
-function! <SID>DisplayLevelCompleteMessage()   "{{{1
+function! s:DisplayLevelCompleteMessage()   "{{{1
     " About...   {{{2
     " Function : DisplayLevelCompleteMessage (PRIVATE
     " Purpose  : Display the message indicating that the level has been completed
@@ -185,7 +185,7 @@ function! <SID>DisplayLevelCompleteMessage()   "{{{1
     call setline(21, "                                                                                ")
 endfunction
 
-function! <SID>ProcessLevel()   "{{{1
+function! s:ProcessLevel()   "{{{1
     " About...   {{{2
     " Function : ProcessLevel (PRIVATE
     " Purpose  : processes a level which has been loaded and populates the object
@@ -225,7 +225,7 @@ function! <SID>ProcessLevel()   "{{{1
     endwhile
 endfunction
 
-function! <SID>LoadLevel(level)   "{{{1
+function! s:LoadLevel(level)   "{{{1
     " About...   {{{2
     " Function : LoadLevel (PRIVATE)
     " Purpose  : loads the level and sets up the syntax highlighting for the file
@@ -238,7 +238,7 @@ function! <SID>LoadLevel(level)   "{{{1
         setlocal modifiable
         silent! execute "r " . levelFile
         silent! execute s:endHeaderLine.",$ s/^/           /g"
-        call <SID>ProcessLevel()
+        call s:ProcessLevel()
         let b:level = a:level
 
         " Replace placeholder text (level file) with appropriate characters.
@@ -263,7 +263,7 @@ function! <SID>LoadLevel(level)   "{{{1
             highlight link SokobanWall Comment
             highlight link SokobanHome Statement
         endif
-        call <SID>SaveCurrentLevelToFile(a:level)
+        call s:SaveCurrentLevelToFile(a:level)
         setlocal buftype=nofile
         setlocal nomodifiable
         setlocal nolist nonumber
@@ -273,7 +273,7 @@ function! <SID>LoadLevel(level)   "{{{1
     endif
 endfunction
 
-function! <SID>SetCharInLine(cell, char)   "{{{1
+function! s:SetCharInLine(cell, char)   "{{{1
     " About...   {{{2
     " Function : SetCharInLine (PRIVATE)
     " Purpose  : Puts a specified character at a specific position in the specified
@@ -290,7 +290,7 @@ function! <SID>SetCharInLine(cell, char)   "{{{1
     call setline(theLine, ln)
 endfunction
 
-function! <SID>IsWall(cell)   "{{{1
+function! s:IsWall(cell)   "{{{1
     " About...   {{{2
     " Function : IsWall (PRIVATE)
     " Purpose  : determines whether the specified cell corresponds to a wall
@@ -300,7 +300,7 @@ function! <SID>IsWall(cell)   "{{{1
     return index(b:wallList, a:cell) >= 0
 endfunction
 
-function! <SID>IsHome(cell)   "{{{1
+function! s:IsHome(cell)   "{{{1
     " About...   {{{2
     " Function : IsHome (PRIVATE)
     " Purpose  : determines whether the specified (line, column) pair corresponds
@@ -311,7 +311,7 @@ function! <SID>IsHome(cell)   "{{{1
     return index(b:homeList, a:cell) >= 0
 endfunction
 
-function! <SID>IsPackage(cell)   "{{{1
+function! s:IsPackage(cell)   "{{{1
     " About...   {{{2
     " Function : IsPackage (PRIVATE)
     " Purpose  : determines whether the specified cell corresponds to a package
@@ -321,17 +321,17 @@ function! <SID>IsPackage(cell)   "{{{1
     return index(b:packageList, a:cell) >= 0
 endfunction
 
-function! <SID>IsEmpty(cell)   "{{{1
+function! s:IsEmpty(cell)   "{{{1
     " About...   {{{2
     " Function : IsEmpty (PRIVATE)
     " Purpose  : determines whether the specified cell corresponds to empty space in the maze
     " Args     : cell - the location to check
     " Returns  : 1 if the cell is an empty space, 0 otherwise
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    return !<SID>IsWall(a:cell) && !<SID>IsPackage(a:cell)
+    return !s:IsWall(a:cell) && !s:IsPackage(a:cell)
 endfunction
 
-function! <SID>MoveMan(from, to, package)   "{{{1
+function! s:MoveMan(from, to, package)   "{{{1
     " About...   {{{2
     " Function : MoveMan (PRIVATE)
     " Purpose  : moves the man and possibly a package in the buffer. The package is
@@ -343,18 +343,18 @@ function! <SID>MoveMan(from, to, package)   "{{{1
     "            package - the cell where a package is moving to
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    if <SID>IsHome(a:from)
-        call <SID>SetCharInLine(a:from, g:charHome)
+    if s:IsHome(a:from)
+        call s:SetCharInLine(a:from, g:charHome)
     else
-        call <SID>SetCharInLine(a:from, ' ')
+        call s:SetCharInLine(a:from, ' ')
     endif
-    call <SID>SetCharInLine(a:to, g:charSoko)
+    call s:SetCharInLine(a:to, g:charSoko)
     if !empty(a:package)
-        call <SID>SetCharInLine(a:package, g:charPackage)
+        call s:SetCharInLine(a:package, g:charPackage)
     endif
 endfunction
 
-function! <SID>UpdatePackageList(old, new)   "{{{1
+function! s:UpdatePackageList(old, new)   "{{{1
     " About...   {{{2
     " Function : UpdatePackageList (PRIVATE)
     " Purpose  : updates the package list when a package is moved
@@ -366,7 +366,7 @@ function! <SID>UpdatePackageList(old, new)   "{{{1
     call add(b:packageList, a:new)
 endfunction
 
-function! <SID>AreAllPackagesHome()   "{{{1
+function! s:AreAllPackagesHome()   "{{{1
     " About...   {{{2
     " Function : AreAllPackagesHome (PRIVATE
     " Purpose  : Determines if all packages have been placed in the home area
@@ -374,14 +374,14 @@ function! <SID>AreAllPackagesHome()   "{{{1
     " Returns  : 1 if all packages are home (i.e. level complete), 0 otherwise
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     for pkg in b:packageList
-        if !<SID>IsHome(pkg)
+        if !s:IsHome(pkg)
             return 0
         endif
     endfor
     return 1
 endfunction
 
-function! <SID>AddVectors(x, y)   "{{{1
+function! s:AddVectors(x, y)   "{{{1
     " About...   {{{2
     " Function : AddVectors (PRIVATE)
     " Purpose  : Adds two vectors (lists) together.
@@ -392,7 +392,7 @@ function! <SID>AddVectors(x, y)   "{{{1
     return [a:x[0]+a:y[0], a:x[1]+a:y[1]]
 endfunction
 
-function! <SID>SubtractVectors(x, y)   "{{{1
+function! s:SubtractVectors(x, y)   "{{{1
     " About...   {{{2
     " Function : SubtractVectors (PRIVATE)
     " Purpose  : Subtracts two vectors (lists) together.
@@ -403,7 +403,7 @@ function! <SID>SubtractVectors(x, y)   "{{{1
     return [a:x[0]-a:y[0], a:x[1]-a:y[1]]
 endfunction
 
-function! <SID>MakeMove(delta, moveDirection)   "{{{1
+function! s:MakeMove(delta, moveDirection)   "{{{1
     " About...   {{{2
     " Function : MakeMove (PRIVATE)
     " Purpose  : This is the core function which is called when a move is made. It
@@ -415,46 +415,46 @@ function! <SID>MakeMove(delta, moveDirection)   "{{{1
     "                            represents the move
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    let newManPos = <SID>AddVectors(b:manPos, a:delta)
-    if !<SID>IsWall(newManPos)
+    let newManPos = s:AddVectors(b:manPos, a:delta)
+    if !s:IsWall(newManPos)
         " if the location we want to move to is not a wall continue processing
-        if <SID>IsPackage(newManPos)
+        if s:IsPackage(newManPos)
             " if the new position is a package check to see if the package moves
-            let newPkgPos = <SID>AddVectors(newManPos, a:delta)
-            if <SID>IsEmpty(newPkgPos)
+            let newPkgPos = s:AddVectors(newManPos, a:delta)
+            if s:IsEmpty(newPkgPos)
                 setlocal modifiable
                 " the move is possible and we pushed a package
-                call <SID>MoveMan(b:manPos, newManPos, newPkgPos)
-                call <SID>UpdatePackageList(newManPos, newPkgPos)
+                call s:MoveMan(b:manPos, newManPos, newPkgPos)
+                call s:UpdatePackageList(newManPos, newPkgPos)
                 call insert(b:undoList, a:moveDirection . "p")
                 let b:moves = b:moves + 1
                 let b:pushes = b:pushes + 1
                 let b:manPos = newManPos
-                call <SID>UpdateHeader(b:level)
+                call s:UpdateHeader(b:level)
                 " check to see if the level is complete. Only need to do this after
                 " each package push as each level must end with a package push
-                if <SID>AreAllPackagesHome()
-                    call <SID>SetupMaps(0)
-                    call <SID>DisplayLevelCompleteMessage()
-                    call <SID>UpdateHighScores()
-                    call <SID>SaveCurrentLevelToFile(b:level + 1)
+                if s:AreAllPackagesHome()
+                    call s:SetupMaps(0)
+                    call s:DisplayLevelCompleteMessage()
+                    call s:UpdateHighScores()
+                    call s:SaveCurrentLevelToFile(b:level + 1)
                 endif
                 setlocal nomodifiable
             endif
         else
             setlocal modifiable
             " the move is possible and no packages moved
-            call <SID>MoveMan(b:manPos, newManPos, [])
+            call s:MoveMan(b:manPos, newManPos, [])
             call insert(b:undoList, a:moveDirection)
             let b:moves = b:moves + 1
             let b:manPos = newManPos
-            call <SID>UpdateHeader(b:level)
+            call s:UpdateHeader(b:level)
             setlocal nomodifiable
         endif
     endif
 endfunction
 
-function! <SID>UndoMove()   "{{{1
+function! s:UndoMove()   "{{{1
     " About...   {{{2
     " Function : UndoMove (PRIVATE
     " Purpose  : Called when the u key is hit to handle the undo move operation
@@ -479,30 +479,30 @@ function! <SID>UndoMove()   "{{{1
         endif
 
         " old position of the man
-        let newManPos = <SID>AddVectors(b:manPos, delta)
+        let newManPos = s:AddVectors(b:manPos, delta)
 
         " determine if the move had moved a package so that can be undone too.
         if prevMove =~ "p$"
             " if we pushed a package, the man's position is where the package was
             let oldPkgPos = b:manPos
-            let currPkgPos = <SID>SubtractVectors(b:manPos, delta)
+            let currPkgPos = s:SubtractVectors(b:manPos, delta)
             let b:pushes = b:pushes - 1
-            call <SID>UpdatePackageList(currPkgPos, oldPkgPos)
+            call s:UpdatePackageList(currPkgPos, oldPkgPos)
         else
             let oldPkgPos = []
             let currPkgPos = b:manPos
         endif
         setlocal modifiable
         " this is abusing this function a little :)
-        call <SID>MoveMan(currPkgPos, newManPos, oldPkgPos)
+        call s:MoveMan(currPkgPos, newManPos, oldPkgPos)
         let b:manPos = newManPos
         let b:moves = b:moves - 1
-        call <SID>UpdateHeader(b:level)
+        call s:UpdateHeader(b:level)
         setlocal nomodifiable
     endif
 endfunction
 
-function! <SID>SetupMaps(enable)   "{{{1
+function! s:SetupMaps(enable)   "{{{1
     " About...   {{{2
     " Function : SetupMaps (PRIVATE
     " Purpose  : Sets up the various maps to control the movement of the game
@@ -535,7 +535,7 @@ function! <SID>SetupMaps(enable)   "{{{1
     nnoremap <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
 endfunction
 
-function! <SID>LoadScoresFile()   "{{{1
+function! s:LoadScoresFile()   "{{{1
     " About...   {{{2
     " Function : LoadScoresFile (PRIVATE
     " Purpose  : loads the highscores file if it exists. Determines the last
@@ -553,7 +553,7 @@ function! <SID>LoadScoresFile()   "{{{1
     endif
 endfunction
 
-function! <SID>SaveScoresToFile()   "{{{1
+function! s:SaveScoresToFile()   "{{{1
     " About...   {{{2
     " Function : SaveScoresToFile (PRIVATE
     " Purpose  : saves the current scores to the highscores file.
@@ -564,7 +564,7 @@ function! <SID>SaveScoresToFile()   "{{{1
     call writefile([string(b:scores)], g:SokobanScoreFile)
 endfunction
 
-function! <SID>GetCurrentHighScores(level)   "{{{1
+function! s:GetCurrentHighScores(level)   "{{{1
     " About...   {{{2
     " Function : GetCurrentHighScores (PRIVATE)
     " Purpose  : determines the high scores for a particular level. This is a
@@ -597,7 +597,7 @@ function! <SID>GetCurrentHighScores(level)   "{{{1
     endif
 endfunction
 
-function! <SID>UpdateHighScores()   "{{{1
+function! s:UpdateHighScores()   "{{{1
     " About...   {{{2
     " Function : UpdateHighScores (PRIVATE
     " Purpose  : Determines if a highscore has been beaten, and if so saves it to
@@ -633,10 +633,10 @@ function! <SID>UpdateHighScores()   "{{{1
      \ b:scores[b:level]['fewestMoves']['pushes'] == b:scores[b:level]['fewestPushes']['pushes']
         call remove(b:scores[b:level], 'fewestPushes')
     endif
-    call <SID>SaveScoresToFile()
+    call s:SaveScoresToFile()
 endfunction
 
-function! <SID>SaveCurrentLevelToFile(level)   "{{{1
+function! s:SaveCurrentLevelToFile(level)   "{{{1
     " About...   {{{2
     " Function : SaveCurrentLevelToFile (PRIVATE)
     " Purpose  : saves the current level to the high scores file.
@@ -644,10 +644,10 @@ function! <SID>SaveCurrentLevelToFile(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     let b:scores['current'] = a:level
-    call <SID>SaveScoresToFile()
+    call s:SaveScoresToFile()
 endfunction
 
-function! <SID>FindOrCreateBuffer(filename, doSplit)   "{{{1
+function! s:FindOrCreateBuffer(filename, doSplit)   "{{{1
     " About...   {{{2
     " Function : FindOrCreateBuffer (PRIVATE)
     "            Checks the window list for the buffer. If the buffer is in an
@@ -720,21 +720,21 @@ function! Sokoban(splitWindow, ...)   "{{{1
     else
         let level = a:1 <= 0 ? 1 : a:1
     endif
-    call <SID>FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
+    call s:FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
     setlocal modifiable
-    call <SID>ClearBuffer()
-    let savedLevel = <SID>LoadScoresFile()
+    call s:ClearBuffer()
+    let savedLevel = s:LoadScoresFile()
     " if there was a saved level and the level was not specified use it now
     if (a:0 == 0 && savedLevel != 0)
         let level = savedLevel
     endif
     let b:moves = 0        " counter of number of moves made
     let b:pushes = 0       " counter of number of pushes made
-    call <SID>GetCurrentHighScores(level)
-    call <SID>DisplayInitialHeader(level)
-    call <SID>LoadLevel(level)
+    call s:GetCurrentHighScores(level)
+    call s:DisplayInitialHeader(level)
+    call s:LoadLevel(level)
     setlocal nomodifiable
-    call <SID>SetupMaps(1)
+    call s:SetupMaps(1)
     " do something with the cursor....
     normal 1G
     normal 0
