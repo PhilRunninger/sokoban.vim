@@ -77,21 +77,16 @@
 
 " Initial setup   {{{1
 " Allow the user to specify the location of the sokoban levels
-if exists("g:SokobanLevelDirectory")
-    if !isdirectory("g:SokobanLevelDirectory")
-        echoerr "g:SokobanLevelDirectory contains an invalid path."
-        finish
-    endif
-else
-    let g:SokobanLevelDirectory = fnamemodify(expand("<sfile>:p:h") . "/../levels/","p:")
+let g:SokobanLevelDirectory = get(g:,'SokobanLevelDirectory',resolve(fnamemodify(expand("<sfile>:p:h") . "/../levels/","p:")))
+if !isdirectory(g:SokobanLevelDirectory)
+    echoerr "g:SokobanLevelDirectory (".g:SokobanLevelDirectory.") contains an invalid path."
+    finish
 endif
 
 " Allow the user to specify the location of the score file.
-if !exists("g:SokobanScoreFile")
-    let g:SokobanScoreFile = expand("<sfile>:p:h") . "/../.VimSokobanScores"
-endif
+let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand("<sfile>:p:h") . "/../.VimSokobanScores"))
 
-" Characters used to draw the level on the screen.
+" Characters used to draw the maze and objects on the screen.
 let g:charSoko    = get(g:,'charSoko',   '◆') " replaces @ in level file
 let g:charWall    = get(g:,'charWall',   '▓') " replaces # in level file
 let g:charPackage = get(g:,'charPackage','☻') " replaces $ and * in level file
@@ -211,7 +206,7 @@ function! s:LoadLevel(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     normal dG
-    let levelFile = g:SokobanLevelDirectory . "level" . a:level . ".sok"
+    let levelFile = g:SokobanLevelDirectory . "/level" . a:level . ".sok"
     if filereadable(levelFile)
         setlocal modifiable
         silent! execute "r " . levelFile
