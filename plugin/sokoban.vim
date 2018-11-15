@@ -114,18 +114,13 @@ function! s:DisplayInitialHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call append(0, 'VIM SOKOBAN, v1.4 -~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~')
-    call append(1, '')
-    call append(2, 'Score           Fewest Moves         Fewest Pushes            Key')
-    call append(3, '--------------  -------------------  -------------------      ------------------')
-    call append(4, '')
-    call append(5, '')
-    call append(6, '')
-    call s:UpdateHeader(a:level)  " Fill in those two blank lines I just made.
-    call append(7, ' ')
-    call append(8, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call append(9, '================================================================================')
-    call append(10, ' ')
+    call append(0, repeat([''],10))
+    call setline(1, 'VIM SOKOBAN, v1.4')
+    call setline(3, 'Score           Fewest Moves         Fewest Pushes            Key')
+    call setline(4, '──────────────  ───────────────────  ───────────────────      ──────────────────')
+    call s:UpdateHeader(a:level)
+    call setline(9, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
+    call setline(10,'════════════════════════════════════════════════════════════════════════════════')
     let s:endHeaderLine = 11
 endfunction
 
@@ -149,12 +144,12 @@ function! s:DisplayLevelCompleteMessage()   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     call setline(14, "                                                                                ")
-    call setline(15, "          .---------------------------------------------------------.           ")
-    call setline(16, "          |                       LEVEL COMPLETE                    |           ")
-    call setline(17, printf("          |              %6d Moves  %6d Pushes                |           ", b:moves,b:pushes))
-    call setline(18, "          |---------------------------------------------------------|           ")
-    call setline(19, "          | r - restart level   p - previous level   n - next level |           ")
-    call setline(20, "          '---------------------------------------------------------'           ")
+    call setline(15, "          ╭─────────────────────────────────────────────────────────╮           ")
+    call setline(16, "          │                       LEVEL COMPLETE                    │           ")
+    call setline(17, printf("          │              %6d Moves  %6d Pushes                │           ", b:moves,b:pushes))
+    call setline(18, "          ├─────────────────────────────────────────────────────────┤           ")
+    call setline(19, "          │ r - restart level   p - previous level   n - next level │           ")
+    call setline(20, "          ╰─────────────────────────────────────────────────────────╯           ")
     call setline(21, "                                                                                ")
 endfunction
 
@@ -222,7 +217,7 @@ function! s:LoadLevel(level)   "{{{1
         silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPackage."/g"
 
         call append(line("$"), "")
-        call append(line("$"), '================================================================================')
+        call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
         call append(line("$"), "The sequence of moves is stored in the scores file.")
 
         if has("syntax")
