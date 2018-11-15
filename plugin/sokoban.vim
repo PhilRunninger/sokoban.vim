@@ -98,26 +98,10 @@ if !exists("g:SokobanScoreFile")
 endif
 
 " Characters used to draw the level on the screen.
-if exists("g:charSoko")
-    let g:charSoko = strcharpart(g:charSoko,0,1)
-else
-    let g:charSoko = '◆'  " replaces @ in level file
-endif
-if exists("g:charWall")
-    let g:charWall = strcharpart(g:charWall,0,1)
-else
-    let g:charWall = '▓'  " replaces # in level file
-endif
-if exists("g:charPackage")
-    let g:charPackage = strcharpart(g:charPackage,0,1)
-else
-    let g:charPackage  = '☻'  " replaces $ and * in level file
-endif
-if exists("g:charHome")
-    let g:charHome = strcharpart(g:charHome,0,1)
-else
-    let g:charHome = '○'  " replaces . in level file
-endif
+let g:charSoko    = get(g:,'charSoko',   '◆') " replaces @ in level file
+let g:charWall    = get(g:,'charWall',   '▓') " replaces # in level file
+let g:charPackage = get(g:,'charPackage','☻') " replaces $ and * in level file
+let g:charHome    = get(g:,'charHome',   '○') " replaces . in level file
 
 command! -nargs=? Sokoban call Sokoban("", <f-args>)
 command! -nargs=? SokobanH call Sokoban("h", <f-args>)
