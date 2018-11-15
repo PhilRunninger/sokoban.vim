@@ -76,12 +76,6 @@
 " }}}
 
 " Initial setup   {{{1
-" Do nothing if the script has already been loaded
-if (exists("g:VimSokoban_version"))
-    finish
-endif
-let g:VimSokoban_version = "1.4"
-
 " Allow the user to specify the location of the sokoban levels
 if exists("g:SokobanLevelDirectory")
     if !isdirectory("g:SokobanLevelDirectory")
