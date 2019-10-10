@@ -218,7 +218,9 @@ function! s:LoadLevel(level)   "{{{1
 
         call append(line("$"), "")
         call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
-        call append(line("$"), "The sequence of moves is stored in the scores file.")
+        call append(line("$"), "Your best scores are stored in this file:")
+        call append(line("$"), "   ".g:SokobanScoreFile)
+        call append(line("$"), "Submit them to http://www.cs.cornell.edu/andru/xsokoban/manual-solve.html")
 
         if has("syntax")
             syn clear
@@ -584,7 +586,7 @@ function! s:UpdateHighScores()   "{{{1
     endif
 
     let thisGame = { 'moves':b:moves, 'pushes':b:pushes,
-                   \ 'seq':substitute(join(reverse(copy(b:undoList)),''),'p','','g'),
+                   \ 'seq':s:CompressMoves(),
                    \ 'date':strftime("%Y-%m-%d %T") }
 
     if (b:moves <= b:scores[b:level]['fewestMoves']['moves']) ||
@@ -602,6 +604,26 @@ function! s:UpdateHighScores()   "{{{1
         call remove(b:scores[b:level], 'fewestPushes')
     endif
     call s:SaveScoresToFile()
+endfunction
+
+function! s:CompressMoves()   " {{{1
+    " About...   {{{2
+    " Function : s:CompressMoves() (PRIVATE
+    " Purpose  : Compress the sequence of moves such that repeated keystrokes
+    "            are replaced by a count followed by the key that was pressed,
+    "            where count is between 2 and 9.
+    " Args     : none.
+    " Returns  : a compressed string of the sequence of moves in b:undoList
+    " Author   : Phil Runninger   }}}
+    let l:moves = substitute(join(reverse(copy(b:undoList)),''),'p','','g')
+    for l:move in ['h','j','k','l']
+        for l:count in range(9,2,-1)
+            while match(l:moves, repeat(l:move, l:count)) > -1
+                let l:moves = substitute(l:moves, repeat(l:move, l:count), l:count.l:move.' ', 'g')
+            endwhile
+        endfor
+    endfor
+    return substitute(l:moves, ' ', '', 'g')
 endfunction
 
 function! s:SaveCurrentLevelToFile(level)   "{{{1
