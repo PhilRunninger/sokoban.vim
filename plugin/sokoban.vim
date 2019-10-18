@@ -120,7 +120,7 @@ function! s:DisplayInitialHeader(level)   "{{{1
     call setline(4, '──────────────  ───────────────────  ───────────────────      ──────────────────')
     call s:UpdateHeader(a:level)
     call setline(9, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call setline(10,'════════════════════════════════════════════════════════════════════════════════')
+    call setline(10,repeat('═', 80))
     let s:endHeaderLine = 11
 endfunction
 
@@ -136,6 +136,18 @@ function! s:UpdateHeader(level)   "{{{1
     call setline(7, printf("Pushes: %6d  %10s           %10s", b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
 endfunction
 
+function! s:UpdateFooter()   "{{{1
+    " About...   {{{2
+    " Function : UpdateFooter (PRIVATE
+    " Purpose  : updates the sequence of moves in the footer
+    " Args     : none
+    " Returns  : nothing
+    " Author   : Phil Runninger   }}}
+    " silent! execute s:startSequence+1 . ",$d"
+    call deletebufline(bufname(),s:startSequence+1,'$')
+    call append(line("$"), split(s:CompressMoves(), '.\{80}\zs'))
+endfunction
+
 function! s:DisplayLevelCompleteMessage()   "{{{1
     " About...   {{{2
     " Function : DisplayLevelCompleteMessage (PRIVATE
@@ -143,14 +155,14 @@ function! s:DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(14, "                                                                                ")
+    call setline(14, repeat(" ",80))
     call setline(15, "          ╭─────────────────────────────────────────────────────────╮           ")
     call setline(16, "          │                       LEVEL COMPLETE                    │           ")
     call setline(17, printf("          │              %6d Moves  %6d Pushes                │           ", b:moves,b:pushes))
     call setline(18, "          ├─────────────────────────────────────────────────────────┤           ")
     call setline(19, "          │ r - restart level   p - previous level   n - next level │           ")
     call setline(20, "          ╰─────────────────────────────────────────────────────────╯           ")
-    call setline(21, "                                                                                ")
+    call setline(21, repeat(" ",80))
 endfunction
 
 function! s:ProcessLevel()   "{{{1
@@ -217,10 +229,12 @@ function! s:LoadLevel(level)   "{{{1
         silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPackage."/g"
 
         call append(line("$"), "")
-        call append(line("$"), '════════════════════════════════════════════════════════════════════════════════')
+        call append(line("$"), repeat('═', 80))
         call append(line("$"), "Your best scores are stored in this file:")
         call append(line("$"), "   ".g:SokobanScoreFile)
         call append(line("$"), "Submit them to http://www.cs.cornell.edu/andru/xsokoban/manual-solve.html")
+        call append(line("$"), "")
+        let s:startSequence = line("$")
 
         if has("syntax")
             syn clear
@@ -401,6 +415,7 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
                 let b:pushes = b:pushes + 1
                 let b:manPos = newManPos
                 call s:UpdateHeader(b:level)
+                call s:UpdateFooter()
                 " check to see if the level is complete. Only need to do this after
                 " each package push as each level must end with a package push
                 if s:AreAllPackagesHome()
@@ -419,6 +434,7 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
             let b:moves = b:moves + 1
             let b:manPos = newManPos
             call s:UpdateHeader(b:level)
+            call s:UpdateFooter()
             setlocal nomodifiable
         endif
     endif
@@ -468,6 +484,7 @@ function! s:UndoMove()   "{{{1
         let b:manPos = newManPos
         let b:moves = b:moves - 1
         call s:UpdateHeader(b:level)
+        call s:UpdateFooter()
         setlocal nomodifiable
     endif
 endfunction
