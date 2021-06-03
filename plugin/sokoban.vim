@@ -144,7 +144,7 @@ function! s:UpdateFooter()   "{{{1
     " Returns  : nothing
     " Author   : Phil Runninger   }}}
     " silent! execute s:startSequence+1 . ",$d"
-    call deletebufline(bufname(),s:startSequence+1,'$')
+    call deletebufline(bufname('%'),s:startSequence+1,'$')
     call append(line("$"), split(s:CompressMoves(), '.\{80}\zs'))
 endfunction
 
