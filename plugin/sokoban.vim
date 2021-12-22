@@ -532,7 +532,7 @@ function! s:LoadScoresFile()   "{{{1
     " Returns  : the last level played.
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     if filereadable(g:SokobanScoreFile)
-        execute "let b:scores = " . join(readfile(g:SokobanScoreFile),'')
+        let b:scores = eval(join(readfile(g:SokobanScoreFile),''))
         return b:scores['current']
     else
         let b:scores = {}
@@ -548,7 +548,7 @@ function! s:SaveScoresToFile()   "{{{1
     " Returns  : nothing
     " Notes    : call by silent! call SaveScoresToFile()
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call writefile([substitute(string(b:scores),"'",'"','g')], g:SokobanScoreFile)
+    call writefile([json_encode(b:scores)], g:SokobanScoreFile)
 endfunction
 
 function! s:GetCurrentHighScores(level)   "{{{1
