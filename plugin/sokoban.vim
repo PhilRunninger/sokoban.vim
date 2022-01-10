@@ -314,16 +314,14 @@ function! s:IsEmpty(cell)   "{{{1
     return !s:IsWall(a:cell) && !s:IsPackage(a:cell)
 endfunction
 
-function! s:MoveMan(from, to, package)   "{{{1
+function! s:Move(from, to, item)   "{{{1
     " About...   {{{2
-    " Function : MoveMan (PRIVATE)
-    " Purpose  : moves the man and possibly a package in the buffer. The package is
-    "            assumed to move from where the man moves too. Home squares are
-    "            handled correctly in this function too. Things are a little crazy
-    "            for the undo'ing of a move.
+    " Function : Move (PRIVATE)
+    " Purpose  : moves the item (man or package) in the buffer. Home squares are
+    "            handled correctly in this function too.
     " Args     : from - the cell where the man is moving from
     "            to - the cell where the man is moving to
-    "            package - the cell where a package is moving to
+    "            item - the character representing the item being moved.
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     if s:IsHome(a:from)
@@ -331,10 +329,7 @@ function! s:MoveMan(from, to, package)   "{{{1
     else
         call s:SetCharInLine(a:from, ' ')
     endif
-    call s:SetCharInLine(a:to, g:charSoko)
-    if !empty(a:package)
-        call s:SetCharInLine(a:package, g:charPackage)
-    endif
+    call s:SetCharInLine(a:to, a:item)
 endfunction
 
 function! s:UpdatePackageList(old, new)   "{{{1
@@ -407,7 +402,8 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
             if s:IsEmpty(newPkgPos)
                 setlocal modifiable
                 " the move is possible and we pushed a package
-                call s:MoveMan(b:manPos, newManPos, newPkgPos)
+                call s:Move(newManPos, newPkgPos, g:charPackage)
+                call s:Move(b:manPos, newManPos, g:charSoko)
                 call s:UpdatePackageList(newManPos, newPkgPos)
                 call insert(b:undoList, a:moveDirection . "p")
                 let b:moves = b:moves + 1
@@ -428,7 +424,7 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
         else
             setlocal modifiable
             " the move is possible and no packages moved
-            call s:MoveMan(b:manPos, newManPos, [])
+            call s:Move(b:manPos, newManPos, g:charSoko)
             call insert(b:undoList, a:moveDirection)
             let b:moves = b:moves + 1
             let b:manPos = newManPos
@@ -450,37 +446,22 @@ function! s:UndoMove()   "{{{1
         let prevMove = b:undoList[0]
         call remove(b:undoList, 0)
 
-        " determine which way the man has to move to undo the move
-        if prevMove =~ "^h"
-            let delta = [0,1]
-        elseif prevMove =~ "^l"
-            let delta = [0,-1]
-        elseif prevMove =~ "^k"
-            let delta = [1,0]
-        elseif prevMove =~ "^j"
-            let delta = [-1,0]
-        else
-            return
-        endif
-
-        " old position of the man
-        let newManPos = s:AddVectors(b:manPos, delta)
-
-        " determine if the move had moved a package so that can be undone too.
-        if prevMove =~ "p$"
-            " if we pushed a package, the man's position is where the package was
-            let oldPkgPos = b:manPos
-            let currPkgPos = s:SubtractVectors(b:manPos, delta)
-            let b:pushes = b:pushes - 1
-            call s:UpdatePackageList(currPkgPos, oldPkgPos)
-        else
-            let oldPkgPos = []
-            let currPkgPos = b:manPos
-        endif
         setlocal modifiable
-        " this is abusing this function a little :)
-        call s:MoveMan(currPkgPos, newManPos, oldPkgPos)
-        let b:manPos = newManPos
+
+        " determine which direction un-does the move
+        " h->[0,1], j->[0,-1], k->[0,1], l->[0,-1]
+        let delta = [(stridx('jhkl',prevMove[0])-1)%2,(stridx('lkhj',prevMove[0])-1)%2]
+
+        let priorManPos = s:AddVectors(b:manPos, delta)
+        call s:Move(b:manPos, priorManPos, g:charSoko)
+        if prevMove =~ "p$"
+            let currPkgPos = s:SubtractVectors(b:manPos, delta)
+            call s:Move(currPkgPos, b:manPos, g:charPackage)
+            let b:pushes = b:pushes - 1
+            call s:UpdatePackageList(currPkgPos, b:manPos)
+        endif
+
+        let b:manPos = priorManPos
         let b:moves = b:moves - 1
         call s:UpdateHeader(b:level)
         call s:UpdateFooter()
