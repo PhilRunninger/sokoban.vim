@@ -1,5 +1,5 @@
 " Boilerplate {{{1
-" Copyright (c) 1998-2018   {{{2
+" Copyright (c) 1998-2022   {{{2
 " Michael Sharpe <feline@irendi.com>
 " Phil Runninger
 "
@@ -702,19 +702,10 @@ function! Sokoban(splitWindow, ...)   "{{{1
     "            level (optional) - specifies the start level
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    if (a:0 == 0)
-        let level = 1
-    else
-        let level = a:1 <= 0 ? 1 : a:1
-    endif
     call s:FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
     setlocal modifiable
     call s:ClearBuffer()
-    let savedLevel = s:LoadScoresFile()
-    " if there was a saved level and the level was not specified use it now
-    if (a:0 == 0 && savedLevel != 0)
-        let level = savedLevel
-    endif
+    let level = a:0 ? max([1, a:1]) : max([1, s:LoadScoresFile()])
     let b:moves = 0        " counter of number of moves made
     let b:pushes = 0       " counter of number of pushes made
     call s:GetCurrentHighScores(level)
