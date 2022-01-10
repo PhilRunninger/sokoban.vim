@@ -88,7 +88,7 @@ let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand("<sfile>:p:h")
 
 " Characters used to draw the maze and objects on the screen.
 let g:charSoko    = get(g:,'charSoko',   '◆') " replaces @ in level file
-let g:charWall    = get(g:,'charWall',   '▓') " replaces # in level file
+let g:charWall    = get(g:,'charWall',   '█') " replaces # in level file
 let g:charPackage = get(g:,'charPackage','☻') " replaces $ and * in level file
 let g:charHome    = get(g:,'charHome',   '○') " replaces . in level file
 
