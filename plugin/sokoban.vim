@@ -103,8 +103,7 @@ function! s:ClearBuffer()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    normal 1G
-    normal dG
+    normal! 1GdG
 endfunction
 
 function! s:DisplayInitialHeader(level)   "{{{1
@@ -212,7 +211,7 @@ function! s:LoadLevel(level)   "{{{1
     " Args     : level - the level to load
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    normal dG
+    normal! dG
     let levelFile = g:SokobanLevelDirectory . "/level" . a:level . ".sok"
     if filereadable(levelFile)
         setlocal modifiable
@@ -692,10 +691,10 @@ function! s:FindOrCreateBuffer(filename, doSplit)   "{{{1
             " search the windows for the target window
             if bufWindow != winnr()
                 " only search if the current window does not contain the buffer
-                execute "normal \<C-W>b"
+                execute "normal! \<C-W>b"
                 let winNum = winnr()
                 while (winNum != bufWindow && winNum > 0)
-                    execute "normal \<C-W>k"
+                    execute "normal! \<C-W>k"
                     let winNum = winNum - 1
                 endwhile
                 if (0 == winNum)
@@ -743,8 +742,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     setlocal nomodifiable
     call s:SetupMaps(1)
     " do something with the cursor....
-    normal 1G
-    normal 0
+    normal! 1G0
 endfunction
 
 " vim: foldmethod=marker
