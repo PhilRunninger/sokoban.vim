@@ -449,8 +449,7 @@ function! s:UndoMove()   "{{{1
         setlocal modifiable
 
         " determine which direction un-does the move
-        " h->[0,1], j->[0,-1], k->[0,1], l->[0,-1]
-        let delta = [(stridx('jhkl',prevMove[0])-1)%2,(stridx('lkhj',prevMove[0])-1)%2]
+        let delta = {'h':[0,1],'j':[-1,0],'k':[1,0],'l':[0,-1]}[prevMove[0]]
 
         let priorManPos = s:AddVectors(b:manPos, delta)
         call s:Move(b:manPos, priorManPos, g:charSoko)
