@@ -394,45 +394,40 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     let newManPos = s:AddVectors(b:manPos, a:delta)
-    if !s:IsWall(newManPos)
-        " if the location we want to move to is not a wall continue processing
-        if s:IsPackage(newManPos)
-            " if the new position is a package check to see if the package moves
-            let newPkgPos = s:AddVectors(newManPos, a:delta)
-            if s:IsEmpty(newPkgPos)
-                setlocal modifiable
-                " the move is possible and we pushed a package
-                call s:Move(newManPos, newPkgPos, g:charPackage)
-                call s:Move(b:manPos, newManPos, g:charSoko)
-                call s:UpdatePackageList(newManPos, newPkgPos)
-                call insert(b:undoList, a:moveDirection . "p")
-                let b:moves = b:moves + 1
-                let b:pushes = b:pushes + 1
-                let b:manPos = newManPos
-                call s:UpdateHeader(b:level)
-                call s:UpdateFooter()
-                " check to see if the level is complete. Only need to do this after
-                " each package push as each level must end with a package push
-                if s:AreAllPackagesHome()
-                    call s:SetupMaps(0)
-                    call s:DisplayLevelCompleteMessage()
-                    call s:UpdateHighScores()
-                    call s:SaveCurrentLevelToFile(b:level + 1)
-                endif
-                setlocal nomodifiable
-            endif
-        else
-            setlocal modifiable
-            " the move is possible and no packages moved
-            call s:Move(b:manPos, newManPos, g:charSoko)
-            call insert(b:undoList, a:moveDirection)
-            let b:moves = b:moves + 1
-            let b:manPos = newManPos
-            call s:UpdateHeader(b:level)
-            call s:UpdateFooter()
-            setlocal nomodifiable
-        endif
+    if s:IsWall(newManPos)
+        return
     endif
+
+    setlocal modifiable
+    let l:undo = a:moveDirection
+
+    if s:IsPackage(newManPos)
+        let newPkgPos = s:AddVectors(newManPos, a:delta)
+        if !s:IsEmpty(newPkgPos)
+            return
+        endif
+
+        call s:Move(newManPos, newPkgPos, g:charPackage)
+        call s:UpdatePackageList(newManPos, newPkgPos)
+        let b:pushes = b:pushes + 1
+        let l:undo .= 'p'
+    endif
+
+    call s:Move(b:manPos, newManPos, g:charSoko)
+    call insert(b:undoList, l:undo)
+    let b:moves = b:moves + 1
+    let b:manPos = newManPos
+    call s:UpdateHeader(b:level)
+    call s:UpdateFooter()
+
+    if s:AreAllPackagesHome()
+        call s:SetupMaps(0)
+        call s:DisplayLevelCompleteMessage()
+        call s:UpdateHighScores()
+        call s:SaveCurrentLevelToFile(b:level + 1)
+    endif
+
+    setlocal nomodifiable
 endfunction
 
 function! s:UndoMove()   "{{{1
