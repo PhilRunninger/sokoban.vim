@@ -216,7 +216,8 @@ function! s:LoadLevel(level)   "{{{1
     if filereadable(levelFile)
         setlocal modifiable
         silent! execute "r " . levelFile
-        silent! execute s:endHeaderLine.",$ s/^/           /g"
+        let maxWidth = max(map(getline(s:endHeaderLine,line('$')), {_,l -> strchars(l)}))
+        silent! execute s:endHeaderLine.',$ s/^/' . repeat(' ', (80-maxWidth)/2) . '/g'
         call s:ProcessLevel()
         let b:level = a:level
 
@@ -399,7 +400,7 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
     endif
 
     setlocal modifiable
-    let l:undo = a:moveDirection
+    let undo = a:moveDirection
 
     if s:IsPackage(newManPos)
         let newPkgPos = s:AddVectors(newManPos, a:delta)
@@ -410,11 +411,11 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
         call s:Move(newManPos, newPkgPos, g:charPackage)
         call s:UpdatePackageList(newManPos, newPkgPos)
         let b:pushes = b:pushes + 1
-        let l:undo .= 'p'
+        let undo .= 'p'
     endif
 
     call s:Move(b:manPos, newManPos, g:charSoko)
-    call insert(b:undoList, l:undo)
+    call insert(b:undoList, undo)
     let b:moves = b:moves + 1
     let b:manPos = newManPos
     call s:UpdateHeader(b:level)
@@ -606,15 +607,15 @@ function! s:CompressMoves()   " {{{1
     " Args     : none.
     " Returns  : a compressed string of the sequence of moves in b:undoList
     " Author   : Phil Runninger   }}}
-    let l:moves = substitute(join(reverse(copy(b:undoList)),''),'p','','g')
-    for l:move in ['h','j','k','l']
-        for l:count in range(9,2,-1)
-            while match(l:moves, repeat(l:move, l:count)) > -1
-                let l:moves = substitute(l:moves, repeat(l:move, l:count), l:count.l:move.' ', 'g')
+    let moves = substitute(join(reverse(copy(b:undoList)),''),'p','','g')
+    for direction in ['h','j','k','l']
+        for count in range(9,2,-1)
+            while match(moves, repeat(direction, count)) > -1
+                let moves = substitute(moves, repeat(direction, count), count.direction.' ', 'g')
             endwhile
         endfor
     endfor
-    return substitute(l:moves, ' ', '', 'g')
+    return substitute(moves, ' ', '', 'g')
 endfunction
 
 function! s:SaveCurrentLevelToFile(level)   "{{{1
