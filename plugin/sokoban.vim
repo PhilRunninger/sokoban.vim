@@ -92,7 +92,7 @@ let g:charWall    = get(g:,'charWall',   '█') " replaces # in level file
 let g:charPackage = get(g:,'charPackage','☻') " replaces $ and * in level file
 let g:charHome    = get(g:,'charHome',   '○') " replaces . in level file
 
-command! -nargs=? Sokoban call Sokoban("", <f-args>)
+command! -nargs=? Sokoban call Sokoban("e", <f-args>)
 command! -nargs=? SokobanH call Sokoban("h", <f-args>)
 command! -nargs=? SokobanV call Sokoban("v", <f-args>)
 
@@ -638,53 +638,15 @@ function! s:FindOrCreateBuffer(filename, doSplit)   "{{{1
     "            not exist, it creates it.
     " Args     : filename (IN) -- the name of the file
     "            doSplit (IN) -- indicates whether the window should be split
-    "                            ("v", "h", "")
+    "                            ("v", "h", "e")
     " Returns  : nothing
     " Author   : Michael Sharpe <feline@irendi.com>   }}}
-    " Check to see if the buffer is already open before re-opening it.
-    let bufName = bufname(a:filename)
-    if (bufName == "")
-        " Buffer did not exist....create it
-        if (a:doSplit == "h")
-            execute ":split " . a:filename
-        elseif (a:doSplit == "v")
-            execute ":vsplit " . a:filename
-        else
-            execute ":e " . a:filename
-        endif
+    let bufNum = bufnr(a:filename, 1)
+    let winNum = bufwinnr(a:filename)
+    if (winNum == -1)
+        execute {'h': 'sbuffer', 'v':'vert sbuffer', 'e':'buffer'}[a:doSplit] . a:filename
     else
-        " Buffer was already open......check to see if it is in a window
-        let bufWindow = bufwinnr(a:filename)
-        if (bufWindow == -1)
-            if (a:doSplit == "h")
-                execute ":sbuffer " . a:filename
-            elseif (a:doSplit == "v")
-                execute ":vert sbuffer " . a:filename
-            else
-                execute ":buffer " . a:filename
-            endif
-        else
-            " search the windows for the target window
-            if bufWindow != winnr()
-                " only search if the current window does not contain the buffer
-                execute "normal! \<C-W>b"
-                let winNum = winnr()
-                while (winNum != bufWindow && winNum > 0)
-                    execute "normal! \<C-W>k"
-                    let winNum = winNum - 1
-                endwhile
-                if (0 == winNum)
-                    " something wierd happened...open the buffer
-                    if (a:doSplit == "h")
-                        execute ":split " . a:filename
-                    elseif (a:doSplit == "v")
-                        execute ":vsplit " . a:filename
-                    else
-                        execute ":e " . a:filename
-                    endif
-                endif
-            endif
-        endif
+        execute "normal! ".winNum."\<C-W>w"
     endif
 endfunction
 
@@ -697,7 +659,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     "            level (optional) - specifies the start level
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call s:FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
+    call s:FindOrCreateBuffer('__.#VimSokoban#.__', a:splitWindow)
     setlocal modifiable
     call s:ClearBuffer()
     let lastRecordedLevel = s:LoadScoresFile()
