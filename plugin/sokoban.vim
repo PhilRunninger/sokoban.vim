@@ -142,7 +142,6 @@ function! s:UpdateFooter()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Phil Runninger   }}}
-    " silent! execute s:startSequence+1 . ",$d"
     call deletebufline(bufname('%'),s:startSequence+1,'$')
     call append(line("$"), split(s:CompressMoves(), '.\{80}\zs'))
 endfunction
@@ -154,14 +153,20 @@ function! s:DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(14, repeat(" ",80))
-    call setline(15, "          ╭─────────────────────────────────────────────────────────╮           ")
-    call setline(16, "          │                       LEVEL COMPLETE                    │           ")
-    call setline(17, printf("          │              %6d Moves  %6d Pushes                │           ", b:moves,b:pushes))
-    call setline(18, "          ├─────────────────────────────────────────────────────────┤           ")
-    call setline(19, "          │ r - restart level   p - previous level   n - next level │           ")
-    call setline(20, "          ╰─────────────────────────────────────────────────────────╯           ")
-    call setline(21, repeat(" ",80))
+    for l in range(s:endHeaderLine,s:startSequence-1)
+        call setline(l, repeat(" ",80))
+    endfor
+
+    let msg = ["         ╭───────────────────────────────────────────────────────────╮",
+             \ "         │                        LEVEL COMPLETE                     │",
+             \ printf("         │               %6d Moves  %6d Pushes                 │", b:moves,b:pushes),
+             \ "         ├───────────────────────────────────────────────────────────┤",
+             \ "         │  r - restart level   p - previous level   n - next level  │",
+             \ "         ╰───────────────────────────────────────────────────────────╯"]
+    let offset = (s:startSequence - s:endHeaderLine - len(msg))/2 + s:endHeaderLine
+    for l in range(len(msg))
+        call setline(l+offset, msg[l])
+    endfor
 endfunction
 
 function! s:ProcessLevel()   "{{{1
@@ -228,12 +233,7 @@ function! s:LoadLevel(level)   "{{{1
         silent! execute s:endHeaderLine . ",$ s/\\V./".g:charHome."/g"
         silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPackage."/g"
 
-        call append(line("$"), "")
         call append(line("$"), repeat('═', 80))
-        call append(line("$"), "Your best scores are stored in this file:")
-        call append(line("$"), "   ".g:SokobanScoreFile)
-        call append(line("$"), "Submit them to http://www.cs.cornell.edu/andru/xsokoban/manual-solve.html")
-        call append(line("$"), "")
         let s:startSequence = line("$")
 
         if has("syntax")
