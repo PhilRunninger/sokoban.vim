@@ -153,19 +153,19 @@ function! s:DisplayLevelCompleteMessage()   "{{{1
     " Args     : none
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    for l in range(s:endHeaderLine,s:startSequence-1)
-        call setline(l, repeat(" ",80))
-    endfor
-
-    let msg = ["         ╭───────────────────────────────────────────────────────────╮",
-             \ "         │                        LEVEL COMPLETE                     │",
-             \ printf("         │               %6d Moves  %6d Pushes                 │", b:moves,b:pushes),
-             \ "         ├───────────────────────────────────────────────────────────┤",
-             \ "         │  r - restart level   p - previous level   n - next level  │",
-             \ "         ╰───────────────────────────────────────────────────────────╯"]
+    let msg = ['╭───────────────────────────────────────────────────────────╮',
+             \ '│                        LEVEL COMPLETE                     │',
+      \ printf('│               %6d Moves  %6d Pushes                 │', b:moves,b:pushes),
+             \ '├───────────────────────────────────────────────────────────┤',
+             \ '│  r - restart level   p - previous level   n - next level  │',
+             \ '╰───────────────────────────────────────────────────────────╯']
+    let indent = repeat(' ', (80 - max(map(copy(msg),{_,l -> strchars(l)}))) / 2)
     let offset = (s:startSequence - s:endHeaderLine - len(msg))/2 + s:endHeaderLine
-    for l in range(len(msg))
-        call setline(l+offset, msg[l])
+    for l in range(s:endHeaderLine,s:startSequence-1)
+        call setline(l, '')
+        if l >= offset && l < offset+len(msg)
+            call setline(l, indent.msg[l-offset])
+        endif
     endfor
 endfunction
 
