@@ -77,14 +77,14 @@
 
 " Initial setup   {{{1
 " Allow the user to specify the location of the sokoban levels
-let g:SokobanLevelDirectory = get(g:,'SokobanLevelDirectory',resolve(fnamemodify(expand("<sfile>:p:h") . "/../levels/","p:")))
+let g:SokobanLevelDirectory = get(g:,'SokobanLevelDirectory',resolve(fnamemodify(expand('<sfile>:p:h') . '/../levels/','p:')))
 if !isdirectory(g:SokobanLevelDirectory)
-    echoerr "g:SokobanLevelDirectory (".g:SokobanLevelDirectory.") contains an invalid path."
+    echoerr 'g:SokobanLevelDirectory ('.g:SokobanLevelDirectory.') contains an invalid path.'
     finish
 endif
 
 " Allow the user to specify the location of the score file.
-let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand("<sfile>:p:h") . "/../.VimSokobanScores"))
+let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h') . '/../.VimSokobanScores'))
 
 " Characters used to draw the maze and objects on the screen.
 let g:charSoko    = get(g:,'charSoko',   '◆') " replaces @ in level file
@@ -92,9 +92,9 @@ let g:charWall    = get(g:,'charWall',   '█') " replaces # in level file
 let g:charPackage = get(g:,'charPackage','☻') " replaces $ and * in level file
 let g:charHome    = get(g:,'charHome',   '○') " replaces . in level file
 
-command! -nargs=? Sokoban call Sokoban("e", <f-args>)
-command! -nargs=? SokobanH call Sokoban("h", <f-args>)
-command! -nargs=? SokobanV call Sokoban("v", <f-args>)
+command! -nargs=? Sokoban call Sokoban('e', <f-args>)
+command! -nargs=? SokobanH call Sokoban('h', <f-args>)
+command! -nargs=? SokobanV call Sokoban('v', <f-args>)
 
 function! s:ClearBuffer()   "{{{1
     " About...   {{{2
@@ -131,8 +131,8 @@ function! s:UpdateHeader(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     call setline(5, printf('Level:  %6d  %19s  %19s      %s soko      %s wall', a:level,b:fewestMovesDate,b:fewestPushesDate,g:charSoko,g:charWall))
-    call setline(6, printf("Moves:  %6d  %10s           %10s               %s package   %s home",b:moves,b:fewestMovesMoves,b:fewestPushesMoves,g:charPackage,g:charHome))
-    call setline(7, printf("Pushes: %6d  %10s           %10s", b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
+    call setline(6, printf('Moves:  %6d  %10s           %10s               %s package   %s home',b:moves,b:fewestMovesMoves,b:fewestPushesMoves,g:charPackage,g:charHome))
+    call setline(7, printf('Pushes: %6d  %10s           %10s', b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
 endfunction
 
 function! s:UpdateFooter()   "{{{1
@@ -143,7 +143,7 @@ function! s:UpdateFooter()   "{{{1
     " Returns  : nothing
     " Author   : Phil Runninger   }}}
     call deletebufline(bufname('%'),s:startSequence+1,'$')
-    call append(line("$"), split(s:CompressMoves(), '.\{80}\zs'))
+    call append(line('$'), split(s:CompressMoves(), '.\{80}\zs'))
 endfunction
 
 function! s:DisplayLevelCompleteMessage()   "{{{1
@@ -217,26 +217,26 @@ function! s:LoadLevel(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     normal! dG
-    let levelFile = g:SokobanLevelDirectory . "/level" . a:level . ".sok"
+    let levelFile = g:SokobanLevelDirectory . '/level' . a:level . '.sok'
     if filereadable(levelFile)
         setlocal modifiable
-        silent! execute "r " . levelFile
+        silent! execute 'r ' . levelFile
         let maxWidth = max(map(getline(s:endHeaderLine,line('$')), {_,l -> strchars(l)}))
         silent! execute s:endHeaderLine.',$ s/^/' . repeat(' ', (80-maxWidth)/2) . '/g'
         call s:ProcessLevel()
         let b:level = a:level
 
         " Replace placeholder text (level file) with appropriate characters.
-        silent! execute s:endHeaderLine . ",$ s/\\V@/".g:charSoko."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V#/".g:charWall."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V$/".g:charPackage."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V./".g:charHome."/g"
-        silent! execute s:endHeaderLine . ",$ s/\\V*/".g:charPackage."/g"
+        silent! execute s:endHeaderLine . ',$ s/\V@/'.g:charSoko.'/g'
+        silent! execute s:endHeaderLine . ',$ s/\V#/'.g:charWall.'/g'
+        silent! execute s:endHeaderLine . ',$ s/\V$/'.g:charPackage.'/g'
+        silent! execute s:endHeaderLine . ',$ s/\V./'.g:charHome.'/g'
+        silent! execute s:endHeaderLine . ',$ s/\V*/'.g:charPackage.'/g'
 
-        call append(line("$"), repeat('═', 80))
-        let s:startSequence = line("$")
+        call append(line('$'), repeat('═', 80))
+        let s:startSequence = line('$')
 
-        if has("syntax")
+        if has('syntax')
             syn clear
             execute 'syn match SokobanMan /'.g:charSoko.'/'
             execute 'syn match SokobanPackage /'.g:charPackage.'/'
@@ -253,7 +253,7 @@ function! s:LoadLevel(level)   "{{{1
         setlocal nolist nonumber
     else
         let b:level = 0
-        call append(10, "Could not find file " . levelFile)
+        call append(10, 'Could not find file ' . levelFile)
     endif
 endfunction
 
@@ -449,7 +449,7 @@ function! s:UndoMove()   "{{{1
 
         let priorManPos = s:AddVectors(b:manPos, delta)
         call s:Move(b:manPos, priorManPos, g:charSoko)
-        if prevMove =~ "p$"
+        if prevMove =~ 'p$'
             let currPkgPos = s:SubtractVectors(b:manPos, delta)
             call s:Move(currPkgPos, b:manPos, g:charPackage)
             let b:pushes = b:pushes - 1
@@ -472,14 +472,14 @@ function! s:SetupMaps(enable)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     if a:enable
-        nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], "h")<CR>
-        nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], "h")<CR>
-        nnoremap <silent> <buffer> j       :call <SID>MakeMove([1, 0], "j")<CR>
-        nnoremap <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], "j")<CR>
-        nnoremap <silent> <buffer> k       :call <SID>MakeMove([-1, 0], "k")<CR>
-        nnoremap <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], "k")<CR>
-        nnoremap <silent> <buffer> l       :call <SID>MakeMove([0, 1], "l")<CR>
-        nnoremap <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], "l")<CR>
+        nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], 'h')<CR>
+        nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], 'h')<CR>
+        nnoremap <silent> <buffer> j       :call <SID>MakeMove([1, 0], 'j')<CR>
+        nnoremap <silent> <buffer> <Down>  :call <SID>MakeMove([1, 0], 'j')<CR>
+        nnoremap <silent> <buffer> k       :call <SID>MakeMove([-1, 0], 'k')<CR>
+        nnoremap <silent> <buffer> <Up>    :call <SID>MakeMove([-1, 0], 'k')<CR>
+        nnoremap <silent> <buffer> l       :call <SID>MakeMove([0, 1], 'l')<CR>
+        nnoremap <silent> <buffer> <Right> :call <SID>MakeMove([0, 1], 'l')<CR>
         nnoremap <silent> <buffer> u       :call <SID>UndoMove()<CR>
     else
         nnoremap <buffer> h       <Nop>
@@ -579,7 +579,7 @@ function! s:UpdateHighScores()   "{{{1
 
     let thisGame = { 'moves':b:moves, 'pushes':b:pushes,
                    \ 'seq':s:CompressMoves(),
-                   \ 'date':strftime("%Y-%m-%d %T") }
+                   \ 'date':strftime('%Y-%m-%d %T') }
 
     if (b:moves <= b:scores[b:level]['fewestMoves']['moves']) ||
      \ (b:moves == b:scores[b:level]['fewestMoves']['moves'] && b:pushes <= b:scores[b:level]['fewestMoves']['pushes'])
@@ -646,7 +646,7 @@ function! s:FindOrCreateBuffer(filename, doSplit)   "{{{1
     if (winNum == -1)
         execute {'h': 'sbuffer', 'v':'vert sbuffer', 'e':'buffer'}[a:doSplit] . a:filename
     else
-        execute "normal! ".winNum."\<C-W>w"
+        execute winNum.'wincmd w'
     endif
 endfunction
 
