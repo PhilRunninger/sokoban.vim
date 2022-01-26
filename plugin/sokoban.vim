@@ -691,7 +691,7 @@ endfunction
 function! Sokoban(splitWindow, ...)   "{{{1
     " About...   {{{2
     " Function : Sokoban (PUBLIC)
-    " Purpose  : This is the entry point to the game. It create the buffer, loads
+    " Purpose  : This is the entry point to the game. It creates the buffer, loads
     "            the level, and sets the game up.
     " Args     : splitWindow - indicates how to split the window
     "            level (optional) - specifies the start level
@@ -700,7 +700,8 @@ function! Sokoban(splitWindow, ...)   "{{{1
     call s:FindOrCreateBuffer('__\.\#\$VimSokoban\$\#\.__', a:splitWindow)
     setlocal modifiable
     call s:ClearBuffer()
-    let level = a:0 ? max([1, a:1]) : max([1, s:LoadScoresFile()])
+    let lastRecordedLevel = s:LoadScoresFile()
+    let level = max([1, a:0 ? a:1 : lastRecordedLevel])
     let b:moves = 0        " counter of number of moves made
     let b:pushes = 0       " counter of number of pushes made
     call s:GetCurrentHighScores(level)
