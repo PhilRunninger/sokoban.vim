@@ -51,6 +51,7 @@
 "   g:charSoko
 "   g:charWall
 "   g:charPackage
+"   g:charPackageHome
 "   g:charHome
 "
 " Release Notes:   {{{2
@@ -87,10 +88,11 @@ endif
 let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h') . '/../.VimSokobanScores'))
 
 " Characters used to draw the maze and objects on the screen.
-let g:charSoko    = get(g:,'charSoko',   '◆') " replaces @ in level file
-let g:charWall    = get(g:,'charWall',   '█') " replaces # in level file
-let g:charPackage = get(g:,'charPackage','☻') " replaces $ and * in level file
-let g:charHome    = get(g:,'charHome',   '○') " replaces . in level file
+let g:charSoko        = get(g:,'charSoko',       '◆') " replaces @ in level file
+let g:charWall        = get(g:,'charWall',       '█') " replaces # in level file
+let g:charPackage     = get(g:,'charPackage',    '☻') " replaces $ in level file
+let g:charHome        = get(g:,'charHome',       '○') " replaces . in level file
+let g:charPackageHome = get(g:,'charPackageHome','●') " replaces * in level file
 
 command! -nargs=? Sokoban call Sokoban('e', <f-args>)
 command! -nargs=? SokobanH call Sokoban('h', <f-args>)
@@ -231,7 +233,7 @@ function! s:LoadLevel(level)   "{{{1
         silent! execute s:endHeaderLine . ',$ s/\V#/'.g:charWall.'/g'
         silent! execute s:endHeaderLine . ',$ s/\V$/'.g:charPackage.'/g'
         silent! execute s:endHeaderLine . ',$ s/\V./'.g:charHome.'/g'
-        silent! execute s:endHeaderLine . ',$ s/\V*/'.g:charPackage.'/g'
+        silent! execute s:endHeaderLine . ',$ s/\V*/'.g:charPackageHome.'/g'
 
         call append(line('$'), repeat('═', 80))
         let s:startSequence = line('$')
@@ -240,10 +242,12 @@ function! s:LoadLevel(level)   "{{{1
             syn clear
             execute 'syn match SokobanMan /'.g:charSoko.'/'
             execute 'syn match SokobanPackage /'.g:charPackage.'/'
+            execute 'syn match SokobanPackageHome /'.g:charPackageHome.'/'
             execute 'syn match SokobanWall /'.g:charWall.'/'
             execute 'syn match SokobanHome /'.g:charHome.'/'
-            highlight link SokobanPackage String
-            highlight link SokobanMan Special
+            highlight link SokobanPackage Constant
+            highlight link SokobanPackageHome Statement
+            highlight link SokobanMan Label
             highlight link SokobanWall Comment
             highlight link SokobanHome Statement
         endif
@@ -408,7 +412,7 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
             return
         endif
 
-        call s:Move(newManPos, newPkgPos, g:charPackage)
+        call s:Move(newManPos, newPkgPos, s:IsHome(newPkgPos) ? g:charPackageHome : g:charPackage)
         call s:UpdatePackageList(newManPos, newPkgPos)
         let b:pushes = b:pushes + 1
         let undo .= 'p'
@@ -451,7 +455,7 @@ function! s:UndoMove()   "{{{1
         call s:Move(b:manPos, priorManPos, g:charSoko)
         if prevMove =~ 'p$'
             let currPkgPos = s:SubtractVectors(b:manPos, delta)
-            call s:Move(currPkgPos, b:manPos, g:charPackage)
+            call s:Move(currPkgPos, b:manPos, s:IsHome(b:manPos) ? g:charPackageHome : g:charPackage)
             let b:pushes = b:pushes - 1
             call s:UpdatePackageList(currPkgPos, b:manPos)
         endif
