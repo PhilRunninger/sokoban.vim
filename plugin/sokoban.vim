@@ -108,21 +108,51 @@ function! s:ClearBuffer()   "{{{1
     normal! 1GdG
 endfunction
 
-function! s:DisplayInitialHeader(level)   "{{{1
-    " About...   {{{2
-    " Function : DisplayInitialHeader (PRIVATE)
-    " Purpose  : Displays the header of the sokoban screen
-    " Args     : level - the current level number
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call append(0, repeat([''],10))
-    call setline(1, 'VIM SOKOBAN, v1.4')
-    call setline(3, 'Score           Fewest Moves         Fewest Pushes            Key')
-    call setline(4, '──────────────  ───────────────────  ───────────────────      ──────────────────')
+function! s:DrawGameBoard(level)   "{{{1
+    let size = max([31, empty(b:levelPack) ? 0 : b:levelPack.levelCollection.maxHeight])
+    call s:ClearBuffer()
+    call append(0, repeat([''],size+3))
+    call setline( 1,                printf('VIM SOKOBAN, v2.0      Level Pack: %s', b:levelPack.title ))
+    call setline( 2, repeat('═',52).       '╦═══════════════════════════')
+    call setline( 3, repeat(' ',52).       '║ Pack: ')
+    call setline( 4, repeat(' ',52).printf('║ Level: %d', a:level))
+    call setline( 5, repeat(' ',52).printf('║   %24s',b:levelPack.levelCollection.levels[a:level-1].id))
+    call setline( 6, repeat(' ',52).       '║')
+    call setline( 7, repeat(' ',52).       '║ Score')
+    call setline( 8, repeat(' ',52).       '║')
+    call setline( 9, repeat(' ',52).       '║')
+    call setline(10, repeat(' ',52).       '╠═══════════════════════════')
+    call setline(11, repeat(' ',52).       '║')
+    call setline(12, repeat(' ',52).       '║ Fewest Moves')
+    call setline(13, repeat(' ',52).       '║')
+    call setline(14, repeat(' ',52).       '║')
+    call setline(15, repeat(' ',52).       '║')
+    call setline(16, repeat(' ',52).       '║ Fewest Pushes')
+    call setline(17, repeat(' ',52).       '║')
+    call setline(18, repeat(' ',52).       '║')
+    call setline(19, repeat(' ',52).       '║')
+    call setline(20, repeat(' ',52).       '╠═══════════════════════════')
+    call setline(21, repeat(' ',52).       '║')
+    call setline(22, repeat(' ',52).printf('║  %s   Player', g:charSoko))
+    call setline(23, repeat(' ',52).printf('║ %s %s  Package', g:charPackage, g:charPackageHome))
+    call setline(24, repeat(' ',52).printf('║  %s   Wall', g:charWall))
+    call setline(25, repeat(' ',52).printf('║  %s   Home', g:charHome))
+    call setline(26, repeat(' ',52).       '║')
+    call setline(27, repeat(' ',52).       '║ h j k l  Move')
+    call setline(28, repeat(' ',52).       '║    u     Undo')
+    call setline(29, repeat(' ',52).       '║    r     Restart')
+    call setline(30, repeat(' ',52).       '║    u     Undo')
+    call setline(31, repeat(' ',52).       '║    n     Next Level')
+    call setline(32, repeat(' ',52).       '║    p     Previous Level')
+    call setline(33, repeat(' ',52).       '║    c     Choose Pack')
+    let l = 31
+    while l < size
+        call setline(l+3,repeat(' ',52).   '║')
+        let l += 1
+    endwhile
+    call setline(l+3, repeat('═',52).      '╩═══════════════════════════')
     call s:UpdateHeader(a:level)
-    call setline(9, 'Commands:  h,j,k,l - move   u - undo   r - restart   n,p - next, previous level')
-    call setline(10,repeat('═', 80))
-    let s:endHeaderLine = 11
+    call s:LoadLevel(a:level)
 endfunction
 
 function! s:UpdateHeader(level)   "{{{1
@@ -132,9 +162,11 @@ function! s:UpdateHeader(level)   "{{{1
     " Args     : level - the current level number
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call setline(5, printf('Level:  %6d  %19s  %19s      %s soko      %s wall', a:level,b:fewestMovesDate,b:fewestPushesDate,g:charSoko,g:charWall))
-    call setline(6, printf('Moves:  %6d  %10s           %10s               %s package   %s home',b:moves,b:fewestMovesMoves,b:fewestPushesMoves,g:charPackage,g:charHome))
-    call setline(7, printf('Pushes: %6d  %10s           %10s', b:pushes,b:fewestMovesPushes,b:fewestPushesPushes))
+    call setline( 8, strcharpart(getline( 8),0,52).printf('║  %d moves  %d pushes',b:moves,b:pushes))
+    call setline(13, strcharpart(getline(13),0,52).printf('║  %5s moves  %5s pushes',b:fewestMovesMoves,b:fewestMovesPushes))
+    call setline(14, strcharpart(getline(14),0,52).printf('║        %s',b:fewestMovesDate))
+    call setline(17, strcharpart(getline(17),0,52).printf('║  %5s moves  %5s pushes',b:fewestPushesMoves,b:fewestPushesPushes))
+    call setline(18, strcharpart(getline(18),0,52).printf('║        %s',b:fewestPushesDate))
 endfunction
 
 function! s:UpdateFooter()   "{{{1
@@ -171,7 +203,7 @@ function! s:DisplayLevelCompleteMessage()   "{{{1
     endfor
 endfunction
 
-function! s:ProcessLevel()   "{{{1
+function! s:ProcessLevel(room, paddingTop, paddingLeft)   "{{{1
     " About...   {{{2
     " Function : ProcessLevel (PRIVATE
     " Purpose  : processes a level which has been loaded and populates the object
@@ -184,32 +216,40 @@ function! s:ProcessLevel()   "{{{1
     let b:packageList = [] " list of all package locations
     let b:undoList = []    " list of current moves (used for the undo move feature)
 
-    let eob = line('$')
-    let l = s:endHeaderLine
-    while (l <= eob)
-        let currentLine = getline(l)
-        let eoc = strchars(currentLine)
-        let c = 1
-        while (c <= eoc)
-            let ch = currentLine[c]
+    for l in range(len(a:room))
+        for c in range(strchars(a:room[l]))
+            let ch = strcharpart(a:room[l], c, 1)
+            let location = [l+3+a:paddingTop,c+a:paddingLeft]
             if (ch == '#')
-                call add(b:wallList, [l,c])
+                call add(b:wallList, location)
             elseif (ch == '.')
-                call add(b:homeList, [l,c])
+                call add(b:homeList, location)
             elseif (ch == '*')
-                call add(b:homeList, [l,c])
-                call add(b:packageList, [l,c])
+                call add(b:homeList, location)
+                call add(b:packageList, location)
             elseif (ch == '$')
-                call add(b:packageList, [l,c])
+                call add(b:packageList, location)
             elseif (ch == '@')
-                let b:manPos = [l,c]
-            else
+                let b:manPos = location
             endif
-            let c = c + 1
-        endwhile
-        let l = l + 1
-    endwhile
+        endfor
+    endfor
 endfunction
+
+function! s:LoadLevelPack()   "{{{1
+    " About...   {{{2
+    " Function : LoadLevelPack (PRIVATE)
+    " Purpose  : loads the level pack JSON file into memory.
+    " Args     :
+    " Returns  : nothing
+    " Author   : Phil Runninger   }}}
+    let levelFile = g:SokobanLevelDirectory . '/Original.json'
+    if filereadable(levelFile)
+        let b:levelPack = eval(join(readfile(levelFile),''))
+    else
+        let b:levelPack = {}
+    endif
+endfunction    "}}}
 
 function! s:LoadLevel(level)   "{{{1
     " About...   {{{2
@@ -218,24 +258,26 @@ function! s:LoadLevel(level)   "{{{1
     " Args     : level - the level to load
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    normal! dG
-    let levelFile = g:SokobanLevelDirectory . '/level' . a:level . '.sok'
-    if filereadable(levelFile)
+    if a:level <= len(b:levelPack.levelCollection.levels)
+        let level = b:levelPack.levelCollection.levels[a:level-1]
+        let paddingLeft = (52-level.width) / 2
+        let paddingTop = max([0,(31-level.height)/2])
+        call s:ProcessLevel(level.room, paddingTop, paddingLeft)
+
         setlocal modifiable
-        silent! execute 'r ' . levelFile
-        let maxWidth = max(map(getline(s:endHeaderLine,line('$')), {_,l -> strchars(l)}))
-        silent! execute s:endHeaderLine.',$ s/^/' . repeat(' ', (80-maxWidth)/2) . '/g'
-        call s:ProcessLevel()
+        for line in range(level.height)
+            let roomline = level.room[line]
+            let roomline = substitute(roomline, '\V@', g:charSoko, 'g')
+            let roomline = substitute(roomline, '\V#', g:charWall, 'g')
+            let roomline = substitute(roomline, '\V$', g:charPackage, 'g')
+            let roomline = substitute(roomline, '\V.', g:charHome, 'g')
+            let roomline = substitute(roomline, '\V*', g:charPackageHome, 'g')
+            let text = getline(line+3+paddingTop)
+            let text = strcharpart(text,0,paddingLeft).roomline.strcharpart(text,paddingLeft+strchars(roomline))
+            call setline(line+3+paddingTop, text)
+        endfor
+
         let b:level = a:level
-
-        " Replace placeholder text (level file) with appropriate characters.
-        silent! execute s:endHeaderLine . ',$ s/\V@/'.g:charSoko.'/g'
-        silent! execute s:endHeaderLine . ',$ s/\V#/'.g:charWall.'/g'
-        silent! execute s:endHeaderLine . ',$ s/\V$/'.g:charPackage.'/g'
-        silent! execute s:endHeaderLine . ',$ s/\V./'.g:charHome.'/g'
-        silent! execute s:endHeaderLine . ',$ s/\V*/'.g:charPackageHome.'/g'
-
-        call append(line('$'), repeat('═', 80))
         let s:startSequence = line('$')
 
         if has('syntax')
@@ -257,7 +299,6 @@ function! s:LoadLevel(level)   "{{{1
         setlocal nolist nonumber
     else
         let b:level = 0
-        call append(10, 'Could not find file ' . levelFile)
     endif
 endfunction
 
@@ -371,7 +412,7 @@ function! s:AddVectors(x, y)   "{{{1
     " Args     : x - a list of 2 numbers
     "            y - a list of 2 numbers
     " Returns  : A new list, the sum of x and y
-    " Author   : Phil Runninger (philrunninger@gmail.com)   }}}
+    " Author   : Phil Runninger   }}}
     return [a:x[0]+a:y[0], a:x[1]+a:y[1]]
 endfunction
 
@@ -382,7 +423,7 @@ function! s:SubtractVectors(x, y)   "{{{1
     " Args     : x - a list of 2 numbers
     "            y - a list of 2 numbers
     " Returns  : A new list, the difference of x and y
-    " Author   : Phil Runninger (philrunninger@gmail.com)   }}}
+    " Author   : Phil Runninger   }}}
     return [a:x[0]-a:y[0], a:x[1]-a:y[1]]
 endfunction
 
@@ -633,22 +674,22 @@ function! s:SaveCurrentLevelToFile(level)   "{{{1
     call s:SaveScoresToFile()
 endfunction
 
-function! s:FindOrCreateBuffer(filename, doSplit)   "{{{1
+function! s:FindOrCreateBuffer(doSplit)   "{{{1
     " About...   {{{2
     " Function : FindOrCreateBuffer (PRIVATE)
     "            Checks the window list for the buffer. If the buffer is in an
     "            already open window, it switches to the window. If the buffer
     "            was not in a window, it switches to that buffer. If the buffer did
     "            not exist, it creates it.
-    " Args     : filename (IN) -- the name of the file
-    "            doSplit (IN) -- indicates whether the window should be split
+    " Args     : doSplit (IN) -- indicates whether the window should be split
     "                            ("v", "h", "e")
     " Returns  : nothing
     " Author   : Michael Sharpe <feline@irendi.com>   }}}
-    let bufNum = bufnr(a:filename, 1)
-    let winNum = bufwinnr(a:filename)
+    let filename = '_.#VimSokoban#._'
+    let bufNum = bufnr(filename, 1)
+    let winNum = bufwinnr(filename)
     if (winNum == -1)
-        execute {'h': 'sbuffer', 'v':'vert sbuffer', 'e':'buffer'}[a:doSplit] . a:filename
+        execute {'h': 'sbuffer', 'v':'vert sbuffer', 'e':'buffer'}[a:doSplit] . filename
     else
         execute winNum.'wincmd w'
     endif
@@ -663,15 +704,16 @@ function! Sokoban(splitWindow, ...)   "{{{1
     "            level (optional) - specifies the start level
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
-    call s:FindOrCreateBuffer('__.#VimSokoban#.__', a:splitWindow)
+    call s:FindOrCreateBuffer(a:splitWindow)
     setlocal modifiable
     call s:ClearBuffer()
     let lastRecordedLevel = s:LoadScoresFile()
     let level = max([1, a:0 ? a:1 : lastRecordedLevel])
+    call s:GetCurrentHighScores(level)
     let b:moves = 0        " counter of number of moves made
     let b:pushes = 0       " counter of number of pushes made
-    call s:GetCurrentHighScores(level)
-    call s:DisplayInitialHeader(level)
+    call s:LoadLevelPack()
+    call s:DrawGameBoard(level)
     call s:LoadLevel(level)
     setlocal nomodifiable
     call s:SetupMaps(1)
