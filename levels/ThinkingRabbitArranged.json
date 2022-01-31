@@ -11,7 +11,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, Andoni Elcano",
-                "lines": [
+                "room": [
                     "##########",
                     "#..      #",
                     "#..$  $  #",
@@ -27,7 +27,7 @@
                 "id": "Boxxle I / Level 8 R--1",
                 "width": 10,
                 "height": 7,
-                "lines": [
+                "room": [
                     "   ######",
                     " ###    #",
                     "##. $## ##",
@@ -42,7 +42,7 @@
                 "width": 21,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "######",
                     "#    ###      ######",
                     "# #  $ #      #  ..#",
@@ -58,7 +58,7 @@
                 "id": "Boxxle II / Level 2 R--1",
                 "width": 9,
                 "height": 8,
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  #",
                     "###  ####",
@@ -74,7 +74,7 @@
                 "width": 7,
                 "height": 7,
                 "copyright": "Thinking Rabbit, Radio Shack",
-                "lines": [
+                "room": [
                     " ######",
                     "## . @#",
                     "# $ $ #",
@@ -89,7 +89,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ######",
                     "###   .#",
                     "#   .#####",
@@ -106,7 +106,7 @@
                 "width": 7,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#######",
                     "#  * @#",
                     "#$ .$ #",
@@ -123,7 +123,7 @@
                 "width": 21,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "    #########",
                     "    #       #",
                     "    # #*### #",
@@ -145,7 +145,7 @@
                 "id": "Originals / Level 1 R--2",
                 "width": 22,
                 "height": 11,
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -163,7 +163,7 @@
                 "id": "Originals / Level 1 R--3",
                 "width": 17,
                 "height": 11,
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -182,7 +182,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Mercury",
-                "lines": [
+                "room": [
                     "      #####",
                     "      #   #",
                     "      #$  #",
@@ -203,7 +203,7 @@
                 "width": 17,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "  ###$  #",
@@ -221,7 +221,7 @@
                 "width": 19,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -240,7 +240,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -259,7 +259,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, stopheart",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "   ## $ #",
@@ -278,7 +278,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, Jordi Doménech",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -297,7 +297,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, Jordi Doménech",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -316,7 +316,7 @@
                 "width": 12,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, Jordi Doménech",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -335,7 +335,7 @@
                 "width": 12,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, Jordi Doménech",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -354,7 +354,7 @@
                 "width": 12,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Erim Sever, Jordi Doménech",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -372,7 +372,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, Erim Sever, Jordi Doménech",
-                "lines": [
+                "room": [
                     "  #####",
                     "  #   #",
                     "  #$  #",
@@ -389,7 +389,7 @@
                 "width": 9,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, stopheart, Jordi Doménech",
-                "lines": [
+                "room": [
                     "  #####",
                     "  #   #",
                     " ## $ #",
@@ -408,7 +408,7 @@
                 "width": 9,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Erim Sever, stopheart, Jordi Doménech, YASGen",
-                "lines": [
+                "room": [
                     "  #####",
                     "  #   #",
                     " ## $ #",
@@ -427,7 +427,7 @@
                 "width": 15,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$  #",
@@ -446,7 +446,7 @@
                 "width": 16,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Juriy Szczapow",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "  ###  $###",
@@ -464,7 +464,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Mercury",
-                "lines": [
+                "room": [
                     "      #####",
                     "      #   #",
                     "      #$  #",
@@ -485,7 +485,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #   #",
@@ -505,7 +505,7 @@
                 "width": 15,
                 "height": 12,
                 "copyright": "Thinking Rabbit, Thomas Jensen",
-                "lines": [
+                "room": [
                     "#########",
                     "#       #",
                     "# $ $ $ #",
@@ -525,7 +525,7 @@
                 "width": 22,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       #####",
                     "       #   #",
                     "       #$  #",
@@ -545,7 +545,7 @@
                 "width": 17,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "    #   #",
                     "    #$ $#",
@@ -563,7 +563,7 @@
                 "width": 12,
                 "height": 10,
                 "copyright": "Katsuhiko Sadamoto, Jordi Doménech",
-                "lines": [
+                "room": [
                     " #########",
                     " #..#    ###",
                     " #..# $    #",
@@ -581,7 +581,7 @@
                 "width": 13,
                 "height": 7,
                 "copyright": "Katsuhiko Sadamoto, unknown",
-                "lines": [
+                "room": [
                     "###########",
                     "#.  #     ###",
                     "#.  # $  $  #",
@@ -596,7 +596,7 @@
                 "width": 14,
                 "height": 10,
                 "copyright": "Katsuhiko Sadamoto, unknown",
-                "lines": [
+                "room": [
                     "############",
                     "#..  #     ###",
                     "#..  # $  $  #",
@@ -614,7 +614,7 @@
                 "width": 14,
                 "height": 10,
                 "copyright": "Katsuhiko Sadamoto, unknown",
-                "lines": [
+                "room": [
                     "############",
                     "#..  #     ###",
                     "#..  # $  $  #",
@@ -632,7 +632,7 @@
                 "width": 14,
                 "height": 10,
                 "copyright": "Katsuhiko Sadamoto, Eric Linenberg",
-                "lines": [
+                "room": [
                     "############",
                     "#..  #     ###",
                     "#..  # $  $  #",
@@ -650,7 +650,7 @@
                 "width": 17,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Charles W Dickens",
-                "lines": [
+                "room": [
                     "        ########",
                     "        #     @#",
                     "        # $#$ ##",
@@ -668,7 +668,7 @@
                 "width": 17,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       ########",
                     "       #   @  #",
                     "       # $#$ ##",
@@ -686,7 +686,7 @@
                 "width": 9,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     " #######",
                     " #    @#",
                     " # $#$ #",
@@ -704,7 +704,7 @@
                 "width": 15,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      #######",
                     "      #@    #",
                     "      # $#$ #",
@@ -722,7 +722,7 @@
                 "width": 17,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Karl-Heinz Jahns",
-                "lines": [
+                "room": [
                     "         ########",
                     "         #     @#",
                     "         # $#$ ##",
@@ -740,7 +740,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Yuri Dobronravin",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  #",
                     "           #  #####",
@@ -763,7 +763,7 @@
                 "width": 20,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "           #########",
                     "############  .....#",
                     "#    #  $ $   .....#",
@@ -783,7 +783,7 @@
                 "width": 20,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "           #########",
                     "           #   ....#",
                     "############   ....#",
@@ -805,7 +805,7 @@
                 "width": 14,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     "       #######",
                     "########   ..#",
                     "#   #   $ ...#",
@@ -826,7 +826,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "             ######",
                     "           ###....#",
                     "############ $....#",
@@ -848,7 +848,7 @@
                 "width": 20,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "           #####",
                     "           #   #####",
                     "           # #$##  #",
@@ -869,7 +869,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     " ########",
                     " #  #   #####",
                     " #  # #$##  #",
@@ -888,7 +888,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     " ########",
                     " #  #   #####",
                     " #  # #$##  #",
@@ -907,7 +907,7 @@
                 "width": 10,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     " #####",
                     "##   #####",
                     "#  #$##  #",
@@ -926,7 +926,7 @@
                 "width": 14,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "     #   #####",
                     "     # #$##  #",
@@ -947,7 +947,7 @@
                 "width": 17,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "         ########",
                     "        ##  ##  #",
                     "        #  $ $  #",
@@ -967,7 +967,7 @@
                 "width": 10,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     " #########",
                     "##...# @ #",
                     "# ...#   #",
@@ -985,7 +985,7 @@
                 "width": 12,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Charles W Dickens",
-                "lines": [
+                "room": [
                     "######  ###",
                     "#..  # ##@##",
                     "#..  ###   #",
@@ -1004,7 +1004,7 @@
                 "width": 12,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "###### ####",
                     "#..  # #  ##",
                     "#..  ###   #",
@@ -1023,7 +1023,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#...# #####",
                     "#.. ###   #",
@@ -1041,7 +1041,7 @@
                 "id": "Originals / Level 7 R--1",
                 "width": 13,
                 "height": 12,
-                "lines": [
+                "room": [
                     "       #####",
                     " #######   ##",
                     "##@#  ## $  #",
@@ -1061,7 +1061,7 @@
                 "width": 13,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     "     ####",
                     " #####  ####",
                     " #@  # $   #",
@@ -1079,7 +1079,7 @@
                 "width": 13,
                 "height": 10,
                 "copyright": "Thinking Rabbit, anian",
-                "lines": [
+                "room": [
                     "     ####",
                     " #####  ####",
                     " #   #     #",
@@ -1097,7 +1097,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       #####",
                     "   #####   ##",
                     "####  ## $$ #",
@@ -1117,7 +1117,7 @@
                 "width": 14,
                 "height": 13,
                 "copyright": "Thinking Rabbit, anian",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   #####",
                     "  # $#     ###",
@@ -1138,7 +1138,7 @@
                 "width": 15,
                 "height": 17,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ####",
                     " #  ###########",
                     " #    $   $ $ #",
@@ -1163,7 +1163,7 @@
                 "width": 15,
                 "height": 17,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ####",
                     " #  ###########",
                     " #    $   $ $ #",
@@ -1188,7 +1188,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   ####",
                     "   #  ###########",
                     "   #    $   $ $ #",
@@ -1212,7 +1212,7 @@
                 "width": 16,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Eric Linenberg",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  ###########",
                     "  #    $   $ $ #",
@@ -1235,7 +1235,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "          #########",
                     "      #####  .....#",
                     "      #      . ...#",
@@ -1255,7 +1255,7 @@
                 "width": 17,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Karl-Heinz Jahns",
-                "lines": [
+                "room": [
                     "          #######",
                     "          #     #",
                     "      #####     #",
@@ -1276,7 +1276,7 @@
                 "id": "Originals / Level 9 R--4",
                 "width": 17,
                 "height": 14,
-                "lines": [
+                "room": [
                     "          #######",
                     "          #  ...#",
                     "      #####  ...#",
@@ -1298,7 +1298,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ###  #############",
                     "##@####       #   #",
                     "# $$   $$  $ $    #",
@@ -1318,7 +1318,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     " ###  #############",
                     "##@####       #   #",
                     "#  $   $ $$$$*....#",
@@ -1342,7 +1342,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Charles W Dickens",
-                "lines": [
+                "room": [
                     "          ####",
                     "     #### #  #",
                     "   ### @###$ #",
@@ -1365,7 +1365,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #### ####",
                     "   ###  ###  #",
                     "  ##   @  $  #",
@@ -1385,7 +1385,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "          ####",
                     "     #### #  #",
                     "   ### @###  #",
@@ -1407,7 +1407,7 @@
                 "id": "Originals / Level 11 R--5",
                 "width": 19,
                 "height": 15,
-                "lines": [
+                "room": [
                     "          ####",
                     "     #### #  #",
                     "   ### @###$ #",
@@ -1430,7 +1430,7 @@
                 "width": 17,
                 "height": 12,
                 "copyright": "Hachiro Kajiwara, unknown",
-                "lines": [
+                "room": [
                     "################",
                     "#              #",
                     "# #            #",
@@ -1450,7 +1450,7 @@
                 "width": 17,
                 "height": 13,
                 "copyright": "Hachiro Kajiwara, Pavel Klavik",
-                "lines": [
+                "room": [
                     "################",
                     "#              #",
                     "# # ######     #",
@@ -1471,7 +1471,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #########",
                     "  ##   ##  ######",
                     "###     #  #    ###",
@@ -1491,7 +1491,7 @@
                 "width": 20,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ################",
                     "##       #  #   ####",
                     "#  $$ #$ #  #  ... #",
@@ -1511,7 +1511,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   #######",
                     "  #  $  ##   ######",
@@ -1531,7 +1531,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   #######",
                     "  #  $  ##   ######",
@@ -1551,7 +1551,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "   #########",
                     "  ##   ##  ######",
                     "###     # $#   .###",
@@ -1572,7 +1572,7 @@
                 "width": 20,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #########",
                     "  ###   ##  ######",
                     "###      #  #    ###",
@@ -1593,7 +1593,7 @@
                 "width": 18,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Charles W Dickens",
-                "lines": [
+                "room": [
                     "       #######",
                     " #######     #",
                     " #     # $@$ #",
@@ -1617,7 +1617,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "######  ###########",
                     "#    ####     #   #",
                     "# #$$   # $ $   $ #",
@@ -1641,7 +1641,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       #######",
                     " #######     #",
                     " #     # $ $ #####",
@@ -1662,7 +1662,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Karl-Heinz Jahns",
-                "lines": [
+                "room": [
                     "        #######",
                     "  #######     #",
                     "  #     # $@$ #",
@@ -1686,7 +1686,7 @@
                 "width": 18,
                 "height": 17,
                 "copyright": "Thinking Rabbit, MacTommy",
-                "lines": [
+                "room": [
                     "   ########",
                     "   #   #  #",
                     "   #  $   #",
@@ -1711,7 +1711,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   ########",
                     "   #   #  #",
                     "   #  $   #",
@@ -1735,7 +1735,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   ########",
                     "   #   #  #",
                     "   #  $ $ #",
@@ -1759,7 +1759,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "   ########",
                     "   #   #  #",
                     "   #  $   #",
@@ -1783,7 +1783,7 @@
                 "width": 14,
                 "height": 15,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    #  ####",
@@ -1806,7 +1806,7 @@
                 "width": 14,
                 "height": 15,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    #  ####",
@@ -1829,7 +1829,7 @@
                 "width": 14,
                 "height": 15,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    #  ####",
@@ -1852,7 +1852,7 @@
                 "width": 16,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ###########",
                     "  #..   #   #",
                     "  #..       #",
@@ -1874,7 +1874,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Michael Bischoff",
-                "lines": [
+                "room": [
                     "     ###########",
                     "     #  .  #   #",
                     "     # #.    @ #",
@@ -1895,7 +1895,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     ###########",
                     "     #  #    @ #",
                     " #####....   ####",
@@ -1915,7 +1915,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "     ###########",
                     "     #  .  #   #",
                     "     # #.$   $@#",
@@ -1936,7 +1936,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Yang Chao",
-                "lines": [
+                "room": [
                     "     ######",
                     " #####    #",
                     " #  ##$## ####",
@@ -1959,7 +1959,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Alex Saenko",
-                "lines": [
+                "room": [
                     "    ##########",
                     "#####        ####",
                     "#     #   $  #@ #",
@@ -1983,7 +1983,7 @@
                 "width": 21,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, anian, Xi Bei Tian Lang",
-                "lines": [
+                "room": [
                     "                 ####",
                     "    ##############  #",
                     "#####... ....#  ##  #",
@@ -2009,7 +2009,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Thomas Jensen",
-                "lines": [
+                "room": [
                     "    ##########",
                     "#####        ####",
                     "#     #    $ #@ #",
@@ -2033,7 +2033,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "    ##########",
                     "#####        ####",
                     "#     # $ $  #@.#",
@@ -2057,7 +2057,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Michael Bischoff",
-                "lines": [
+                "room": [
                     "######     ####",
                     "#    #######  #####",
                     "#   $#  #  $  #   #",
@@ -2081,7 +2081,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #######",
                     "    #  # @####",
                     "##### $#$ #  ##",
@@ -2103,7 +2103,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Eric Linenberg",
-                "lines": [
+                "room": [
                     "    #######",
                     "    #  #  ####",
                     "##### $#$ #  ##",
@@ -2125,7 +2125,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "    #######",
                     "    #  #  ####",
                     "##### $#$ #  ##",
@@ -2147,7 +2147,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Eric Linenberg",
-                "lines": [
+                "room": [
                     "###############",
                     "#..........  .####",
                     "#..........$$.#  #",
@@ -2171,7 +2171,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "###############",
                     "#..........  .####",
                     "#..........$$.#  #",
@@ -2194,7 +2194,7 @@
                 "id": "Originals / Level 25 R--3",
                 "width": 19,
                 "height": 16,
-                "lines": [
+                "room": [
                     "####",
                     "#  ##############",
                     "#  #   ..#......#",
@@ -2218,7 +2218,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "####",
                     "#  ##############",
                     "#  #   ..#......#",
@@ -2242,7 +2242,7 @@
                 "width": 15,
                 "height": 12,
                 "copyright": "Shinji Yamada, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  #  #####",
                     "##  #  #...###",
@@ -2262,7 +2262,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #################",
                     " #...   #    #   ##",
                     "##....   $## # #$ #",
@@ -2281,7 +2281,7 @@
                 "id": "Originals / Level 28 R--2",
                 "width": 17,
                 "height": 15,
-                "lines": [
+                "room": [
                     "        ######",
                     "     ####    #",
                     "    ## $  $  ####",
@@ -2304,7 +2304,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Kurt Nittel",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "# $  ########",
@@ -2325,7 +2325,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Lena Pankratova",
-                "lines": [
+                "room": [
                     "#############",
                     "#  #        ###",
                     "#    $$ $##   ###",
@@ -2346,7 +2346,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, York Shen",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "# $  ########",
@@ -2367,7 +2367,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Eric F Tchong",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    ########",
@@ -2388,7 +2388,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Eric F Tchong",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    ########",
@@ -2409,7 +2409,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Eric F Tchong",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    ########",
@@ -2430,7 +2430,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "# $  #########",
@@ -2451,7 +2451,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ####",
                     " #  ##",
                     " #$  ########",
@@ -2472,7 +2472,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "######",
                     "#    #########",
                     "##$# #       ######",
@@ -2492,7 +2492,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#@  ##",
                     "# $  ########",
@@ -2513,7 +2513,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "# $  #########",
@@ -2534,7 +2534,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Zhenying, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    #########",
@@ -2555,7 +2555,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Zhenying",
-                "lines": [
+                "room": [
                     "######",
                     "#    #",
                     "#    #########",
@@ -2576,7 +2576,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Thinking Rabbit, Zhenying, Eric F Tchong",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    #########",
@@ -2597,7 +2597,7 @@
                 "width": 21,
                 "height": 15,
                 "copyright": "Thinking Rabbit, MacTommy",
-                "lines": [
+                "room": [
                     " ##################",
                     "##       #        #",
                     "#  #$ ##     $ $  ###",
@@ -2620,7 +2620,7 @@
                 "width": 20,
                 "height": 12,
                 "copyright": "Thinking Rabbit, Allan Dragon",
-                "lines": [
+                "room": [
                     "       ###########",
                     "       #   #     #",
                     "#####  #     $ $ #",
@@ -2640,7 +2640,7 @@
                 "width": 12,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "###########",
                     "#@  #     #",
                     "#         #",
@@ -2661,7 +2661,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       ###########",
                     "       #   #     #",
                     "#####  #     $ $ #",
@@ -2683,7 +2683,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "       ###########",
                     "       #   #     #",
                     "#####  #     $ $ #",
@@ -2705,7 +2705,7 @@
                 "width": 18,
                 "height": 15,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  #########",
                     " ##  ##  #   #",
@@ -2728,7 +2728,7 @@
                 "width": 18,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Karl-Heinz Jahns",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  #########",
                     " ##  ##  #   #",
@@ -2752,7 +2752,7 @@
                 "width": 18,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Phil Shapiro",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  #########",
                     " ##  ##  #   #",
@@ -2775,7 +2775,7 @@
                 "width": 18,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  #########",
                     " ##  ##  #   #",
@@ -2799,7 +2799,7 @@
                 "width": 12,
                 "height": 17,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ####",
                     "  #####  #",
                     " ##     $#",
@@ -2823,7 +2823,7 @@
                 "id": "Originals / Level 32 R--3",
                 "width": 13,
                 "height": 15,
-                "lines": [
+                "room": [
                     "      ####",
                     "  #####  #",
                     " ##     $#",
@@ -2846,7 +2846,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Michael Bischoff",
-                "lines": [
+                "room": [
                     "############ ######",
                     "#   #    # ###....#",
                     "#   $$#   @  .....#",
@@ -2870,7 +2870,7 @@
                 "width": 22,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Li Jin You",
-                "lines": [
+                "room": [
                     "            #####",
                     "#####  ######   #",
                     "#   ####  $ $ $ #",
@@ -2893,7 +2893,7 @@
                 "id": "Originals / Level 37 R--2",
                 "width": 21,
                 "height": 15,
-                "lines": [
+                "room": [
                     "###########",
                     "#......   #########",
                     "#......   #  ##   #",
@@ -2916,7 +2916,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "###########",
                     "#......   #   #####",
                     "#......   #####   #",
@@ -2938,7 +2938,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "###########    ####",
                     "#......   ######  #",
                     "#......   #  ##   #",
@@ -2961,7 +2961,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Byxon Games",
-                "lines": [
+                "room": [
                     "###########",
                     "#....     #########",
                     "#....     #  ##   #",
@@ -2984,7 +2984,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "############ ######",
                     "#   #    # ###....#",
                     "#   $$#   @  .....#",
@@ -3009,7 +3009,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     " #####       ######",
                     "##   #########....#",
                     "#    ##     ##....#",
@@ -3033,7 +3033,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "          #####",
                     "          #   ###",
                     "         ##     #",
@@ -3056,7 +3056,7 @@
                 "width": 20,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Karl-Heinz Jahns",
-                "lines": [
+                "room": [
                     "            #####",
                     "           ##   ##",
                     "          ##     #",
@@ -3078,7 +3078,7 @@
                 "id": "Originals / Level 41 R--6",
                 "width": 19,
                 "height": 15,
-                "lines": [
+                "room": [
                     "          ######",
                     "          #    ##",
                     "         ##     #",
@@ -3101,7 +3101,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Wayne",
-                "lines": [
+                "room": [
                     "           #####",
                     "          ##   ##",
                     "         ##     #",
@@ -3124,7 +3124,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Yoshiki Kondo, Allan Dragon",
-                "lines": [
+                "room": [
                     "    #########",
                     "  ###       ######",
                     "  #    ## $ $   @#",
@@ -3144,7 +3144,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Yoshiki Kondo, Allan Dragon",
-                "lines": [
+                "room": [
                     "     ########",
                     "  ####      ######",
                     "  #    ## $ $    #",
@@ -3164,7 +3164,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, unknown",
-                "lines": [
+                "room": [
                     "     ########",
                     "  ####      ######",
                     "  #    ## $ $    #",
@@ -3185,7 +3185,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, unknown",
-                "lines": [
+                "room": [
                     "     ########",
                     "  ####      #####",
                     "  #    ## $ $   #",
@@ -3206,7 +3206,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "     ########",
                     "  ####      ######",
                     "  #    ## $ $   @#",
@@ -3227,7 +3227,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Thomas Jensen",
-                "lines": [
+                "room": [
                     "     ########",
                     "  ####      ######",
                     "  #    ## $ $   @#",
@@ -3248,7 +3248,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, unknown",
-                "lines": [
+                "room": [
                     "     ########",
                     "  ####      ######",
                     "  #    ## $ $   @#",
@@ -3269,7 +3269,7 @@
                 "width": 18,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, unknown",
-                "lines": [
+                "room": [
                     "     #########",
                     "  ####       #####",
                     "  #    ## $ $   @#",
@@ -3290,7 +3290,7 @@
                 "width": 19,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "        #######",
                     "    #####  #  ####",
                     "    #   #   $    #",
@@ -3309,7 +3309,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     ##############",
                     " #####            #",
                     " #   # $ $ $ $ $$ #",
@@ -3332,7 +3332,7 @@
                 "id": "Originals / Level 44 R--3",
                 "width": 19,
                 "height": 16,
-                "lines": [
+                "room": [
                     " #####",
                     " #   #",
                     " #   #",
@@ -3356,7 +3356,7 @@
                 "width": 16,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Howard Abed",
-                "lines": [
+                "room": [
                     "##### ####",
                     "#...# #  ####",
                     "#...###  $  #",
@@ -3378,7 +3378,7 @@
                 "width": 18,
                 "height": 11,
                 "copyright": "Hachiro Kajiwara, Charles W Dickens",
-                "lines": [
+                "room": [
                     "         ####",
                     " #########  ##",
                     "##  $      $ #####",
@@ -3396,7 +3396,7 @@
                 "id": "Originals / Level 47 R--3",
                 "width": 18,
                 "height": 11,
-                "lines": [
+                "room": [
                     "         ####",
                     "##########  ##",
                     "#   $      $ #####",
@@ -3415,7 +3415,7 @@
                 "width": 13,
                 "height": 16,
                 "copyright": "Katsuji Shimizu, unknown",
-                "lines": [
+                "room": [
                     "  #########",
                     "  # . # . #",
                     "  #. . . .#",
@@ -3439,7 +3439,7 @@
                 "width": 13,
                 "height": 16,
                 "copyright": "Katsuji Shimizu, Evgeny Grigoriev",
-                "lines": [
+                "room": [
                     "   ### ###",
                     "  ##.###.##",
                     "  #.*.*.*.#",
@@ -3463,7 +3463,7 @@
                 "width": 16,
                 "height": 15,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       ####",
                     "       #  ##",
                     "       #   ##",
@@ -3486,7 +3486,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Kurt Nittel",
-                "lines": [
+                "room": [
                     "   ############",
                     "  ##..    #   #",
                     " ##..* $    $ #",
@@ -3509,7 +3509,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..    #   #",
                     "    ##..  $    $ #",
@@ -3533,7 +3533,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..    #   #",
                     "    ##..* $    $ #",
@@ -3557,7 +3557,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Eric Linenberg",
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..        #",
                     "    ##..* $    $ #",
@@ -3580,7 +3580,7 @@
                 "id": "Originals / Level 50 R--11",
                 "width": 19,
                 "height": 16,
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..    #   #",
                     "    ##..* $    $ #",
@@ -3604,7 +3604,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Mike McKee, Joe Hitchens",
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..    #   #",
                     "    ##..* $    $ #",
@@ -3628,7 +3628,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..    #   #",
                     "    ##..* $    $ #",
@@ -3652,7 +3652,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, Byxon Games",
-                "lines": [
+                "room": [
                     "      ############",
                     "     ##..    #   #",
                     "    ##..* $    $ #",
@@ -3676,7 +3676,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " # @...#",
                     " #   ####",
@@ -3692,7 +3692,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, Andoni Elcano",
-                "lines": [
+                "room": [
                     "#####",
                     "#  @#",
                     "# $$#  ###",
@@ -3708,7 +3708,7 @@
                 "id": "Perfect / Level 3 R--1",
                 "width": 7,
                 "height": 8,
-                "lines": [
+                "room": [
                     " ####",
                     "##  #",
                     "#@$ #",
@@ -3723,7 +3723,7 @@
                 "id": "Perfect / Level 4 R--1",
                 "width": 10,
                 "height": 7,
-                "lines": [
+                "room": [
                     " ########",
                     " #      ##",
                     "##$###   #",
@@ -3738,7 +3738,7 @@
                 "width": 10,
                 "height": 7,
                 "copyright": "Thinking Rabbit, Andoni Elcano",
-                "lines": [
+                "room": [
                     " #######",
                     " #     ###",
                     "##$#$#   #",
@@ -3752,7 +3752,7 @@
                 "id": "Perfect / Level 5 R--1",
                 "width": 8,
                 "height": 8,
-                "lines": [
+                "room": [
                     " ######",
                     " #@   #",
                     " # $  #",
@@ -3768,7 +3768,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #######",
                     "####     #",
                     "#   .### #",
@@ -3787,7 +3787,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Thinking Rabbit, Yong Zhong Zou",
-                "lines": [
+                "room": [
                     "      ####",
                     "  ##### @#",
                     "  #   #  #",
@@ -3803,7 +3803,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  #######",
                     " ##  # @#",
                     " #   #  #",
@@ -3819,7 +3819,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  #######",
                     " ##  # @#",
                     " #   #  #",
@@ -3834,7 +3834,7 @@
                 "id": "Perfect / Level 11 R--1",
                 "width": 12,
                 "height": 6,
-                "lines": [
+                "room": [
                     " ####  #####",
                     "##  #  #  @#",
                     "# $ ####$  #",
@@ -3847,7 +3847,7 @@
                 "id": "Perfect / Level 11 R--2",
                 "width": 13,
                 "height": 6,
-                "lines": [
+                "room": [
                     " ####  #####",
                     "##  #  #   ##",
                     "# $ ####$   #",
@@ -3861,7 +3861,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Thinking Rabbit, Marek Letrab",
-                "lines": [
+                "room": [
                     " #######",
                     " #.... #",
                     "###...$###",
@@ -3877,7 +3877,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Thinking Rabbit, Marek Letrab",
-                "lines": [
+                "room": [
                     " #######",
                     " #.....#",
                     "###...$###",
@@ -3893,7 +3893,7 @@
                 "width": 11,
                 "height": 8,
                 "copyright": "Thinking Rabbit, Eric Linenberg",
-                "lines": [
+                "room": [
                     "   ######",
                     "   # ...#",
                     "####....#",
@@ -3908,7 +3908,7 @@
                 "id": "Perfect / Level 15 R--2",
                 "width": 11,
                 "height": 8,
-                "lines": [
+                "room": [
                     "   ######",
                     "   # ...#",
                     "####....#",
@@ -3924,7 +3924,7 @@
                 "width": 11,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   ######",
                     "   # .. #",
                     "####....#",
@@ -3939,7 +3939,7 @@
                 "id": "Perfect / Level 17 R--1",
                 "width": 10,
                 "height": 8,
-                "lines": [
+                "room": [
                     "#######",
                     "#     ####",
                     "#   $ $  #",
@@ -3955,7 +3955,7 @@
                 "width": 12,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "#### #   ##",
                     "#  ### #  #",
@@ -3973,7 +3973,7 @@
                 "width": 12,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "#### #   ##",
                     "#  ### #  #",
@@ -3991,7 +3991,7 @@
                 "width": 12,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Eric Linenberg",
-                "lines": [
+                "room": [
                     "     #####",
                     "#### #   ##",
                     "#  ### #  #",
@@ -4009,7 +4009,7 @@
                 "width": 20,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     "##     #",
                     "#  ### #      ######",
@@ -4030,7 +4030,7 @@
                 "width": 14,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       ####",
                     "##### ##  ####",
                     "#@  ###....  #",
@@ -4051,7 +4051,7 @@
                 "width": 20,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "              ######",
                     "              #  ..#",
                     "   ############  ..#",
@@ -4071,7 +4071,7 @@
                 "id": "Perfect / Level 29 R--3",
                 "width": 30,
                 "height": 19,
-                "lines": [
+                "room": [
                     "  ####",
                     "###  #########################",
                     "#                      #.....#",
@@ -4098,7 +4098,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################.....#",
                     "###              @.....#",
@@ -4124,7 +4124,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################.....#",
                     "###           @........#",
@@ -4150,7 +4150,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################.....#",
                     "###         @ .........#",
@@ -4176,7 +4176,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################..*..#",
                     "###       @ ........*..#",
@@ -4202,7 +4202,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################..*..#",
                     "###       @ ........*..#",
@@ -4228,7 +4228,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################.....#",
                     "###          .+........#",
@@ -4254,7 +4254,7 @@
                 "width": 24,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland, stopheart",
-                "lines": [
+                "room": [
                     "                 #######",
                     "  ################.*...#",
                     "###       @......*.*...#",
@@ -4280,7 +4280,7 @@
                 "width": 12,
                 "height": 10,
                 "copyright": "Noriko Hashimoto, unknown",
-                "lines": [
+                "room": [
                     "####    ####",
                     "#..######..#",
                     "#*.*...*.*.#",
@@ -4298,7 +4298,7 @@
                 "width": 14,
                 "height": 12,
                 "copyright": "Noriko Hashimoto, unknown",
-                "lines": [
+                "room": [
                     "####      ####",
                     "#..#      #..#",
                     "#..########..#",
@@ -4318,7 +4318,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Noriko Hashimoto, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#......#",
                     "#$ $ $ #",
@@ -4334,7 +4334,7 @@
                 "width": 14,
                 "height": 10,
                 "copyright": "Noriko Hashimoto, unknown",
-                "lines": [
+                "room": [
                     "####      ####",
                     "#..########..#",
                     "#$ *.*.*.*.$ #",
@@ -4352,7 +4352,7 @@
                 "width": 17,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "  #######",
                     " ##  #  ####",
                     "## $ $.    #",
@@ -4375,7 +4375,7 @@
                 "width": 17,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "  #######",
                     " ##  #  ####",
                     "## $ $.    #",
@@ -4398,7 +4398,7 @@
                 "width": 17,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "     ####",
                     "  ####  ####",
                     "###  $.    #",
@@ -4421,7 +4421,7 @@
                 "width": 17,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "     ####",
                     "  ####  ####",
                     "###  $.    #",
@@ -4444,7 +4444,7 @@
                 "width": 20,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "    ##### #########",
                     "   ##   ###       #",
                     "  ## $$      # $$ #",
@@ -4464,7 +4464,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "            #####",
                     "  ######### #   #",
                     " ##       ### #$#",
@@ -4484,7 +4484,7 @@
                 "width": 15,
                 "height": 14,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "#####   ######",
                     "#     #  ##  ##",
@@ -4506,7 +4506,7 @@
                 "width": 15,
                 "height": 14,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "#####   ######",
                     "#     #  ##  ##",
@@ -4527,7 +4527,7 @@
                 "id": "Perfect / Level 42 R--1",
                 "width": 14,
                 "height": 11,
-                "lines": [
+                "room": [
                     "      #######",
                     "     ##     ##",
                     "    ##  $##  #",
@@ -4546,7 +4546,7 @@
                 "width": 14,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      #######",
                     "     ##     ##",
                     "    ##  $##  #",
@@ -4565,7 +4565,7 @@
                 "width": 14,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ########",
                     "     ##      #",
                     "    ##  $##  #",
@@ -4584,7 +4584,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, Eric F Tchong",
-                "lines": [
+                "room": [
                     "  ##########",
                     "  #    #   #",
                     "  # $#   $ #",
@@ -4605,7 +4605,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech",
-                "lines": [
+                "room": [
                     "  ##########",
                     "  #    #   #",
                     "  # $#   $ #",
@@ -4626,7 +4626,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech",
-                "lines": [
+                "room": [
                     "  ##########",
                     "  #    #   #",
                     "  # $#   $ #",
@@ -4647,7 +4647,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "  ##########",
                     "  #    #   #",
                     "  # $#   $ #",
@@ -4668,7 +4668,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "  ##########",
                     "  #    #   #",
                     "  # $#   $ #",
@@ -4689,7 +4689,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "  ##########",
                     "  #    #   #",
                     "  # $#   $ #",
@@ -4710,7 +4710,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "          ######",
                     "      #####....###",
                     "     ## @#.......##",
@@ -4731,7 +4731,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, Radio Shack",
-                "lines": [
+                "room": [
                     "######",
                     "#   @#",
                     "# $  ##",
@@ -4747,7 +4747,7 @@
                 "width": 7,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ######",
                     "##@   #",
                     "#   $ #",
@@ -4764,7 +4764,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, Radio Shack",
-                "lines": [
+                "room": [
                     " #####",
                     " #   ####",
                     "## #$@  #",
@@ -4779,7 +4779,7 @@
                 "width": 11,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#######",
                     "#  @  #####",
                     "# $$.** $ #",
@@ -4794,7 +4794,7 @@
                 "width": 8,
                 "height": 7,
                 "copyright": "Thinking Rabbit, Andoni Elcano",
-                "lines": [
+                "room": [
                     "  #####",
                     "###  @#",
                     "#  $. ##",
@@ -4809,7 +4809,7 @@
                 "width": 12,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ######",
                     "  #. . #",
                     " ##  . ###",
@@ -4825,7 +4825,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #..#",
                     "  # .###",
@@ -4841,7 +4841,7 @@
                 "width": 8,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#  #   #",
                     "# $..$ #",
@@ -4856,7 +4856,7 @@
                 "width": 20,
                 "height": 20,
                 "copyright": "Thinking Rabbit, monry",
-                "lines": [
+                "room": [
                     "        #######",
                     "  #######  ...#",
                     "  #        ...#",
@@ -4884,7 +4884,7 @@
                 "width": 20,
                 "height": 20,
                 "copyright": "Thinking Rabbit, monry, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "        #######",
                     "  #######  ...#",
                     "  #       ....#",
@@ -4912,7 +4912,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -4933,7 +4933,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -4954,7 +4954,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -4975,7 +4975,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -4996,7 +4996,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -5017,7 +5017,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw, stopheart",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -5038,7 +5038,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw, stopheart",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -5059,7 +5059,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw, stopheart",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -5080,7 +5080,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw, stopheart",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -5101,7 +5101,7 @@
                 "width": 23,
                 "height": 13,
                 "copyright": "Yoshiki Kondo, Jordi Doménech, David Holland, minglw, stopheart",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  ##",
                     "      #### # $ ##",
@@ -5122,7 +5122,7 @@
                 "width": 22,
                 "height": 20,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   ######    ####",
                     "  #  $      ######  #",
@@ -5150,7 +5150,7 @@
                 "width": 22,
                 "height": 20,
                 "copyright": "Thinking Rabbit, Jordi Doménech",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   ######    ####",
                     "  #  $      ######  #",
@@ -5178,7 +5178,7 @@
                 "width": 22,
                 "height": 20,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   ######    ####",
                     "  #  $      ######  #",
@@ -5206,7 +5206,7 @@
                 "width": 21,
                 "height": 20,
                 "copyright": "Thinking Rabbit, anian, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   #####    ####",
                     "  #  $     ######  #",
@@ -5234,7 +5234,7 @@
                 "width": 22,
                 "height": 20,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "   #####",
                     "  ##   ######    ####",
                     "  #  $      ######  #",
@@ -5262,7 +5262,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "     #@  ########",
                     "  ##### $  $    #",
@@ -5282,7 +5282,7 @@
                 "width": 17,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #########",
                     "    #       #",
                     "    #$$ $$# ####",
@@ -5302,7 +5302,7 @@
                 "width": 17,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #########",
                     "    #       #",
                     "    #$$ $$# ####",
@@ -5323,7 +5323,7 @@
                 "width": 21,
                 "height": 14,
                 "copyright": "Thinking Rabbit, monry",
-                "lines": [
+                "room": [
                     "           ####",
                     "  ##########  #",
                     "###   #   ##$ #######",
@@ -5345,7 +5345,7 @@
                 "width": 18,
                 "height": 18,
                 "copyright": "Thinking Rabbit, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "            ####",
                     "    #########  #",
                     "    #          #",
@@ -5371,7 +5371,7 @@
                 "width": 18,
                 "height": 18,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "    #########  #",
                     "    #          #",
@@ -5397,7 +5397,7 @@
                 "width": 17,
                 "height": 18,
                 "copyright": "Thinking Rabbit, York Shen, Evgeny Grigoriev",
-                "lines": [
+                "room": [
                     "           ####",
                     "   #########  #",
                     "   #        $ #",
@@ -5423,7 +5423,7 @@
                 "width": 17,
                 "height": 18,
                 "copyright": "Thinking Rabbit, York Shen, Evgeny Grigoriev, Gyjgw, unknown",
-                "lines": [
+                "room": [
                     "           ####",
                     "   #########  #",
                     "   #        $ #",
@@ -5449,7 +5449,7 @@
                 "width": 17,
                 "height": 18,
                 "copyright": "Thinking Rabbit, York Shen, Evgeny Grigoriev, Gyjgw, unknown",
-                "lines": [
+                "room": [
                     "           ####",
                     "           #  #",
                     "           #$ #",
@@ -5475,7 +5475,7 @@
                 "width": 17,
                 "height": 18,
                 "copyright": "Thinking Rabbit, York Shen, Evgeny Grigoriev, Gyjgw, minglw",
-                "lines": [
+                "room": [
                     "           ####",
                     "   #########  #",
                     "   #        * #",
@@ -5501,7 +5501,7 @@
                 "width": 17,
                 "height": 18,
                 "copyright": "Thinking Rabbit, York Shen, Evgeny Grigoriev, Gyjgw, minglw",
-                "lines": [
+                "room": [
                     "           ####",
                     "   #########  #",
                     "   #.       * #",
@@ -5527,7 +5527,7 @@
                 "width": 18,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "    ####   #####",
                     "    #  #####   #",
                     "    #$      .  #",
@@ -5552,7 +5552,7 @@
                 "width": 18,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "    ####   #####",
                     "    #  #####   #",
                     "    #$      .  #",
@@ -5577,7 +5577,7 @@
                 "width": 18,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "    ####   #####",
                     "    #  #####   #",
                     "    #$      .  #",
@@ -5602,7 +5602,7 @@
                 "width": 18,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland",
-                "lines": [
+                "room": [
                     "    ####   #####",
                     "    #  #####   #",
                     "    #$      .  #",
@@ -5627,7 +5627,7 @@
                 "width": 18,
                 "height": 18,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "   ##########  #",
                     "   #           #",
@@ -5653,7 +5653,7 @@
                 "width": 18,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Jordi Doménech, David Holland, Findus",
-                "lines": [
+                "room": [
                     "    ####   #####",
                     "    #  #####   #",
                     "    #$      .  #",
@@ -5678,7 +5678,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "###############",
                     "#      #      #",
                     "# $ #$ # $##$ #",
@@ -5699,7 +5699,7 @@
                 "width": 16,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     " #########",
                     " #       #######",
                     " #    $   #    #",
@@ -5719,7 +5719,7 @@
                 "width": 20,
                 "height": 18,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  ####",
                     "  #* @  #",
@@ -5745,7 +5745,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "    ###########",
                     " ####         ####",
                     " #    # $## #    #",
@@ -5765,7 +5765,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "    ###########",
                     " ####    .    ####",
                     " #    # $.# #    #",
@@ -5786,7 +5786,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "    ###########",
                     " ####    .    ####",
                     " #    # $.# #    #",
@@ -5807,7 +5807,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Jordi Doménech",
-                "lines": [
+                "room": [
                     "       ######",
                     "       # .  #",
                     "       # *$ #",
@@ -5828,7 +5828,7 @@
                 "width": 15,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "  #####",
                     "###   ##",
                     "#      #",
@@ -5847,7 +5847,7 @@
                 "id": "Perfect / Level 106 R--1",
                 "width": 20,
                 "height": 17,
-                "lines": [
+                "room": [
                     "   ####",
                     "   #  ####",
                     "   #     ##",
@@ -5871,7 +5871,7 @@
                 "id": "Perfect / Level 107 R--1",
                 "width": 14,
                 "height": 12,
-                "lines": [
+                "room": [
                     " ##### ######",
                     " #@  ###    #",
                     "## $ $ #$ #$#",
@@ -5891,7 +5891,7 @@
                 "width": 11,
                 "height": 14,
                 "copyright": "Yasuhiro Morita, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "      #####",
                     "  #####   #",
                     "  # $  $# #",
@@ -5913,7 +5913,7 @@
                 "width": 20,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, Allan Dragon",
-                "lines": [
+                "room": [
                     "          ########",
                     "       ####......#",
                     "       #    .....#",
@@ -5933,7 +5933,7 @@
                 "width": 11,
                 "height": 10,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "#########",
                     "#      @#",
                     "#  $ $ $#",
@@ -5951,7 +5951,7 @@
                 "width": 11,
                 "height": 10,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "#########",
                     "#       #",
                     "#  $ $ $#",
@@ -5969,7 +5969,7 @@
                 "width": 13,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "###### ####",
                     "#    ### @###",
                     "# $$   # $$ #",
@@ -5992,7 +5992,7 @@
                 "width": 13,
                 "height": 15,
                 "copyright": "Thinking Rabbit, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "###### ####",
                     "#    ### @###",
                     "# $$ $ # $$ #",
@@ -6014,7 +6014,7 @@
                 "id": "Perfect / Level 116 R--1",
                 "width": 15,
                 "height": 13,
-                "lines": [
+                "room": [
                     "      ####",
                     "      #  ######",
                     "      #    #  #",
@@ -6034,7 +6034,7 @@
                 "id": "Perfect / Level 116 R--2",
                 "width": 15,
                 "height": 13,
-                "lines": [
+                "room": [
                     "      ####",
                     "      #  ######",
                     "      #    #  #",
@@ -6055,7 +6055,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ####",
                     "      #  ######",
                     "      #    #  #",
@@ -6076,7 +6076,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ####",
                     "      #  ######",
                     "      # $  #  #",
@@ -6097,7 +6097,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      ####",
                     "      #  ######",
                     "      #    #  #",
@@ -6118,7 +6118,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#......#",
                     "#  $ # #",
@@ -6133,7 +6133,7 @@
                 "width": 17,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#      #",
                     "# # $$ ##########",
@@ -6153,7 +6153,7 @@
                 "width": 17,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, stopheart",
-                "lines": [
+                "room": [
                     "  #####",
                     "###   ##",
                     "#   #  #",
@@ -6174,7 +6174,7 @@
                 "width": 7,
                 "height": 7,
                 "copyright": "Masaki Ishino, Li Jin You",
-                "lines": [
+                "room": [
                     "#######",
                     "#.   .#",
                     "# $*$ #",
@@ -6189,7 +6189,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, York Shen, stopheart",
-                "lines": [
+                "room": [
                     "#######",
                     "#  #  #     ####",
                     "# $  $#######  ####",
@@ -6210,7 +6210,7 @@
                 "width": 19,
                 "height": 12,
                 "copyright": "Hidemitsu Kobayashi, Allan Dragon",
-                "lines": [
+                "room": [
                     "#######",
                     "#  #  #     ####",
                     "# $  $#######  ####",
@@ -6230,7 +6230,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, stopheart, Zhenying, York Shen",
-                "lines": [
+                "room": [
                     "#######",
                     "#  #  #     ####",
                     "# $  $#######  ####",
@@ -6251,7 +6251,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, Jordi Doménech",
-                "lines": [
+                "room": [
                     "#######",
                     "#  #  #     ####",
                     "# $$ $#######  ####",
@@ -6272,7 +6272,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, York Shen, stopheart",
-                "lines": [
+                "room": [
                     "#######",
                     "#  #  #     ####",
                     "# $  $#######  ####",
@@ -6293,7 +6293,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "#######",
                     "#  #  #     ####",
                     "# $$ $#######  ####",
@@ -6313,7 +6313,7 @@
                 "id": "Perfect / Level 132 R--1",
                 "width": 11,
                 "height": 7,
-                "lines": [
+                "room": [
                     "   ########",
                     "####    . #",
                     "#  $ $ $. #",
@@ -6327,7 +6327,7 @@
                 "id": "Perfect / Level 132 R--2",
                 "width": 11,
                 "height": 7,
-                "lines": [
+                "room": [
                     "   ########",
                     "####@   . #",
                     "#  $ $ $. #",
@@ -6342,7 +6342,7 @@
                 "width": 11,
                 "height": 9,
                 "copyright": "Thinking Rabbit, Radio Shack",
-                "lines": [
+                "room": [
                     "  #########",
                     "###   #   #",
                     "#  $. # $ #",
@@ -6359,7 +6359,7 @@
                 "width": 11,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  #########",
                     "###   #   #",
                     "#  $. $ $ #",
@@ -6376,7 +6376,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     "##@ #  ##",
                     "# . . . #",
@@ -6393,7 +6393,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     "##  #  ##",
                     "# .@. . #",
@@ -6410,7 +6410,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     " #######",
                     "##  *  ##",
                     "# . . . #",
@@ -6427,7 +6427,7 @@
                 "width": 8,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ######",
                     "##   @#",
                     "#  ##$#",
@@ -6443,7 +6443,7 @@
                 "id": "Perfect / Level 149 R--1",
                 "width": 12,
                 "height": 9,
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     "   # . * $ #",
@@ -6460,7 +6460,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     "   # ..  $@#",
@@ -6477,7 +6477,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     "   # ..* $ #",
@@ -6494,7 +6494,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     "   # ..* $ #",
@@ -6511,7 +6511,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     "   # ..$ $ #",
@@ -6527,7 +6527,7 @@
                 "id": "Perfect / Level 159 R--1",
                 "width": 18,
                 "height": 14,
-                "lines": [
+                "room": [
                     "########",
                     "#...   ########",
                     "#....     $   ##",
@@ -6549,7 +6549,7 @@
                 "width": 18,
                 "height": 14,
                 "copyright": "Thinking Rabbit, monry",
-                "lines": [
+                "room": [
                     "########",
                     "#...   ########",
                     "#.......  $   ##",
@@ -6571,7 +6571,7 @@
                 "width": 18,
                 "height": 14,
                 "copyright": "Thinking Rabbit, monry, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "########",
                     "#...   ########",
                     "#.......  $   ##",
@@ -6593,7 +6593,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "######",
                     "#    #",
                     "# $$@#",
@@ -6617,7 +6617,7 @@
                 "width": 18,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#########      ###",
                     "#   #   ########.#",
                     "#  $ $  #   #....#",
@@ -6635,7 +6635,7 @@
                 "width": 18,
                 "height": 10,
                 "copyright": "Thinking Rabbit, Riza Purwo Nugroho",
-                "lines": [
+                "room": [
                     "#########",
                     "#   #   ##########",
                     "#  $ $  #   #....#",
@@ -6653,7 +6653,7 @@
                 "width": 22,
                 "height": 17,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    #########  ####",
                     "    #   ##  ####  #",
                     "    #   $   #   $ #",
@@ -6678,7 +6678,7 @@
                 "width": 17,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "        #########",
                     "      ###   #   #",
                     "      #@$  $ $$ #",
@@ -6698,7 +6698,7 @@
                 "width": 11,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #####",
                     " # @ ######",
                     " # #..    #",
@@ -6716,7 +6716,7 @@
                 "width": 8,
                 "height": 11,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#      #",
                     "# ##.# #",
@@ -6735,7 +6735,7 @@
                 "width": 8,
                 "height": 11,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#      #",
                     "# ##.# #",
@@ -6754,7 +6754,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "      ########",
                     "   ####  #...#",
                     "   #  #$  ...#####",
@@ -6774,7 +6774,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     " ##############",
                     "##....#    #  ###",
                     "#.....$  #  $   ##",
@@ -6794,7 +6794,7 @@
                 "width": 17,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "   ##########",
                     "  ##  ##    #####",
                     " ##   $  # $  $ #",
@@ -6813,7 +6813,7 @@
                 "id": "Perfect / Level 186 R--1",
                 "width": 16,
                 "height": 13,
-                "lines": [
+                "room": [
                     "  #########",
                     "  #    #  #",
                     "### #$  $ ####",
@@ -6834,7 +6834,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "  #########",
                     "  #    #  #",
                     "### #$  $ ####",
@@ -6855,7 +6855,7 @@
                 "width": 16,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, Allan Dragon",
-                "lines": [
+                "room": [
                     "  #########",
                     "  #       #",
                     "### #$  $ ####",
@@ -6875,7 +6875,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, York Shen, stopheart",
-                "lines": [
+                "room": [
                     "  #########",
                     "  #    #  #",
                     "### #$  $ ####",
@@ -6896,7 +6896,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, York Shen, stopheart",
-                "lines": [
+                "room": [
                     "  #########",
                     "  #    #  #",
                     "### #$  $ ####",
@@ -6917,7 +6917,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, York Shen, stopheart",
-                "lines": [
+                "room": [
                     "  #########",
                     "  #    #  #",
                     "### #$  $ ####",
@@ -6938,7 +6938,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, York Shen, stopheart",
-                "lines": [
+                "room": [
                     "  #########",
                     "  #    #  #",
                     "### #$  $ ####",
@@ -6959,7 +6959,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     "   #   ##",
                     " ###  $ ##    #####",
@@ -6983,7 +6983,7 @@
                 "width": 13,
                 "height": 9,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "##### #######",
                     "#   ###     #",
                     "# $     $ @ #",
@@ -7000,7 +7000,7 @@
                 "width": 13,
                 "height": 9,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "##### #######",
                     "#@  ###  #  #",
                     "# $     $   #",
@@ -7017,7 +7017,7 @@
                 "width": 13,
                 "height": 9,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "##### #######",
                     "#   ###  #  #",
                     "#       $ @ #",
@@ -7034,7 +7034,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    ###########",
                     "   ##  #  #   #",
                     "  ##   #$ $   #",
@@ -7058,7 +7058,7 @@
                 "width": 10,
                 "height": 11,
                 "copyright": "Thinking Rabbit, George Meier",
-                "lines": [
+                "room": [
                     "##########",
                     "#  . #   #",
                     "# $* # $ #",
@@ -7077,7 +7077,7 @@
                 "width": 12,
                 "height": 5,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "############",
                     "#    ... $ #",
                     "# $$$** $@ #",
@@ -7090,7 +7090,7 @@
                 "width": 12,
                 "height": 5,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "############",
                     "#    *..   #",
                     "# $$$*** $ #",
@@ -7103,7 +7103,7 @@
                 "width": 16,
                 "height": 5,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "################",
                     "# $  ...       #",
                     "#@$ *...$$$$$$ #",
@@ -7115,7 +7115,7 @@
                 "id": "Perfect / Level 199 R--1",
                 "width": 10,
                 "height": 9,
-                "lines": [
+                "room": [
                     " #####",
                     " #   #",
                     "##$.$#####",
@@ -7132,7 +7132,7 @@
                 "width": 22,
                 "height": 18,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "   #####      #####",
                     "  ##   ##    ##   ##",
                     "###  $  ######     ###",
@@ -7158,7 +7158,7 @@
                 "width": 22,
                 "height": 18,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "   #####      #####",
                     "   #   ##    ##   #",
                     "#### $  ######    ####",
@@ -7184,7 +7184,7 @@
                 "width": 23,
                 "height": 19,
                 "copyright": "Hidemitsu Kobayashi, Li Jin You",
-                "lines": [
+                "room": [
                     "           ########",
                     "           # .....#",
                     "    ####   # .....#",
@@ -7210,7 +7210,7 @@
                 "id": "Perfect / Level 206 R--1",
                 "width": 13,
                 "height": 13,
-                "lines": [
+                "room": [
                     "  #########",
                     "  #       #",
                     " ##$ $ $ $##",
@@ -7231,7 +7231,7 @@
                 "width": 11,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "###########",
                     "# $ $ $...#",
                     "#  $ $.$..#",
@@ -7250,7 +7250,7 @@
                 "id": "Perfect / Level 212 R--1",
                 "width": 20,
                 "height": 13,
-                "lines": [
+                "room": [
                     "       ####",
                     "########  #####",
                     "#         #   #",
@@ -7271,7 +7271,7 @@
                 "width": 11,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     " ###   ###",
                     "##   $ $ #",
@@ -7289,7 +7289,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ######    ####",
                     " #    ######  #",
                     " #@# $        ##",
@@ -7313,7 +7313,7 @@
                 "width": 15,
                 "height": 17,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "     # @ #",
                     "     # $ #",
@@ -7338,7 +7338,7 @@
                 "width": 17,
                 "height": 19,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "      #####",
                     "      # @ #",
                     "      # $ #",
@@ -7365,7 +7365,7 @@
                 "width": 25,
                 "height": 18,
                 "copyright": "Akira Yoshima, Jordi Doménech, stopheart",
-                "lines": [
+                "room": [
                     "   #####    #####",
                     "   #   # ####   #",
                     "   # $ # # *    #",
@@ -7391,7 +7391,7 @@
                 "width": 10,
                 "height": 10,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#########",
                     "#   ##  #",
                     "# # $ $ #",
@@ -7409,7 +7409,7 @@
                 "width": 20,
                 "height": 13,
                 "copyright": "Akira Yotsuji, unknown",
-                "lines": [
+                "room": [
                     "    #########",
                     "  ###   ##  ######",
                     "###      #  #    ###",
@@ -7429,7 +7429,7 @@
                 "id": "Perfect / Level 226 R--1",
                 "width": 20,
                 "height": 20,
-                "lines": [
+                "room": [
                     "       ############",
                     "       #..........#",
                     "     ###.#.#.#.#..#",
@@ -7457,7 +7457,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, John Polhemus",
-                "lines": [
+                "room": [
                     "   #########",
                     "   #   #   #",
                     "   #       #",
@@ -7474,7 +7474,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #########",
                     "   #   #   #",
                     "   # $     #",
@@ -7491,7 +7491,7 @@
                 "width": 12,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       #####",
                     "  ######   #",
                     "###    . $ #",
@@ -7510,7 +7510,7 @@
                 "id": "Perfect / Level 233 R--1",
                 "width": 16,
                 "height": 12,
-                "lines": [
+                "room": [
                     "        ########",
                     "        #  #   #",
                     " ######## $$...#",
@@ -7530,7 +7530,7 @@
                 "width": 15,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       ########",
                     "       # @#   #",
                     " ####### $$...#",
@@ -7550,7 +7550,7 @@
                 "width": 15,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "       ########",
                     "       #  #   #",
                     " ####### $$.. #",
@@ -7570,7 +7570,7 @@
                 "width": 12,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "    ####",
                     "#####  #####",
                     "#    $   $ #",
@@ -7587,7 +7587,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     #########",
                     "     #    ...#",
                     "     # #  ...#",
@@ -7607,7 +7607,7 @@
                 "width": 14,
                 "height": 13,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "     ######",
                     "   ###    ##",
                     "   #   ##  #",
@@ -7628,7 +7628,7 @@
                 "width": 23,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Alex Saenko, York Shen",
-                "lines": [
+                "room": [
                     "               ####",
                     "          ######  #####",
                     "    #######       #   #",
@@ -7653,7 +7653,7 @@
                 "width": 16,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "####     ####",
                     "#  #######..###",
                     "# $ $ $  #....#",
@@ -7675,7 +7675,7 @@
                 "width": 16,
                 "height": 14,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     " ##############",
                     " #@  * * * #  ##",
                     " #$#  * *  #   #",
@@ -7697,7 +7697,7 @@
                 "width": 14,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "    ####",
                     " ####  ####",
                     " #. #   $ ####",
@@ -7717,7 +7717,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "      #####",
                     "#######   #",
                     "#   ##.   #",
@@ -7738,7 +7738,7 @@
                 "width": 11,
                 "height": 10,
                 "copyright": "Hideki Akiyama, unknown",
-                "lines": [
+                "room": [
                     "    ###",
                     "   ##@##",
                     "  ##   ##",
@@ -7756,7 +7756,7 @@
                 "width": 13,
                 "height": 10,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "     ####",
                     "######  #####",
                     "#@$    $  $ #",
@@ -7774,7 +7774,7 @@
                 "width": 13,
                 "height": 10,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "     ####",
                     "######  #####",
                     "#@$    $    #",
@@ -7792,7 +7792,7 @@
                 "width": 16,
                 "height": 13,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     " ####",
                     "##  ############",
                     "# $ $ $ $ $ $@ #",
@@ -7813,7 +7813,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "###########",
                     "#  .$ $.  #",
                     "#  #  $. $#",
@@ -7832,7 +7832,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     "   #   #",
                     "   # $$#",
@@ -7851,7 +7851,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Yasuhiro Morita, Evgeny Grigoriev",
-                "lines": [
+                "room": [
                     "        #####",
                     "    #####   ####",
                     "   ## $   #    ####",
@@ -7873,7 +7873,7 @@
                 "width": 19,
                 "height": 14,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "        #####",
                     "    #####   ###",
                     "   ## $   #   #####",
@@ -7895,7 +7895,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #########",
                     " #   ##  ####",
                     " # $        #",
@@ -7915,7 +7915,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #########",
                     " #   ##  ####",
                     " # $        #",
@@ -7935,7 +7935,7 @@
                 "width": 14,
                 "height": 12,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ##########",
                     " #    ##  ####",
                     " #  $        #",
@@ -7955,7 +7955,7 @@
                 "width": 10,
                 "height": 6,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ######",
                     "# $ .. $ #",
@@ -7969,7 +7969,7 @@
                 "width": 16,
                 "height": 14,
                 "copyright": "Hidemitsu Kobayashi, Marek Letrab",
-                "lines": [
+                "room": [
                     " #####",
                     " #   #",
                     " # $$#########",
@@ -7991,7 +7991,7 @@
                 "width": 11,
                 "height": 8,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "###########",
                     "#@   #    #",
                     "# $$$$$ $ #",
@@ -8007,7 +8007,7 @@
                 "width": 18,
                 "height": 12,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "####    ##########",
                     "#  ######   #  ..#",
                     "# $       $ #  ..#",
@@ -8027,7 +8027,7 @@
                 "width": 26,
                 "height": 16,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "        #####",
                     "        #   ####",
                     "        # $    ####  ####",
@@ -8051,7 +8051,7 @@
                 "width": 26,
                 "height": 16,
                 "copyright": "Thinking Rabbit, York Shen, Zhenying, Xing Fey",
-                "lines": [
+                "room": [
                     "        #####",
                     "        #   ####",
                     "        # $    ####  ####",
@@ -8075,7 +8075,7 @@
                 "width": 20,
                 "height": 15,
                 "copyright": "Seiji Nishikawa, unknown",
-                "lines": [
+                "room": [
                     "     ############",
                     "     # .        #",
                     "###### # $ * *  #",
@@ -8098,7 +8098,7 @@
                 "width": 32,
                 "height": 20,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "    #### ######### ########",
                     "#####  ###   #   ###      ####",
                     "#   # $   $    $  ## $ $  #  #",
@@ -8126,7 +8126,7 @@
                 "width": 32,
                 "height": 20,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "    #### ######### ########",
                     "#####  ###   #   ###      ####",
                     "#   # $   $    $  ## $ $  #  #",
@@ -8154,7 +8154,7 @@
                 "width": 11,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "####  ####",
                     "#  ####  #",
                     "#  #   . #",
@@ -8176,7 +8176,7 @@
                 "width": 11,
                 "height": 14,
                 "copyright": "Thinking Rabbit, Masato Hiramatsu, Marek Letrab",
-                "lines": [
+                "room": [
                     "####  ####",
                     "#  ####  #",
                     "#  #   . #",
@@ -8198,7 +8198,7 @@
                 "width": 11,
                 "height": 14,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #####",
                     " #@  ####",
                     "##$$ #  ###",
@@ -8220,7 +8220,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  #######",
                     "  #  .  #",
                     " ## $*$ #",
@@ -8237,7 +8237,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  ########",
                     "  #  .   #",
                     "  # $*$  #",
@@ -8254,7 +8254,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ #",
@@ -8271,7 +8271,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ #",
@@ -8287,7 +8287,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ #",
@@ -8303,7 +8303,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ #",
@@ -8319,7 +8319,7 @@
                 "width": 10,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "  #######",
                     "  #  .  #",
                     "  # $*$ #",
@@ -8336,7 +8336,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ #",
@@ -8353,7 +8353,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     "##  .  #",
                     "#  $*$ #",
@@ -8369,7 +8369,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " # $.  #",
                     "## $.$$#",
@@ -8385,7 +8385,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .$ #",
                     "##$$.$ #",
@@ -8401,7 +8401,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  *  #",
                     "##  *  #",
@@ -8417,7 +8417,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ #",
@@ -8433,7 +8433,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $#$ #",
@@ -8449,7 +8449,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#   .  #",
                     "#  $*$ #",
@@ -8465,7 +8465,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "########",
                     "#   .  #",
                     "#  $#$ #",
@@ -8481,7 +8481,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#######",
                     "#  .  #",
                     "# $*$ #",
@@ -8497,7 +8497,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#######",
                     "#  .  #",
                     "# $#$ #",
@@ -8513,7 +8513,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     "##  .  #",
                     "#  $*$ #",
@@ -8528,7 +8528,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     "##  .  #",
                     "#  $#$ #",
@@ -8543,7 +8543,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ ##",
@@ -8558,7 +8558,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ ##",
@@ -8573,7 +8573,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  .  #",
                     "## $*$ ##",
@@ -8588,7 +8588,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  *  #",
                     "## $*$ ##",
@@ -8603,7 +8603,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  #  #",
                     "## $#$ ##",
@@ -8618,7 +8618,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " #######",
                     " #  *  #",
                     "## $*$ ##",
@@ -8633,7 +8633,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ########",
                     " #  .   #",
                     "## $*$  #",
@@ -8648,7 +8648,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ########",
                     " #  .   #",
                     "## $*$  #",
@@ -8663,7 +8663,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     " ########",
                     " #  .   #",
                     "## $#$  #",
@@ -8678,7 +8678,7 @@
                 "width": 14,
                 "height": 12,
                 "copyright": "Thinking Rabbit, Marek Letrab",
-                "lines": [
+                "room": [
                     " ########",
                     " #   #  ######",
                     " # *  * ##   #",
@@ -8698,7 +8698,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "#########",
                     "#     . #",
                     "# *** * #",
@@ -8715,7 +8715,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Thinking Rabbit, Radio Shack",
-                "lines": [
+                "room": [
                     "#########",
                     "#@      #",
                     "# $.$.$ #",
@@ -8732,7 +8732,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Thinking Rabbit, Radio Shack",
-                "lines": [
+                "room": [
                     "########",
                     "#@     ##",
                     "# $.$.$ #",
@@ -8746,7 +8746,7 @@
                 "id": "Playstation / PS Ultimate 53 R--1",
                 "width": 12,
                 "height": 9,
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     "   # ..* $ #",
@@ -8763,7 +8763,7 @@
                 "width": 12,
                 "height": 11,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "  ######",
                     "  #    #####",
                     "### ##$##  #",
@@ -8782,7 +8782,7 @@
                 "width": 11,
                 "height": 10,
                 "copyright": "Thinking Rabbit, stopheart",
-                "lines": [
+                "room": [
                     "   #####",
                     " ###   ###",
                     " # $@$   #",
@@ -8800,7 +8800,7 @@
                 "width": 15,
                 "height": 11,
                 "copyright": "Thinking Rabbit, Marek Letrab",
-                "lines": [
+                "room": [
                     "####",
                     "#..########",
                     "#.....*.  ##",
@@ -8819,7 +8819,7 @@
                 "width": 15,
                 "height": 11,
                 "copyright": "Thinking Rabbit, unknown",
-                "lines": [
+                "room": [
                     "####",
                     "#..########",
                     "#.....*   ##",
@@ -8838,7 +8838,7 @@
                 "width": 9,
                 "height": 7,
                 "copyright": "Yoshio Murase, unknown",
-                "lines": [
+                "room": [
                     "    ####",
                     "#####  ##",
                     "#  . .  #",
@@ -8853,7 +8853,7 @@
                 "width": 7,
                 "height": 7,
                 "copyright": "Motoyuki Ozeki, Juan Carlos Garcia",
-                "lines": [
+                "room": [
                     " ######",
                     "## . @#",
                     "# $ $ #",
@@ -8868,7 +8868,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Akihiro Miyamoto, unknown",
-                "lines": [
+                "room": [
                     " ######",
                     "##  . #",
                     "# *   ##",
@@ -8885,7 +8885,7 @@
                 "width": 8,
                 "height": 8,
                 "copyright": "Hiroshi Yamamoto, Jordi Doménech",
-                "lines": [
+                "room": [
                     "######",
                     "#    ###",
                     "# ##$$ #",
@@ -8901,7 +8901,7 @@
                 "width": 12,
                 "height": 12,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "   ###   #",
                     "####     #",
@@ -8921,7 +8921,7 @@
                 "width": 12,
                 "height": 12,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "   ###   #",
                     "   #     #",
@@ -8941,7 +8941,7 @@
                 "width": 12,
                 "height": 12,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "   ###   #",
                     "   #     #",
@@ -8961,7 +8961,7 @@
                 "width": 12,
                 "height": 12,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "   ###   #",
                     "   #     #",
@@ -8981,7 +8981,7 @@
                 "width": 9,
                 "height": 8,
                 "copyright": "Takemi Watanabe, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "#########",
                     "#       #",
                     "# $$#$$$#",
@@ -8997,7 +8997,7 @@
                 "width": 19,
                 "height": 8,
                 "copyright": "Takemi Watanabe, Masato Hiramatsu, Jordi Doménech",
-                "lines": [
+                "room": [
                     "###################",
                     "#             .  @#",
                     "#$$$  #$$$ $$$ $$$#",
@@ -9013,7 +9013,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Tamanai, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "######...#",
                     "#   $  $##",
@@ -9029,7 +9029,7 @@
                 "width": 10,
                 "height": 10,
                 "copyright": "Michio Ikemizu, unknown",
-                "lines": [
+                "room": [
                     "##########",
                     "#.*...#  #",
                     "#.#$ $   #",
@@ -9047,7 +9047,7 @@
                 "width": 7,
                 "height": 9,
                 "copyright": "Hiroshi Yamamoto, unknown",
-                "lines": [
+                "room": [
                     " ######",
                     " #....#",
                     " #    #",
@@ -9064,7 +9064,7 @@
                 "width": 7,
                 "height": 8,
                 "copyright": "Hiroshi Yamamoto, unknown",
-                "lines": [
+                "room": [
                     " ######",
                     "##....#",
                     "#  #  #",
@@ -9080,7 +9080,7 @@
                 "width": 13,
                 "height": 13,
                 "copyright": "Yoshio Sakae, Jordi Doménech",
-                "lines": [
+                "room": [
                     "#############",
                     "#. .  .  . .#",
                     "# $*$$*$$*$ #",
@@ -9101,7 +9101,7 @@
                 "width": 14,
                 "height": 13,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "    ####",
                     "    #@ ###",
                     "  ### $  ##",
@@ -9122,7 +9122,7 @@
                 "width": 18,
                 "height": 11,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "              ####",
                     "###############  #",
                     "#     $   $   $  #",
@@ -9141,7 +9141,7 @@
                 "width": 17,
                 "height": 11,
                 "copyright": "Yoshiaki Hirano, unknown",
-                "lines": [
+                "room": [
                     "    #########",
                     "    # . . . ##",
                     "    #.$#$$$. ##",
@@ -9160,7 +9160,7 @@
                 "width": 17,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "        #########",
                     " #####  #   #   #",
                     " #   #### $   $ #",
@@ -9183,7 +9183,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "unknown, Seiichi Katsurada, stopheart",
-                "lines": [
+                "room": [
                     "            ####",
                     "###### ######  #",
                     "#..  ### @#    #",
@@ -9207,7 +9207,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "unknown, Seiichi Katsurada, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "###### #### #  #",
                     "#    ### @###  #",
@@ -9231,7 +9231,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "unknown, Seiichi Katsurada, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "###### #### #  #",
                     "#    ### @###  #",
@@ -9255,7 +9255,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "unknown, Seiichi Katsurada, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "###### #### #  #",
                     "#..  ### @###  #",
@@ -9279,7 +9279,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "unknown, Seiichi Katsurada, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "###### #### #  #",
                     "#    ### @###  #",
@@ -9303,7 +9303,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "unknown, Seiichi Katsurada, unknown",
-                "lines": [
+                "room": [
                     "            ####",
                     "###### #### #  #",
                     "#    ### @###  #",
@@ -9327,7 +9327,7 @@
                 "width": 18,
                 "height": 18,
                 "copyright": "Takashi Aoyagi, unknown",
-                "lines": [
+                "room": [
                     "##################",
                     "#               @#",
                     "# ####  $  ### # #",
@@ -9353,7 +9353,7 @@
                 "width": 32,
                 "height": 20,
                 "copyright": "Hiroyuki Kaneda, unknown",
-                "lines": [
+                "room": [
                     " #########    ####",
                     "##       ######  ###############",
                     "#  $ $ $ #          #          #",
@@ -9381,7 +9381,7 @@
                 "width": 32,
                 "height": 19,
                 "copyright": "Takashi Hiratsuka, unknown",
-                "lines": [
+                "room": [
                     "#############   ################",
                     "#     ##    #####    ##     #  #",
                     "#        # $       #      #    #",
@@ -9408,7 +9408,7 @@
                 "width": 32,
                 "height": 20,
                 "copyright": "Eiji Takeuchi, unknown",
-                "lines": [
+                "room": [
                     "################################",
                     "#       #    #     #     #    +#",
                     "# #####   #      #    #     #  #",
@@ -9436,7 +9436,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Akihiro Miyamoto, Juan Carlos Garcia",
-                "lines": [
+                "room": [
                     "  ####",
                     "  #  #",
                     "###  #####",
@@ -9452,7 +9452,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Ryo Hachiya, unknown",
-                "lines": [
+                "room": [
                     "  #####",
                     "###   ####",
                     "#  . * * #",
@@ -9468,7 +9468,7 @@
                 "width": 18,
                 "height": 18,
                 "copyright": "Takashi Aoyagi, unknown",
-                "lines": [
+                "room": [
                     "##################",
                     "#.....##         #",
                     "#.....##$#$##$## #",
@@ -9494,7 +9494,7 @@
                 "width": 13,
                 "height": 13,
                 "copyright": "Hiroshi Yamamoto, unknown",
-                "lines": [
+                "room": [
                     "#############",
                     "#           #",
                     "# ## # #### #",
@@ -9515,7 +9515,7 @@
                 "width": 13,
                 "height": 13,
                 "copyright": "Hiroshi Yamamoto, unknown",
-                "lines": [
+                "room": [
                     "#############",
                     "#           #",
                     "# ## # #### #",
@@ -9536,7 +9536,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Hiroshi Yamamoto, unknown",
-                "lines": [
+                "room": [
                     " ######",
                     " #    ##",
                     " # # $ #",
@@ -9553,7 +9553,7 @@
                 "width": 14,
                 "height": 9,
                 "copyright": "Hiroshi Inoue, unknown",
-                "lines": [
+                "room": [
                     "##############",
                     "#            #",
                     "#            #",
@@ -9570,7 +9570,7 @@
                 "width": 19,
                 "height": 19,
                 "copyright": "Shinji Kai, unknown",
-                "lines": [
+                "room": [
                     "        ####",
                     " ########@ #######",
                     " #    $     $    #",
@@ -9597,7 +9597,7 @@
                 "width": 28,
                 "height": 19,
                 "copyright": "Shinji Kai, Marek Letrab",
-                "lines": [
+                "room": [
                     "          ########",
                     "         ##      ##",
                     "        ##  ####  ##",
@@ -9624,7 +9624,7 @@
                 "width": 27,
                 "height": 18,
                 "copyright": "Shinji Kai, unknown",
-                "lines": [
+                "room": [
                     "  ###########      ########",
                     "  #         ###### #   #  #",
                     " ## #######      # # $  $ #",
@@ -9650,7 +9650,7 @@
                 "width": 27,
                 "height": 18,
                 "copyright": "Shinji Kai, York Shen",
-                "lines": [
+                "room": [
                     "  ###########      ########",
                     "  #         ###### #   #  #",
                     " ## #######      # # $  $ #",
@@ -9676,7 +9676,7 @@
                 "width": 31,
                 "height": 20,
                 "copyright": "Kazuo Fukushima, unknown",
-                "lines": [
+                "room": [
                     "          ###########",
                     "         ##         ##",
                     "####    ##  ### ###  ##    ####",
@@ -9704,7 +9704,7 @@
                 "width": 9,
                 "height": 9,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     "#########",
                     "#   @   #",
                     "#$ $ $ $#",
@@ -9721,7 +9721,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Yoshio Sakae, Marek Letrab",
-                "lines": [
+                "room": [
                     "#############",
                     "# .*.* $ $  #",
                     "# *.*.$ $ $ #",
@@ -9741,7 +9741,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Yoshio Sakae, Marek Letrab",
-                "lines": [
+                "room": [
                     " ###########",
                     " #.*.* $ $ #",
                     " #*.*.$ $  #",
@@ -9761,7 +9761,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Yoshio Sakae, Marek Letrab",
-                "lines": [
+                "room": [
                     " ###########",
                     " #.*.* $ $ #",
                     " #*.*.$ $  #",
@@ -9781,7 +9781,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Yoshio Sakae, Marek Letrab",
-                "lines": [
+                "room": [
                     " ############",
                     " #.*.* $ $  #",
                     " #*.*.$ $ $ #",
@@ -9801,7 +9801,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Thinking Rabbit, Marek Letrab, Findus",
-                "lines": [
+                "room": [
                     " ###########",
                     " #.*.* $ $ #",
                     " ##.*.$ $  #",
@@ -9821,7 +9821,7 @@
                 "width": 32,
                 "height": 16,
                 "copyright": "Yoshio Sakae, Jordi Doménech",
-                "lines": [
+                "room": [
                     "   ######           ####",
                     "  ##  # ###         #  ##",
                     " ##     $ ###      ##$  ##",
@@ -9845,7 +9845,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Yoshio Sakae, Marek Letrab",
-                "lines": [
+                "room": [
                     " #########",
                     "##.......##",
                     "#.*$$$$$*.#",
@@ -9864,7 +9864,7 @@
                 "width": 11,
                 "height": 11,
                 "copyright": "Yoshio Sakae, Marek Letrab",
-                "lines": [
+                "room": [
                     " #########",
                     "##.......##",
                     "#.#$$$$$#.#",
@@ -9883,7 +9883,7 @@
                 "width": 17,
                 "height": 17,
                 "copyright": "Yoshio Sakae, unknown",
-                "lines": [
+                "room": [
                     " ###########",
                     " #@        ######",
                     " # .$$$$$$      #",
@@ -9908,7 +9908,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Seiichi Katsurada, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "     #####",
                     "######   #",
                     "#  ##..  #",
@@ -9929,7 +9929,7 @@
                 "width": 16,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, Marek Letrab",
-                "lines": [
+                "room": [
                     "#############",
                     "#      ##...##",
                     "# $$$$$  ....##",
@@ -9952,7 +9952,7 @@
                 "width": 16,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, Marek Letrab",
-                "lines": [
+                "room": [
                     "   #####   ####",
                     " ###   #####  #",
                     " #  $.   #   $##",
@@ -9972,7 +9972,7 @@
                 "width": 15,
                 "height": 16,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "     ####",
                     "  ####  #",
                     "### $ $ #",
@@ -9996,7 +9996,7 @@
                 "width": 13,
                 "height": 12,
                 "copyright": "Yasuhiro Morita, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "  ###########",
                     "###         #",
                     "#   ######$ #",
@@ -10016,7 +10016,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Yasuhiro Morita, stopheart",
-                "lines": [
+                "room": [
                     "  ###########",
                     "###         #",
                     "#   ######  #",
@@ -10035,7 +10035,7 @@
                 "width": 19,
                 "height": 18,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "    ####",
                     " ####  #",
                     " #  $  ##########",
@@ -10061,7 +10061,7 @@
                 "width": 15,
                 "height": 13,
                 "copyright": "Yasuhiro Morita, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     " #####",
                     " #   #########",
                     " #     $ #   #",
@@ -10082,7 +10082,7 @@
                 "width": 18,
                 "height": 16,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "   ####",
                     "   #  #########",
                     "####$ $   #   ####",
@@ -10106,7 +10106,7 @@
                 "width": 13,
                 "height": 16,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     "   #   #####",
                     "   # # $   #",
@@ -10130,7 +10130,7 @@
                 "width": 13,
                 "height": 16,
                 "copyright": "Yasuhiro Morita, stopheart",
-                "lines": [
+                "room": [
                     "   #####",
                     "   #   #####",
                     "   # # $   #",
@@ -10154,7 +10154,7 @@
                 "width": 10,
                 "height": 8,
                 "copyright": "Takeshi Miyake, Marek Letrab",
-                "lines": [
+                "room": [
                     "##########",
                     "#. $    .#",
                     "#.@###$ .#",
@@ -10170,7 +10170,7 @@
                 "width": 18,
                 "height": 18,
                 "copyright": "Takashi Aoyagi, Marek Letrab",
-                "lines": [
+                "room": [
                     "##################",
                     "#...  #          #",
                     "#....      #  $$ #",
@@ -10196,7 +10196,7 @@
                 "width": 14,
                 "height": 14,
                 "copyright": "Masaki Ishino, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "#####",
                     "#   ##",
                     "#    #  ####",
@@ -10218,7 +10218,7 @@
                 "width": 17,
                 "height": 10,
                 "copyright": "Masaki Nakajo, unknown",
-                "lines": [
+                "room": [
                     " ####",
                     " #  ######",
                     "## $   $ ###",
@@ -10236,7 +10236,7 @@
                 "width": 19,
                 "height": 13,
                 "copyright": "Masaki Nakajo, unknown",
-                "lines": [
+                "room": [
                     " ######## ########",
                     " #   #  # #  #   #",
                     " #     $# # $$  $#",
@@ -10257,7 +10257,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "         ####",
                     "      #### @#",
                     "      #  #  ####",
@@ -10282,7 +10282,7 @@
                 "width": 24,
                 "height": 17,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "   ########",
                     " ###      ###",
                     " #   ####   #  #####",
@@ -10307,7 +10307,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "           ####",
                     "       #####  ###",
                     "       #        ###",
@@ -10332,7 +10332,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Takahiro Suzushima, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ##",
                     "   ##  *  ##",
@@ -10355,7 +10355,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Takahiro Suzushima, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ##",
                     "   ##  *  ##",
@@ -10378,7 +10378,7 @@
                 "width": 17,
                 "height": 17,
                 "copyright": "Takahiro Suzushima, Gyjgw",
-                "lines": [
+                "room": [
                     "      #####",
                     "     ##   ##",
                     "    ##  *  ##",
@@ -10403,7 +10403,7 @@
                 "width": 29,
                 "height": 29,
                 "copyright": "Takahiro Suzushima, unknown",
-                "lines": [
+                "room": [
                     "            #####",
                     "           ## @ ##",
                     "          ##  *  ##",
@@ -10440,7 +10440,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Takahiro Suzushima, Marek Letrab",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ##",
                     "   ##  #  ##",
@@ -10463,7 +10463,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Takahiro Suzushima, Marek Letrab",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ##",
                     "   ##  *  ##",
@@ -10486,7 +10486,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Takahiro Suzushima, Marek Letrab",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ##",
                     "   ## $.$ ##",
@@ -10509,7 +10509,7 @@
                 "width": 17,
                 "height": 17,
                 "copyright": "Thinking Rabbit, Gyjgw, Findus",
-                "lines": [
+                "room": [
                     "      #####",
                     "     ##   ##",
                     "    ##  *  ##",
@@ -10534,7 +10534,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Takahiro Suzushima, unknown",
-                "lines": [
+                "room": [
                     "    #######",
                     "   ##  #  #",
                     "   #  $   #",
@@ -10558,7 +10558,7 @@
                 "width": 11,
                 "height": 9,
                 "copyright": "Hidemitsu Kobayashi, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "   ####",
                     "   #  ###",
                     "####$   ###",
@@ -10575,7 +10575,7 @@
                 "width": 19,
                 "height": 19,
                 "copyright": "Hidemitsu Kobayashi, York Shen",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ##",
                     "    # $ $ ####",
@@ -10602,7 +10602,7 @@
                 "width": 13,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, Marek Letrab",
-                "lines": [
+                "room": [
                     "   #######",
                     "   #  #  #",
                     "  ##.$#$.#",
@@ -10623,7 +10623,7 @@
                 "width": 13,
                 "height": 13,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "   #######",
                     "   #  #  #",
                     "  ##.$#$.##",
@@ -10644,7 +10644,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Hidemitsu Kobayashi, York Shen, Panda, minglw, stopheart",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# #######",
@@ -10669,7 +10669,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Hidemitsu Kobayashi, York Shen, Panda, minglw, stopheart",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #  ####",
                     "   #  ##*.# ####  #",
@@ -10694,7 +10694,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Hidemitsu Kobayashi, York Shen, Panda, minglw, stopheart",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #  ####",
                     "   #  ##*.# ####  #",
@@ -10719,7 +10719,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, York Shen",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10747,7 +10747,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, York Shen",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10775,7 +10775,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, York Shen",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10803,7 +10803,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, York Shen",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10831,7 +10831,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, stopheart, Zhenying",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10859,7 +10859,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10887,7 +10887,7 @@
                 "width": 28,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, York Shen",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# ############",
@@ -10915,7 +10915,7 @@
                 "width": 19,
                 "height": 17,
                 "copyright": "Hidemitsu Kobayashi, minglw, stopheart",
-                "lines": [
+                "room": [
                     "       ######",
                     "   ##### .  #",
                     "   #  ##*.# #######",
@@ -10940,7 +10940,7 @@
                 "width": 18,
                 "height": 9,
                 "copyright": "Keiichi Enomoto, York Shen",
-                "lines": [
+                "room": [
                     "##################",
                     "#....#...........#",
                     "#.$$ #$ $$$#$$$$.#",
@@ -10957,7 +10957,7 @@
                 "width": 16,
                 "height": 18,
                 "copyright": "Yasuhiro Morita, York Shen",
-                "lines": [
+                "room": [
                     "     #####",
                     "     #   ######",
                     "     #     #  ##",
@@ -10983,7 +10983,7 @@
                 "width": 16,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "######   #####",
                     "#@   #####   #",
                     "# $# ## $    #",
@@ -11006,7 +11006,7 @@
                 "width": 16,
                 "height": 14,
                 "copyright": "Yasuhiro Morita, Oki Yasutaka, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     "######    ####",
                     "#    ######  #",
                     "# $# ##      ##",
@@ -11028,7 +11028,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "   #######",
                     "####  #  ###",
                     "#  #       #",
@@ -11047,7 +11047,7 @@
                 "width": 13,
                 "height": 11,
                 "copyright": "Hidemitsu Kobayashi, unknown, stopheart",
-                "lines": [
+                "room": [
                     "   #######",
                     "####  #  ###",
                     "#  #       #",
@@ -11066,7 +11066,7 @@
                 "width": 27,
                 "height": 16,
                 "copyright": "Hidemitsu Kobayashi, Marek Letrab",
-                "lines": [
+                "room": [
                     "         ####    #####",
                     " ####    #  ######   #",
                     " #  #   ##        $  #",
@@ -11090,7 +11090,7 @@
                 "width": 27,
                 "height": 16,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "         ####    #####",
                     " ####    #  ######   #",
                     " #  #   ##        $  #",
@@ -11114,7 +11114,7 @@
                 "width": 27,
                 "height": 16,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "         ####    #####",
                     " ####    #  ######   #",
                     "##  #   ##        $  #",
@@ -11138,7 +11138,7 @@
                 "width": 27,
                 "height": 16,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "         ####    #####",
                     " ####    #  ######   #",
                     " #  #   ##        $  #",
@@ -11162,7 +11162,7 @@
                 "width": 27,
                 "height": 16,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "         ####    #####",
                     " ####    #  ######   #",
                     " #  #   ##        $  #",
@@ -11186,7 +11186,7 @@
                 "width": 23,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, Gyjgw",
-                "lines": [
+                "room": [
                     "  ########### #####",
                     "  #    ##   ### @ ###",
                     "  #  # $  #     $   #",
@@ -11214,7 +11214,7 @@
                 "width": 23,
                 "height": 21,
                 "copyright": "Hidemitsu Kobayashi, Gyjgw, York Shen",
-                "lines": [
+                "room": [
                     "  ########### #####",
                     "  #    ##   ### @ ###",
                     "  #  # $  #     $   #",
@@ -11243,7 +11243,7 @@
                 "width": 23,
                 "height": 19,
                 "copyright": "Hidemitsu Kobayashi, Gyjgw, unknown",
-                "lines": [
+                "room": [
                     "  ########### #####",
                     "  #    ##   ### @ ###",
                     "  #  # $  #     $   #",
@@ -11270,7 +11270,7 @@
                 "width": 23,
                 "height": 19,
                 "copyright": "Hidemitsu Kobayashi, Gyjgw, unknown, minglw",
-                "lines": [
+                "room": [
                     "  ########### #####",
                     "  #    ##   ### @ ###",
                     "  #  # $  #     $   #",
@@ -11297,7 +11297,7 @@
                 "width": 19,
                 "height": 15,
                 "copyright": "Hidemitsu Kobayashi, Gyjgw",
-                "lines": [
+                "room": [
                     "  ###### ##########",
                     "  #    ###   ## @ #",
                     "  #  # $   #    $ #",
@@ -11320,7 +11320,7 @@
                 "width": 32,
                 "height": 18,
                 "copyright": "Hidemitsu Kobayashi, unknown",
-                "lines": [
+                "room": [
                     "         #######################",
                     "       ###   #  #    ##        #",
                     " ####### $   # $ $$  #  # #  # #",
@@ -11346,7 +11346,7 @@
                 "width": 19,
                 "height": 18,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "     #####",
                     "    ##   ####",
                     "  ### $     #",
@@ -11372,7 +11372,7 @@
                 "width": 17,
                 "height": 18,
                 "copyright": "Yasuhiro Morita, York Shen",
-                "lines": [
+                "room": [
                     "    #####",
                     "   ##   ####",
                     " ### $     #",
@@ -11398,7 +11398,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Yasuhiro Morita, unknown",
-                "lines": [
+                "room": [
                     "   #####",
                     "   #   ##",
                     "   #    #####",
@@ -11421,7 +11421,7 @@
                 "width": 31,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, Masato Hiramatsu",
-                "lines": [
+                "room": [
                     " #####  ####",
                     " #   ####  #######       #####",
                     " #$       $      #########   #",
@@ -11449,7 +11449,7 @@
                 "width": 31,
                 "height": 20,
                 "copyright": "Hidemitsu Kobayashi, Masato Hiramatsu, Oki Yasutaka",
-                "lines": [
+                "room": [
                     " #####  ####",
                     " #   ####  #######       #####",
                     " #$       $      #########   #",
@@ -11477,7 +11477,7 @@
                 "width": 15,
                 "height": 15,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "###############",
                     "#             #",
                     "# * * * * * * #",
@@ -11500,7 +11500,7 @@
                 "width": 17,
                 "height": 16,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "#################",
                     "#               #",
                     "# * * * * * * * #",
@@ -11524,7 +11524,7 @@
                 "width": 19,
                 "height": 20,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "###################",
                     "#                 #",
                     "# * * * * * * * * #",
@@ -11552,7 +11552,7 @@
                 "width": 19,
                 "height": 20,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "###################",
                     "#@                #",
                     "# * * * * * * * * #",
@@ -11580,7 +11580,7 @@
                 "width": 19,
                 "height": 16,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     "###################",
                     "#                 #",
                     "# * * * * * * * * #",
@@ -11604,7 +11604,7 @@
                 "width": 31,
                 "height": 23,
                 "copyright": "Masaki Ishino, unknown",
-                "lines": [
+                "room": [
                     " #############################",
                     "##                           ##",
                     "# * * * * * * * * * * * * * * #",
@@ -11635,7 +11635,7 @@
                 "width": 31,
                 "height": 23,
                 "copyright": "Thinking Rabbit, Marek Letrab, Findus",
-                "lines": [
+                "room": [
                     "    #########################",
                     "    #                       #",
                     "##### # # ### # # # # # # # ###",

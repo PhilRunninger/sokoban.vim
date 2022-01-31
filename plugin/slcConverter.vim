@@ -22,7 +22,7 @@ function! SLCtoJSON()
     /<Description>/,/<\/Description>/join
     %s/<Description>\s*/"description":"/
     %s/\s*<\/Description>/",/
-    %s/<Level\(.*\)>/{\r\1,\r"lines":[/
+    %s/<Level\(.*\)>/{\r\1,\r"room":[/
     %s/<\/Level>/},/
     %s/Copyright=/,\r"copyright":/
     %s/MaxWidth=/,\r"maxWidth":/
