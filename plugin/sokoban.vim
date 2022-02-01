@@ -110,21 +110,20 @@ endfunction
 
 function! s:BoardSize()
     return [
-         \   max([52, empty(b:levelPack) ? 0 : b:levelPack.maxWidth]),
-         \   max([31, empty(b:levelPack) ? 0 : b:levelPack.maxHeight])
+         \   max([52, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
+         \   max([31, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])
          \ ]
 endfunction
 
 function! s:DrawGameBoard(level)   "{{{1
     let [maxWidth,maxHeight] = s:BoardSize()
-    let title = printf('Level Pack: %s', b:levelPack.title)
     call s:ClearBuffer()
     call append(0, repeat([''],maxHeight+3))
-    call setline( 1,                   printf('VIM SOKOBAN, v2.0   %60s', title))
+    call setline( 1, 'VIM SOKOBAN, v2.0')
     call setline( 2, repeat('═',maxWidth).       '╦═══════════════════════════')
-    call setline( 3, repeat(' ',maxWidth).       '║ Pack: ')
+    call setline( 3, repeat(' ',maxWidth).printf('║ Set: %-21s', b:levelSet.title))
     call setline( 4, repeat(' ',maxWidth).printf('║ Level: %d', a:level))
-    call setline( 5, repeat(' ',maxWidth).printf('║   %-24s',b:levelPack.levels[a:level-1].id))
+    call setline( 5, repeat(' ',maxWidth).printf('║   %-24s',b:levelSet.levels[a:level-1].id))
     call setline( 6, repeat(' ',maxWidth).       '║')
     call setline( 7, repeat(' ',maxWidth).       '║ Score')
     call setline( 8, repeat(' ',maxWidth).       '║')
@@ -151,7 +150,7 @@ function! s:DrawGameBoard(level)   "{{{1
     call setline(29, repeat(' ',maxWidth).       '║    r     Restart')
     call setline(30, repeat(' ',maxWidth).       '║    n     Next Level')
     call setline(31, repeat(' ',maxWidth).       '║    p     Previous Level')
-    call setline(32, repeat(' ',maxWidth).       '║    c     Choose Pack')
+    call setline(32, repeat(' ',maxWidth).       '║    c     Choose Level Set')
     let l = 30
     while l < maxHeight
         call setline(l+3,repeat(' ',maxWidth).   '║')
@@ -246,18 +245,18 @@ function! s:ProcessLevel(room, paddingTop, paddingLeft)   "{{{1
     endfor
 endfunction
 
-function! s:LoadLevelPack()   "{{{1
     " About...   {{{2
-    " Function : LoadLevelPack (PRIVATE)
     " Purpose  : loads the level pack JSON file into memory.
+function! s:LoadLevelSet()   "{{{1
+    " Function : LoadLevelSet (PRIVATE)
     " Args     :
     " Returns  : nothing
     " Author   : Phil Runninger   }}}
     let levelFile = g:SokobanLevelDirectory . '/Original.json'
     if filereadable(levelFile)
-        let b:levelPack = eval(join(readfile(levelFile),''))
+        let b:levelSet = eval(join(readfile(levelFile),''))
     else
-        let b:levelPack = {}
+        let b:levelSet = {}
     endif
 endfunction    "}}}
 
@@ -269,8 +268,8 @@ function! s:LoadLevel(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     let [maxWidth,_] = s:BoardSize()
-    if a:level <= len(b:levelPack.levels)
-        let level = b:levelPack.levels[a:level-1]
+    if a:level <= len(b:levelSet.levels)
+        let level = b:levelSet.levels[a:level-1]
         let paddingLeft = (maxWidth-level.width) / 2
         let paddingTop = max([0,(31-level.height)/2])
         call s:ProcessLevel(level.room, paddingTop, paddingLeft)
@@ -723,7 +722,7 @@ function! Sokoban(splitWindow, ...)   "{{{1
     call s:GetCurrentHighScores(level)
     let b:moves = 0        " counter of number of moves made
     let b:pushes = 0       " counter of number of pushes made
-    call s:LoadLevelPack()
+    call s:LoadLevelSet()
     call s:DrawGameBoard(level)
     setlocal nomodifiable
     call s:SetupMaps(1)
