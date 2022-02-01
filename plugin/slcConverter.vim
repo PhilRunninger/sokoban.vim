@@ -11,30 +11,49 @@
 "       :r Foobar.slc
 "       :call SLCtoJSON()
 function! SLCtoJSON()
-    g/<?xml/d
+    " Outer tag becomes start/end of JSON object.
     %s/<SokobanLevels.*/{/
     %s/<\/SokobanLevels>/}/
-    %s/<LevelCollection\(.*\)>/"levelCollection":{\r\1,\r"levels":[/
-    %s/<\/LevelCollection>/]\r}/
+
+    " Uppermost elements to JSON data.
     %s/<Title>\(.*\)<\/Title>/"title":"\1",/
     %s/<Email>\(.*\)<\/Email>/"email":"\1",/
     %s/<Url>\(.*\)<\/Url>/"url":"\1",/
     /<Description>/,/<\/Description>/join
     %s/<Description>\s*/"description":"/
     %s/\s*<\/Description>/",/
-    %s/<Level\(.*\)>/{\r\1,\r"room":[/
-    %s/<\/Level>/},/
+
+    " LevelCollection element removed as unnecessary.
+    %s/<LevelCollection\(.*\)>/\1,\r"levels":[/
+    %s/<\/LevelCollection>/]/
+
+    " Promote some lower-level attributes to the top level data.
     %s/Copyright=/,\r"copyright":/
     %s/MaxWidth=/,\r"maxWidth":/
     %s/MaxHeight=/,\r"maxHeight":/
+
+    " Level becomes a nested JSON object.
+    %s/<Level\(.*\)>/{\r\1,\r"room":[/
+    %s/<\/Level>/},/
+
+    " Convert level attributes to JSON data.
     %s/Id=/,\r"id":/
     %s/Width=/,\r"width":/
     %s/Height=/,\r"height":/
+
+    " Convert <L> elements to string array items.
     %s/<L>/"/
     %s/<\/L>/",/
+
+    " Remove trailing commas from final array elements.
     %s/,\n\s*}/]\r}/
     %s/,\n\s*]/\r]/
-    %s/\(width\|height\)":\s*"\(\d\+\)"/\1": \2/
-    g/^\s*,$/d
+
+    " Remove quotes around integer values.
+    %s/\(width\|height\)":\s*\zs"\(\d\+\)"/\2/
+
+    " Remove blank lines, stray commas, and <?xml> tag.
     g/^$/d
+    g/^\s*,$/d
+    g/<?xml/d
 endfunction

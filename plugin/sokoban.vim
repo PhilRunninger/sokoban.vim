@@ -110,8 +110,8 @@ endfunction
 
 function! s:BoardSize()
     return [
-         \   max([52, empty(b:levelPack) ? 0 : b:levelPack.levelCollection.maxWidth]),
-         \   max([31, empty(b:levelPack) ? 0 : b:levelPack.levelCollection.maxHeight])
+         \   max([52, empty(b:levelPack) ? 0 : b:levelPack.maxWidth]),
+         \   max([31, empty(b:levelPack) ? 0 : b:levelPack.maxHeight])
          \ ]
 endfunction
 
@@ -124,7 +124,7 @@ function! s:DrawGameBoard(level)   "{{{1
     call setline( 2, repeat('═',maxWidth).       '╦═══════════════════════════')
     call setline( 3, repeat(' ',maxWidth).       '║ Pack: ')
     call setline( 4, repeat(' ',maxWidth).printf('║ Level: %d', a:level))
-    call setline( 5, repeat(' ',maxWidth).printf('║   %-24s',b:levelPack.levelCollection.levels[a:level-1].id))
+    call setline( 5, repeat(' ',maxWidth).printf('║   %-24s',b:levelPack.levels[a:level-1].id))
     call setline( 6, repeat(' ',maxWidth).       '║')
     call setline( 7, repeat(' ',maxWidth).       '║ Score')
     call setline( 8, repeat(' ',maxWidth).       '║')
@@ -269,8 +269,8 @@ function! s:LoadLevel(level)   "{{{1
     " Returns  : nothing
     " Author   : Michael Sharpe (feline@irendi.com)   }}}
     let [maxWidth,_] = s:BoardSize()
-    if a:level <= len(b:levelPack.levelCollection.levels)
-        let level = b:levelPack.levelCollection.levels[a:level-1]
+    if a:level <= len(b:levelPack.levels)
+        let level = b:levelPack.levels[a:level-1]
         let paddingLeft = (maxWidth-level.width) / 2
         let paddingTop = max([0,(31-level.height)/2])
         call s:ProcessLevel(level.room, paddingTop, paddingLeft)
