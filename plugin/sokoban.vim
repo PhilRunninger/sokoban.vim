@@ -98,24 +98,16 @@ command! -nargs=? Sokoban call Sokoban('e', <f-args>)
 command! -nargs=? SokobanH call Sokoban('h', <f-args>)
 command! -nargs=? SokobanV call Sokoban('v', <f-args>)
 
-function! s:ClearBuffer()   "{{{1
-    " About...   {{{2
-    " Function : ClearBuffer (PRIVATE
-    " Purpose  : clears the buffer of all characters
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:ClearBuffer()   " clears the buffer of all characters {{{1
     normal! 1GdG
 endfunction
 
-function! s:BoardSize()
-    return [
-         \   max([52, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
-         \   max([31, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])
-         \ ]
+function! s:BoardSize()   " Returns a list of game board dimensions {{{1
+    return [ max([52, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
+         \   max([31, empty(b:levelSet) ? 0 : b:levelSet.maxHeight]) ]
 endfunction
 
-function! s:DrawGameBoard(level)   "{{{1
+function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
     let [maxWidth,maxHeight] = s:BoardSize()
     call s:ClearBuffer()
     call append(0, repeat([''],maxHeight+3))
@@ -161,13 +153,7 @@ function! s:DrawGameBoard(level)   "{{{1
     call s:LoadLevel(a:level)
 endfunction
 
-function! s:UpdateHeader(level)   "{{{1
-    " About...   {{{2
-    " Function : UpdateHeader (PRIVATE
-    " Purpose  : updates the moves and the pushes scores in the header
-    " Args     : level - the current level number
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:UpdateHeader(level)   " Update the moves and the push scores in the header {{{1
     let [maxWidth,_] = s:BoardSize()
     call setline( 8, strcharpart(getline( 8),0,maxWidth).printf('║  %5d moves  %5d pushes',b:moves,b:pushes))
     call setline(13, strcharpart(getline(13),0,maxWidth).printf('║  %5s moves  %5s pushes',b:fewestMovesMoves,b:fewestMovesPushes))
@@ -176,24 +162,12 @@ function! s:UpdateHeader(level)   "{{{1
     call setline(18, strcharpart(getline(18),0,maxWidth).printf('║        %s',b:fewestPushesDate))
 endfunction
 
-function! s:UpdateFooter()   "{{{1
-    " About...   {{{2
-    " Function : UpdateFooter (PRIVATE
-    " Purpose  : updates the sequence of moves in the footer
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Phil Runninger   }}}
+function! s:UpdateFooter() " updates the sequence of moves in the footer {{{1
     call deletebufline(bufname('%'),s:startSequence+1,'$')
     call append(line('$'), split(s:CompressMoves(), '.\{80}\zs'))
 endfunction
 
-function! s:DisplayLevelCompleteMessage()   "{{{1
-    " About...   {{{2
-    " Function : DisplayLevelCompleteMessage (PRIVATE
-    " Purpose  : Display the message indicating that the level has been completed
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:DisplayLevelCompleteMessage()   " Display the message indicating that the level has been completed {{{1
     let msg = ['╭──────────────────────────────────╮  ',
              \ '│ ╭──────────────────────────────╮ │',
              \ '│ │        LEVEL COMPLETE        │ │',
@@ -212,14 +186,7 @@ function! s:DisplayLevelCompleteMessage()   "{{{1
     endfor
 endfunction
 
-function! s:ProcessLevel(room, paddingTop, paddingLeft)   "{{{1
-    " About...   {{{2
-    " Function : ProcessLevel (PRIVATE
-    " Purpose  : processes a level which has been loaded and populates the object
-    "            lists and sokoban man position.
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:ProcessLevel(room, paddingTop, paddingLeft)   " Processes a level and populates the object lists and sokoban man position. {{{1
     let b:wallList = []    " list of all wall locations
     let b:homeList = []    " list of all home square locations
     let b:packageList = [] " list of all package locations
@@ -247,26 +214,16 @@ endfunction
 
     " About...   {{{2
     " Purpose  : loads the level pack JSON file into memory.
-function! s:LoadLevelSet()   "{{{1
-    " Function : LoadLevelSet (PRIVATE)
-    " Args     :
-    " Returns  : nothing
-    " Author   : Phil Runninger   }}}
+function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all levels in the set. {{{1
     let levelFile = g:SokobanLevelDirectory . '/Original.json'
     if filereadable(levelFile)
         let b:levelSet = eval(join(readfile(levelFile),''))
     else
         let b:levelSet = {}
     endif
-endfunction    "}}}
+endfunction
 
-function! s:LoadLevel(level)   "{{{1
-    " About...   {{{2
-    " Function : LoadLevel (PRIVATE)
-    " Purpose  : loads the level and sets up the syntax highlighting for the file
-    " Args     : level - the level to load
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:LoadLevel(level)   " Loads the level and sets up the syntax highlighting for the file {{{1
     let [maxWidth,_] = s:BoardSize()
     if a:level <= len(b:levelSet.levels)
         let level = b:levelSet.levels[a:level-1]
@@ -312,15 +269,7 @@ function! s:LoadLevel(level)   "{{{1
     endif
 endfunction
 
-function! s:SetCharInLine(cell, char)   "{{{1
-    " About...   {{{2
-    " Function : SetCharInLine (PRIVATE)
-    " Purpose  : Puts a specified character at a specific position in the specified
-    "            line
-    " Args     : cell - the cell to manipulate
-    "            char - the character to set at the position
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:SetCharInLine(cell, char)   " Puts a specified character at a specific position in the specified line {{{1
     let [theLine,theCol] = a:cell
     let ln = getline(theLine)
     let leftStr = strcharpart(ln, 0, theCol)
@@ -329,57 +278,23 @@ function! s:SetCharInLine(cell, char)   "{{{1
     call setline(theLine, ln)
 endfunction
 
-function! s:IsWall(cell)   "{{{1
-    " About...   {{{2
-    " Function : IsWall (PRIVATE)
-    " Purpose  : determines whether the specified cell corresponds to a wall
-    " Args     : cell - the location to check
-    " Returns  : 1 if the cell is a wall, 0 otherwise
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:IsWall(cell)   " Determines whether the specified cell corresponds to a wall {{{1
     return index(b:wallList, a:cell) >= 0
 endfunction
 
-function! s:IsHome(cell)   "{{{1
-    " About...   {{{2
-    " Function : IsHome (PRIVATE)
-    " Purpose  : determines whether the specified (line, column) pair corresponds
-    "            to a home area
-    " Args     : cell - the location to check
-    " Returns  : 1 if the cell is a home area, 0 otherwise
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:IsHome(cell)   " Determines whether the specified (line, column) pair corresponds {{{1
     return index(b:homeList, a:cell) >= 0
 endfunction
 
-function! s:IsPackage(cell)   "{{{1
-    " About...   {{{2
-    " Function : IsPackage (PRIVATE)
-    " Purpose  : determines whether the specified cell corresponds to a package
-    " Args     : cell - the location to check
-    " Returns  : 1 if the cell is a package, 0 otherwise
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:IsPackage(cell)   " Determines whether the specified cell corresponds to a package {{{1
     return index(b:packageList, a:cell) >= 0
 endfunction
 
-function! s:IsEmpty(cell)   "{{{1
-    " About...   {{{2
-    " Function : IsEmpty (PRIVATE)
-    " Purpose  : determines whether the specified cell corresponds to empty space in the maze
-    " Args     : cell - the location to check
-    " Returns  : 1 if the cell is an empty space, 0 otherwise
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:IsEmpty(cell)   " Determines whether the specified cell corresponds to empty space in the maze {{{1
     return !s:IsWall(a:cell) && !s:IsPackage(a:cell)
 endfunction
 
-function! s:Move(from, to, item)   "{{{1
-    " About...   {{{2
-    " Function : Move (PRIVATE)
-    " Purpose  : moves the item (man or package) in the buffer. Home squares are
-    "            handled correctly in this function too.
-    " Args     : from - the cell where the man is moving from
-    "            to - the cell where the man is moving to
-    "            item - the character representing the item being moved.
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:Move(from, to, item)   " Moves the item (man or package) in the buffer. Home squares are handled correctly in this function too. {{{1
     if s:IsHome(a:from)
         call s:SetCharInLine(a:from, g:charHome)
     else
@@ -388,25 +303,12 @@ function! s:Move(from, to, item)   "{{{1
     call s:SetCharInLine(a:to, a:item)
 endfunction
 
-function! s:UpdatePackageList(old, new)   "{{{1
-    " About...   {{{2
-    " Function : UpdatePackageList (PRIVATE)
-    " Purpose  : updates the package list when a package is moved
-    " Args     : old - the cell of the old package location
-    "            new - the cell of the package's new location
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:UpdatePackageList(old, new)   " Updates the package list when a package is moved {{{1
     call remove(b:packageList, index(b:packageList, a:old))
     call add(b:packageList, a:new)
 endfunction
 
-function! s:AreAllPackagesHome()   "{{{1
-    " About...   {{{2
-    " Function : AreAllPackagesHome (PRIVATE
-    " Purpose  : Determines if all packages have been placed in the home area
-    " Args     : none
-    " Returns  : 1 if all packages are home (i.e. level complete), 0 otherwise
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:AreAllPackagesHome()   " Determines if all packages have been placed in the home area {{{1
     for pkg in b:packageList
         if !s:IsHome(pkg)
             return 0
@@ -415,40 +317,15 @@ function! s:AreAllPackagesHome()   "{{{1
     return 1
 endfunction
 
-function! s:AddVectors(x, y)   "{{{1
-    " About...   {{{2
-    " Function : AddVectors (PRIVATE)
-    " Purpose  : Adds two vectors (lists) together.
-    " Args     : x - a list of 2 numbers
-    "            y - a list of 2 numbers
-    " Returns  : A new list, the sum of x and y
-    " Author   : Phil Runninger   }}}
+function! s:AddVectors(x, y)   " Adds two vectors (lists) together. {{{1
     return [a:x[0]+a:y[0], a:x[1]+a:y[1]]
 endfunction
 
-function! s:SubtractVectors(x, y)   "{{{1
-    " About...   {{{2
-    " Function : SubtractVectors (PRIVATE)
-    " Purpose  : Subtracts two vectors (lists) together.
-    " Args     : x - a list of 2 numbers
-    "            y - a list of 2 numbers
-    " Returns  : A new list, the difference of x and y
-    " Author   : Phil Runninger   }}}
+function! s:SubtractVectors(x, y)   " Subtracts two vectors (lists) together. {{{1
     return [a:x[0]-a:y[0], a:x[1]-a:y[1]]
 endfunction
 
-function! s:MakeMove(delta, moveDirection)   "{{{1
-    " About...   {{{2
-    " Function : MakeMove (PRIVATE)
-    " Purpose  : This is the core function which is called when a move is made. It
-    "            detemines if the move is legal, if packages have moved and takes
-    "            care of updating the buffer to reflect the new position of
-    "            everything.
-    " Args     : delta - indicates the direction the man has moved
-    "            moveDirection - character to place in the undolist which
-    "                            represents the move
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:MakeMove(delta, moveDirection)   " This is the core function which is called when a move is made. {{{1
     let newManPos = s:AddVectors(b:manPos, a:delta)
     if s:IsWall(newManPos)
         return
@@ -486,13 +363,7 @@ function! s:MakeMove(delta, moveDirection)   "{{{1
     setlocal nomodifiable
 endfunction
 
-function! s:UndoMove()   "{{{1
-    " About...   {{{2
-    " Function : UndoMove (PRIVATE
-    " Purpose  : Called when the u key is hit to handle the undo move operation
-    " Args     : none
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:UndoMove()   " Called when the u key is hit to handle the undo move operation. {{{1
     if !empty(b:undoList)
         let prevMove = b:undoList[0]
         call remove(b:undoList, 0)
@@ -519,13 +390,7 @@ function! s:UndoMove()   "{{{1
     endif
 endfunction
 
-function! s:SetupMaps(enable)   "{{{1
-    " About...   {{{2
-    " Function : SetupMaps (PRIVATE
-    " Purpose  : Sets up the various maps to control the movement of the game
-    " Args     : enable - if 0, turn off movement maps; otherwise, turn them on.
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:SetupMaps(enable)   " Sets up the various maps to control the movement of the game. {{{1
     if a:enable
         nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], 'h')<CR>
         nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], 'h')<CR>
@@ -552,15 +417,7 @@ function! s:SetupMaps(enable)   "{{{1
     nnoremap <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
 endfunction
 
-function! s:LoadScoresFile()   "{{{1
-    " About...   {{{2
-    " Function : LoadScoresFile (PRIVATE
-    " Purpose  : loads the highscores file if it exists. Determines the last
-    "            level played. The contents of the highscore file end up in the
-    "            b:scores variable.
-    " Args     : none
-    " Returns  : the last level played.
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:LoadScoresFile()   " Loads the highscores file if it exists. Determines the last level played. {{{1
     if filereadable(g:SokobanScoreFile)
         let b:scores = eval(join(readfile(g:SokobanScoreFile),''))
         return b:scores['current']
@@ -570,27 +427,14 @@ function! s:LoadScoresFile()   "{{{1
     endif
 endfunction
 
-function! s:SaveScoresToFile()   "{{{1
-    " About...   {{{2
-    " Function : SaveScoresToFile (PRIVATE
-    " Purpose  : saves the current scores to the highscores file.
-    " Args     : none
-    " Returns  : nothing
-    " Notes    : call by silent! call SaveScoresToFile()
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:SaveScoresToFile()   " Saves the current scores to the highscores file. {{{1
     call writefile([json_encode(b:scores)], g:SokobanScoreFile)
 endfunction
 
-function! s:GetCurrentHighScores(level)   "{{{1
-    " About...   {{{2
-    " Function : GetCurrentHighScores (PRIVATE)
-    " Purpose  : determines the high scores for a particular level. This is a
-    "            little tricky as there are two high scores possible for each
-    "            level. One for the pushes and one for the moves. This function
-    "            detemines both and maintains the information for both
-    " Args     : level - the level to determine the high scores
-    " Returns  : nothing, sets alot of buffer variables though
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:GetCurrentHighScores(level)   " Determines the high scores for a particular level. {{{1
+    " This is a little tricky as there are two high scores possible for each
+    " level. One for the pushes and one for the moves. This function detemines
+    " both and maintains the information for both
     let b:fewestMovesDate = ''
     let b:fewestMovesMoves = ''
     let b:fewestMovesPushes = ''
@@ -614,14 +458,7 @@ function! s:GetCurrentHighScores(level)   "{{{1
     endif
 endfunction
 
-function! s:UpdateHighScores()   "{{{1
-    " About...   {{{2
-    " Function : UpdateHighScores (PRIVATE
-    " Purpose  : Determines if a highscore has been beaten, and if so saves it to
-    "            the highscores file
-    " Args     : none.
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:UpdateHighScores()   " Determines if a highscore has been beaten, and if so saves it to the highscores file. {{{1
     if !has_key(b:scores,b:level)
         let b:scores[b:level] = {}
     endif
@@ -653,15 +490,7 @@ function! s:UpdateHighScores()   "{{{1
     call s:SaveScoresToFile()
 endfunction
 
-function! s:CompressMoves()   " {{{1
-    " About...   {{{2
-    " Function : s:CompressMoves() (PRIVATE
-    " Purpose  : Compress the sequence of moves such that repeated keystrokes
-    "            are replaced by a count followed by the key that was pressed,
-    "            where count is between 2 and 9.
-    " Args     : none.
-    " Returns  : a compressed string of the sequence of moves in b:undoList
-    " Author   : Phil Runninger   }}}
+function! s:CompressMoves()   " Compresses the sequence of moves using run-length-encoding. {{{1
     let moves = substitute(join(reverse(copy(b:undoList)),''),'p','','g')
     for direction in ['h','j','k','l']
         for count in range(9,2,-1)
@@ -673,28 +502,12 @@ function! s:CompressMoves()   " {{{1
     return substitute(moves, ' ', '', 'g')
 endfunction
 
-function! s:SaveCurrentLevelToFile(level)   "{{{1
-    " About...   {{{2
-    " Function : SaveCurrentLevelToFile (PRIVATE)
-    " Purpose  : saves the current level to the high scores file.
-    " Args     : level - the level number to save to the file
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! s:SaveCurrentLevelToFile(level)   " Saves the current level to the high scores file. {{{1
     let b:scores['current'] = a:level
     call s:SaveScoresToFile()
 endfunction
 
-function! s:FindOrCreateBuffer(doSplit)   "{{{1
-    " About...   {{{2
-    " Function : FindOrCreateBuffer (PRIVATE)
-    "            Checks the window list for the buffer. If the buffer is in an
-    "            already open window, it switches to the window. If the buffer
-    "            was not in a window, it switches to that buffer. If the buffer did
-    "            not exist, it creates it.
-    " Args     : doSplit (IN) -- indicates whether the window should be split
-    "                            ("v", "h", "e")
-    " Returns  : nothing
-    " Author   : Michael Sharpe <feline@irendi.com>   }}}
+function! s:FindOrCreateBuffer(doSplit)   " Create or go to the window containing the VimSokoban buffer. {{{1
     let filename = '_.#VimSokoban#._'
     let bufNum = bufnr(filename, 1)
     let winNum = bufwinnr(filename)
@@ -705,15 +518,7 @@ function! s:FindOrCreateBuffer(doSplit)   "{{{1
     endif
 endfunction
 
-function! Sokoban(splitWindow, ...)   "{{{1
-    " About...   {{{2
-    " Function : Sokoban (PUBLIC)
-    " Purpose  : This is the entry point to the game. It creates the buffer, loads
-    "            the level, and sets the game up.
-    " Args     : splitWindow - indicates how to split the window
-    "            level (optional) - specifies the start level
-    " Returns  : nothing
-    " Author   : Michael Sharpe (feline@irendi.com)   }}}
+function! Sokoban(splitWindow, ...)   " This is the entry point to the game. {{{1
     call s:FindOrCreateBuffer(a:splitWindow)
     setlocal modifiable
     call s:ClearBuffer()
