@@ -256,12 +256,12 @@ function! s:LoadLevel(level)   " Loads the level and sets up the syntax highligh
     endif
 endfunction
 
-function! s:SetCharInLine(cell, char)   " Puts a specified character at a specific position in the specified line {{{1
+function! s:ReplaceTextInLine(cell, text)   " Puts text at a specific position in the buffer {{{1
     let [theLine,theCol] = a:cell
     let ln = getline(theLine)
     let leftStr = strcharpart(ln, 0, theCol)
-    let rightStr = strcharpart(ln, theCol + 1)
-    let ln = leftStr . a:char . rightStr
+    let rightStr = strcharpart(ln, theCol + strchars(a:text))
+    let ln = leftStr . a:text . rightStr
     call setline(theLine, ln)
 endfunction
 
@@ -283,11 +283,11 @@ endfunction
 
 function! s:Move(from, to, item)   " Moves the item (man or package) in the buffer. Home squares are handled correctly in this function too. {{{1
     if s:IsHome(a:from)
-        call s:SetCharInLine(a:from, g:charHome)
+        call s:ReplaceTextInLine(a:from, g:charHome)
     else
-        call s:SetCharInLine(a:from, ' ')
+        call s:ReplaceTextInLine(a:from, ' ')
     endif
-    call s:SetCharInLine(a:to, a:item)
+    call s:ReplaceTextInLine(a:to, a:item)
 endfunction
 
 function! s:UpdatePackageList(old, new)   " Updates the package list when a package is moved {{{1
