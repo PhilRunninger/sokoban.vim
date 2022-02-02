@@ -102,7 +102,7 @@ function! s:ClearBuffer()   " clears the buffer of all characters {{{1
     normal! 1GdG
 endfunction
 
-function! s:BoardSize()   " Returns a list of game board dimensions {{{1
+function! s:BoardSize()   " Returns a dictionary of game board dimensions, a minimum of 51 columns and 30 lines. {{{1
     return {'maxWidth': max([51, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
          \  'maxHeight': max([30, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
 endfunction
@@ -114,9 +114,9 @@ function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
     call setline( 1,       '    ╭───────────────────╮    ' . repeat(' ',maxWidth))
     call setline( 2,       '╔═══╡ VIM SOKOBAN, v2.0 ╞═══╗' . repeat(' ',maxWidth))
     call setline( 3,       '║   ╰───────────────────╯   ║' . repeat(' ',maxWidth))
-    call setline( 4,printf('║ Set: %-20s ║', b:levelSet.title) . repeat(' ',maxWidth))
-    call setline( 5,printf('║ Level #: %-5d            ║', a:level) . repeat(' ',maxWidth))
-    call setline( 6,printf('║ Id: %-21s ║', b:levelSet.levels[a:level-1].id) . repeat(' ',maxWidth))
+    call setline( 4,       '║ Set:                      ║' . repeat(' ',maxWidth))
+    call setline( 5,       '║ Level #:                  ║' . repeat(' ',maxWidth))
+    call setline( 6,       '║ Name:                     ║' . repeat(' ',maxWidth))
     call setline( 7,       '║                           ║' . repeat(' ',maxWidth))
     call setline( 8,       '║ Score:                    ║' . repeat(' ',maxWidth))
     call setline( 9,       '║     0 moves      0 pushes ║' . repeat(' ',maxWidth))
@@ -150,7 +150,17 @@ function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
     call s:LoadLevel(a:level)
 endfunction
 
+function! s:ScrollText(text, width, increment)
+    let s:scroll = get(s:, 'scroll', -1) + a:increment
+    let divisor = max([0, strchars(a:text) - a:width + 15])
+    let l:text = strcharpart('⚅⚅⚅⚅⚅'.a:text, s:scroll % divisor)
+    return strcharpart(substitute(l:text, '⚅', '', 'g'), 0, a:width)
+endfunction
+
 function! s:UpdateHeader(level)   " Update the moves and the push scores in the header {{{1
+    call s:ReplaceTextInLine([ 4,0], printf('║ Set: %-20s ║', s:ScrollText(b:levelSet.title, 20, 1)))
+    call s:ReplaceTextInLine([ 5,0], printf('║ Level #: %-5d            ║', a:level))
+    call s:ReplaceTextInLine([ 6,0], printf('║ Name: %-19s ║', s:ScrollText(b:levelSet.levels[a:level-1].id, 19, 0)))
     call s:ReplaceTextInLine([ 9,0], printf('║ %5s moves  %5s pushes ║',b:moves,b:pushes))
     call s:ReplaceTextInLine([12,0], printf('║ %5s moves  %5s pushes ║',b:fewestMovesMoves,b:fewestMovesPushes))
     call s:ReplaceTextInLine([13,0], printf('║ %25s ║',                 b:fewestMovesDate))
