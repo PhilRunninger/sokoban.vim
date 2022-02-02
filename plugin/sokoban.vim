@@ -247,21 +247,8 @@ function! s:LoadLevel(level)   " Loads the level and sets up the syntax highligh
         let b:level = a:level
         let s:startSequence = line('$')
 
-        if has('syntax')
-            syn clear
-            execute 'syn match SokobanMan /'.g:charSoko.'/'
-            execute 'syn match SokobanPackage /'.g:charPackage.'/'
-            execute 'syn match SokobanPackageHome /'.g:charPackageHome.'/'
-            execute 'syn match SokobanWall /'.g:charWall.'/'
-            execute 'syn match SokobanHome /'.g:charHome.'/'
-            highlight link SokobanPackage Constant
-            highlight link SokobanPackageHome Statement
-            highlight link SokobanMan Label
-            highlight link SokobanWall Comment
-            highlight link SokobanHome Statement
-        endif
         call s:SaveCurrentLevelToFile(a:level)
-        setlocal buftype=nofile
+        setlocal buftype=nofile filetype=vimsokoban
         setlocal nomodifiable
         setlocal nolist nonumber nowrap signcolumn=no
     else
