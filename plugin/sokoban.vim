@@ -227,8 +227,16 @@ function! s:ProcessLevel(room, top, left)   " Processes a level and populates th
     endfor
 endfunction
 
-    " About...   {{{2
-    " Purpose  : loads the level pack JSON file into memory.
+function! s:ChangeLevelSet()
+    let levelSets = map(readdir(g:SokobanLevelDirectory, {f -> f =~ '\.json$'}), {i,g -> printf('%2d: %s',i+1,fnamemodify(g, ':r'))})
+    call insert(levelSets, 'Choose a level set (by number) from this list.')
+    let choice = inputlist(levelSets)
+    if choice > 0 && choice < len(levelSets)
+        call s:SaveCurrentLevelToFile(levelSets[choice][4:], 1)
+        call Sokoban('')
+    endif
+endfunction
+
 function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all levels in the set. {{{1
     let levelFile = g:SokobanLevelDirectory . '/' . b:userData.currentSet . '.json'
     if filereadable(levelFile)
@@ -402,9 +410,10 @@ function! s:SetupMaps(enable)   " Sets up the various maps to control the moveme
         nnoremap <buffer> <Right> <Nop>
         nnoremap <buffer> u       <Nop>
     endif
-    nnoremap <silent> <buffer> r       :call Sokoban("", b:userData.currentLevel)<CR>
-    nnoremap <silent> <buffer> n       :call Sokoban("", b:userData.currentLevel + 1)<CR>
-    nnoremap <silent> <buffer> p       :call Sokoban("", b:userData.currentLevel - 1)<CR>
+    nnoremap <silent> <buffer> r :call Sokoban('', b:userData.currentLevel)<CR>
+    nnoremap <silent> <buffer> n :call Sokoban('', b:userData.currentLevel + 1)<CR>
+    nnoremap <silent> <buffer> p :call Sokoban('', b:userData.currentLevel - 1)<CR>
+    nnoremap <silent> <buffer> c :call <SID>ChangeLevelSet()<CR>
 endfunction
 
 function! s:ReadUserData()   " Loads the highscores file if it exists. Determines the last level played. {{{1
@@ -435,20 +444,29 @@ function! s:GetCurrentHighScores()   " Retrieves the high scores for the current
     let b:fewestPushesDate = ''
     let b:fewestPushesMoves = ''
     let b:fewestPushesPushes = ''
-    if has_key(b:userData[b:userData.currentSet], b:userData.currentLevel)
-        let best = b:userData[b:userData.currentSet][b:userData.currentLevel]
-        let b:fewestMovesMoves = best['fewestMoves']['moves']
-        let b:fewestMovesPushes = best['fewestMoves']['pushes']
-        if has_key(best['fewestMoves'],'date')
-            let b:fewestMovesDate = best['fewestMoves']['date']
-        endif
-        if has_key(best,'fewestPushes')
-        let b:fewestPushesMoves = best['fewestPushes']['moves']
-        let b:fewestPushesPushes = best['fewestPushes']['pushes']
-            if has_key(best['fewestPushes'],'date')
-                let b:fewestPushesDate = best['fewestPushes']['date']
-            endif
-        endif
+    if !has_key(b:userData, b:userData.currentSet)
+        return
+    endif
+
+    if !has_key(b:userData[b:userData.currentSet], b:userData.currentLevel)
+        return
+    endif
+
+    let best = b:userData[b:userData.currentSet][b:userData.currentLevel]
+    let b:fewestMovesMoves = best['fewestMoves']['moves']
+    let b:fewestMovesPushes = best['fewestMoves']['pushes']
+    if has_key(best['fewestMoves'],'date')
+        let b:fewestMovesDate = best['fewestMoves']['date']
+    endif
+
+    if !has_key(best,'fewestPushes')
+        return
+    endif
+
+    let b:fewestPushesMoves = best['fewestPushes']['moves']
+    let b:fewestPushesPushes = best['fewestPushes']['pushes']
+    if has_key(best['fewestPushes'],'date')
+        let b:fewestPushesDate = best['fewestPushes']['date']
     endif
 endfunction
 
@@ -456,10 +474,10 @@ function! s:UpdateHighScores()   " Determines if a highscore has been beaten, an
     let currentSet = b:userData.currentSet
     let currentLevel = b:userData.currentLevel
     if !has_key(b:userData, currentSet)
-        b:userData[currentSet] = {}
+        let b:userData[currentSet] = {}
     endif
     if !has_key(b:userData[currentSet], currentLevel)
-        b:userData[currentSet][currentLevel] = {}
+        let b:userData[currentSet][currentLevel] = {}
     endif
     call extend(b:userData[currentSet][currentLevel], {'fewestMoves': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
     call extend(b:userData[currentSet][currentLevel], {'fewestPushes': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
