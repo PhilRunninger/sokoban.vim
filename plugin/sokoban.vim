@@ -98,18 +98,15 @@ command! -nargs=? Sokoban call Sokoban('e', <f-args>)
 command! -nargs=? SokobanH call Sokoban('h', <f-args>)
 command! -nargs=? SokobanV call Sokoban('v', <f-args>)
 
-function! s:ClearBuffer()   " Clears the buffer of all characters {{{1
-    normal! 1GdG
-endfunction
-
 function! s:BoardSize()   " Returns a dictionary of game board dimensions, a minimum of 51 columns and 30 lines. {{{1
     return {'maxWidth': max([52, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
          \  'maxHeight': max([30, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
 endfunction
 
-function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
+function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     let maxWidth = s:BoardSize().maxWidth
-    call s:ClearBuffer()
+    setlocal modifiable
+    normal! 1GdG
     call append(0, repeat([''],s:BoardSize().maxHeight))
     call setline( 1,       '   ╭───────────────────╮    ' . repeat(' ',maxWidth))
     call setline( 2,       '═══╡ VIM SOKOBAN, v2.0 ╞═══╗' . repeat(' ',maxWidth))
@@ -117,7 +114,7 @@ function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
     call setline( 4,       ' Set:                      ║' . repeat(' ',maxWidth))
     call setline( 5,       ' Level #:                  ║' . repeat(' ',maxWidth))
     call setline( 6,       ' Name:                     ║' . repeat(' ',maxWidth))
-    call setline( 7,       '                           ║' . repeat(' ',maxWidth))
+    call setline( 7,       '═══════════════════════════╣' . repeat(' ',maxWidth))
     call setline( 8,       ' Score:                    ║' . repeat(' ',maxWidth))
     call setline( 9,       '     0 moves      0 pushes ║' . repeat(' ',maxWidth))
     call setline(10,       '═══════════════════════════╣' . repeat(' ',maxWidth))
@@ -133,7 +130,7 @@ function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
     call setline(20,printf('         %s %s    Package    ║', g:charPackage, g:charPackageHome) . repeat(' ',maxWidth))
     call setline(21,printf('          %s     Wall       ║', g:charWall) . repeat(' ',maxWidth))
     call setline(22,printf('          %s     Home       ║', g:charHome) . repeat(' ',maxWidth))
-    call setline(23,       '                           ║' . repeat(' ',maxWidth))
+    call setline(23,       '═══════════════════════════╣' . repeat(' ',maxWidth))
     call setline(24,       ' Keys: h j k l  Move       ║' . repeat(' ',maxWidth))
     call setline(25,       '          u     Undo       ║' . repeat(' ',maxWidth))
     call setline(26,       '          r     Restart    ║' . repeat(' ',maxWidth))
@@ -146,19 +143,21 @@ function! s:DrawGameBoard(level)   " Draws the game board in the buffer. {{{1
         let l += 1
     endwhile
     call setline(l,        '═══════════════════════════╝' . repeat(' ',maxWidth))
-    call s:UpdatePanel(a:level)
-    call s:LoadLevel(a:level)
+    setlocal nomodifiable
+
+    call s:UpdatePanel()
+    call s:LoadLevel()
 endfunction
 
 function! s:Marquee(text, width, increment)
-    let s:scroll = get(s:, 'scroll', -1) + a:increment
+    let s:marqueeOffset += a:increment
 
     if strchars(a:text) <= a:width
         return a:text
     endif
 
     let divisor = strchars(a:text) - a:width + 9
-    let l:text = strcharpart(repeat("\x07",5).a:text, s:scroll % divisor)
+    let l:text = strcharpart(repeat("\x07",5).a:text, s:marqueeOffset % divisor)
     let l:text = substitute(l:text, "\x07", '', 'g')
     if strchars(l:text) > a:width
         return strcharpart(l:text, 0, a:width-1) . '…'
@@ -167,10 +166,10 @@ function! s:Marquee(text, width, increment)
     endif
 endfunction
 
-function! s:UpdatePanel(level)   " Update the moves and the push scores in the header {{{1
+function! s:UpdatePanel()   " Update the moves and the push scores in the header {{{1
     call s:ReplaceTextInLine([ 4,0], printf(' Set: %-20s ║', s:Marquee(b:levelSet.title, 20, 1)))
-    call s:ReplaceTextInLine([ 5,0], printf(' Level #: %-5d            ║', a:level))
-    call s:ReplaceTextInLine([ 6,0], printf(' Name: %-19s ║', s:Marquee(b:levelSet.levels[a:level-1].id, 19, 0)))
+    call s:ReplaceTextInLine([ 5,0], printf(' Level #: %-5d            ║', b:userData.currentLevel))
+    call s:ReplaceTextInLine([ 6,0], printf(' Name: %-19s ║', s:Marquee(b:levelSet.levels[b:userData.currentLevel-1].id, 19, 0)))
     call s:ReplaceTextInLine([ 9,0], printf(' %5s moves  %5s pushes ║',b:moves,b:pushes))
     call s:ReplaceTextInLine([12,0], printf(' %5s moves  %5s pushes ║',b:fewestMovesMoves,b:fewestMovesPushes))
     call s:ReplaceTextInLine([13,0], printf(' %25s ║',                 b:fewestMovesDate))
@@ -179,8 +178,10 @@ function! s:UpdatePanel(level)   " Update the moves and the push scores in the h
 endfunction
 
 function! s:UpdateFooter() " Updates the sequence of moves in the footer {{{1
-    call deletebufline(bufname('%'),s:startSequence+1,'$')
+    set modifiable
+    call deletebufline(bufname('%'),s:BoardSize().maxHeight+1,'$')
     call append(line('$'), split(s:CompressMoves(), '.\{80}\zs'))
+    set nomodifiable
 endfunction
 
 function! s:DisplayLevelCompleteMessage()   " Display the message indicating that the level has been completed {{{1
@@ -229,7 +230,7 @@ endfunction
     " About...   {{{2
     " Purpose  : loads the level pack JSON file into memory.
 function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all levels in the set. {{{1
-    let levelFile = g:SokobanLevelDirectory . '/Original.json'
+    let levelFile = g:SokobanLevelDirectory . '/' . b:userData.currentSet . '.json'
     if filereadable(levelFile)
         let b:levelSet = eval(join(readfile(levelFile),''))
     else
@@ -237,34 +238,26 @@ function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all l
     endif
 endfunction
 
-function! s:LoadLevel(level)   " Loads the level and sets up the syntax highlighting for the file {{{1
-    if a:level <= len(b:levelSet.levels)
-        let level = b:levelSet.levels[a:level-1]
-        let left = 29 + (s:BoardSize().maxWidth-level.width) / 2
-        let top = max([1,(s:BoardSize().maxHeight-level.height)/2])
-        call s:ProcessLevel(level.room, top, left)
+function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting for the file {{{1
+    let currentLevel = b:userData.currentLevel
+    let level = b:levelSet.levels[currentLevel-1]
 
-        setlocal modifiable
-        for l in range(level.height)
-            let roomline = level.room[l]
-            let roomline = substitute(roomline, '\V@', g:charSoko, 'g')
-            let roomline = substitute(roomline, '\V#', g:charWall, 'g')
-            let roomline = substitute(roomline, '\V$', g:charPackage, 'g')
-            let roomline = substitute(roomline, '\V.', g:charHome, 'g')
-            let roomline = substitute(roomline, '\V*', g:charPackageHome, 'g')
-            call s:ReplaceTextInLine([l+top,left], roomline)
-        endfor
+    let left = 29 + (s:BoardSize().maxWidth-level.width) / 2
+    let top = max([1,(s:BoardSize().maxHeight-level.height)/2])
+    call s:ProcessLevel(level.room, top, left)
 
-        let b:level = a:level
-        let s:startSequence = line('$')
+    for l in range(level.height)
+        let roomline = level.room[l]
+        let roomline = substitute(roomline, '\V@', g:charSoko, 'g')
+        let roomline = substitute(roomline, '\V#', g:charWall, 'g')
+        let roomline = substitute(roomline, '\V$', g:charPackage, 'g')
+        let roomline = substitute(roomline, '\V.', g:charHome, 'g')
+        let roomline = substitute(roomline, '\V*', g:charPackageHome, 'g')
+        call s:ReplaceTextInLine([l+top,left], roomline)
+    endfor
 
-        call s:SaveCurrentLevelToFile(a:level)
-        setlocal buftype=nofile filetype=vimsokoban
-        setlocal nomodifiable
-        setlocal nolist nonumber nowrap signcolumn=no
-    else
-        let b:level = 0
-    endif
+    setlocal buftype=nofile filetype=vimsokoban
+    setlocal nolist nonumber nowrap signcolumn=no
 endfunction
 
 function! s:ReplaceTextInLine(cell, text)   " Puts text at a specific position in the buffer {{{1
@@ -273,7 +266,9 @@ function! s:ReplaceTextInLine(cell, text)   " Puts text at a specific position i
     let leftStr = strcharpart(ln, 0, theCol)
     let rightStr = strcharpart(ln, theCol + strchars(a:text))
     let ln = leftStr . a:text . rightStr
+    setlocal modifiable
     call setline(theLine, ln)
+    setlocal nomodifiable
 endfunction
 
 function! s:IsWall(cell)   " Determines whether the specified cell corresponds to a wall {{{1
@@ -348,14 +343,14 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
     call insert(b:undoList, undo)
     let b:moves = b:moves + 1
     let b:manPos = newManPos
-    call s:UpdatePanel(b:level)
+    call s:UpdatePanel()
     call s:UpdateFooter()
 
     if s:AreAllPackagesHome()
         call s:SetupMaps(0)
         call s:DisplayLevelCompleteMessage()
         call s:UpdateHighScores()
-        call s:SaveCurrentLevelToFile(b:level + 1)
+        call s:SaveCurrentLevelToFile(b:userData.currentSet, b:userData.currentLevel + 1)
     endif
 
     setlocal nomodifiable
@@ -365,8 +360,6 @@ function! s:UndoMove()   " Called when the u key is hit to handle the undo move 
     if !empty(b:undoList)
         let prevMove = b:undoList[0]
         call remove(b:undoList, 0)
-
-        setlocal modifiable
 
         " Determine which direction un-does the move
         let delta = {'h':[0,1],'j':[-1,0],'k':[1,0],'l':[0,-1]}[prevMove[0]]
@@ -382,9 +375,8 @@ function! s:UndoMove()   " Called when the u key is hit to handle the undo move 
 
         let b:manPos = priorManPos
         let b:moves = b:moves - 1
-        call s:UpdatePanel(b:level)
+        call s:UpdatePanel()
         call s:UpdateFooter()
-        setlocal nomodifiable
     endif
 endfunction
 
@@ -410,26 +402,30 @@ function! s:SetupMaps(enable)   " Sets up the various maps to control the moveme
         nnoremap <buffer> <Right> <Nop>
         nnoremap <buffer> u       <Nop>
     endif
-    nnoremap <silent> <buffer> r       :call Sokoban("", b:level)<CR>
-    nnoremap <silent> <buffer> n       :call Sokoban("", b:level + 1)<CR>
-    nnoremap <silent> <buffer> p       :call Sokoban("", b:level - 1)<CR>
+    nnoremap <silent> <buffer> r       :call Sokoban("", b:userData.currentLevel)<CR>
+    nnoremap <silent> <buffer> n       :call Sokoban("", b:userData.currentLevel + 1)<CR>
+    nnoremap <silent> <buffer> p       :call Sokoban("", b:userData.currentLevel - 1)<CR>
 endfunction
 
-function! s:LoadScoresFile()   " Loads the highscores file if it exists. Determines the last level played. {{{1
+function! s:ReadUserData()   " Loads the highscores file if it exists. Determines the last level played. {{{1
     if filereadable(g:SokobanScoreFile)
-        let b:scores = eval(join(readfile(g:SokobanScoreFile),''))
-        return b:scores['current']
+        let b:userData = eval(join(readfile(g:SokobanScoreFile),''))
+
+        " Convert old score file format.
+        if !has_key(b:userData, 'version')
+            let currentLevel=remove(b:userData, 'current')
+            let b:userData = {'version':'2.0', 'currentSet':'Original', 'currentLevel':currentLevel, 'Original': b:userData }
+        endif
     else
-        let b:scores = {}
-        return 0
+        let b:userData = {'version':'2.0', 'currentSet':'Original', 'currentLevel':1, 'Original': {}}
     endif
 endfunction
 
-function! s:SaveScoresToFile()   " Saves the current scores to the highscores file. {{{1
-    call writefile([json_encode(b:scores)], g:SokobanScoreFile)
+function! s:WriteUserData()   " Saves the current scores to the highscores file. {{{1
+    call writefile([json_encode(b:userData)], g:SokobanScoreFile)
 endfunction
 
-function! s:GetCurrentHighScores(level)   " Determines the high scores for a particular level. {{{1
+function! s:GetCurrentHighScores()   " Retrieves the high scores for the current level. {{{1
     " This is a little tricky as there are two high scores possible for each
     " level. One for the pushes and one for the moves. This function detemines
     " both and maintains the information for both
@@ -439,8 +435,8 @@ function! s:GetCurrentHighScores(level)   " Determines the high scores for a par
     let b:fewestPushesDate = ''
     let b:fewestPushesMoves = ''
     let b:fewestPushesPushes = ''
-    if has_key(b:scores,a:level)
-        let best = b:scores[a:level]
+    if has_key(b:userData[b:userData.currentSet], b:userData.currentLevel)
+        let best = b:userData[b:userData.currentSet][b:userData.currentLevel]
         let b:fewestMovesMoves = best['fewestMoves']['moves']
         let b:fewestMovesPushes = best['fewestMoves']['pushes']
         if has_key(best['fewestMoves'],'date')
@@ -457,35 +453,36 @@ function! s:GetCurrentHighScores(level)   " Determines the high scores for a par
 endfunction
 
 function! s:UpdateHighScores()   " Determines if a highscore has been beaten, and if so saves it to the highscores file. {{{1
-    if !has_key(b:scores,b:level)
-        let b:scores[b:level] = {}
+    let currentSet = b:userData.currentSet
+    let currentLevel = b:userData.currentLevel
+    if !has_key(b:userData, currentSet)
+        b:userData[currentSet] = {}
     endif
-    if !has_key(b:scores[b:level],'fewestMoves')
-        let b:scores[b:level]['fewestMoves'] = {'seq':'','moves':999999999,'pushes':999999999}
+    if !has_key(b:userData[currentSet], currentLevel)
+        b:userData[currentSet][currentLevel] = {}
     endif
-    if !has_key(b:scores[b:level],'fewestPushes')
-        let b:scores[b:level]['fewestPushes'] = b:scores[b:level]['fewestMoves']
-    endif
+    call extend(b:userData[currentSet][currentLevel], {'fewestMoves': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
+    call extend(b:userData[currentSet][currentLevel], {'fewestPushes': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
 
     let thisGame = { 'moves':b:moves, 'pushes':b:pushes,
                    \ 'seq':s:CompressMoves(),
                    \ 'date':strftime('%Y-%m-%d %T') }
 
-    if (b:moves <= b:scores[b:level]['fewestMoves']['moves']) ||
-     \ (b:moves == b:scores[b:level]['fewestMoves']['moves'] && b:pushes <= b:scores[b:level]['fewestMoves']['pushes'])
-        let b:scores[b:level]['fewestMoves'] = thisGame
+    if (b:moves <= b:userData[currentSet][currentLevel]['fewestMoves']['moves']) ||
+     \ (b:moves == b:userData[currentSet][currentLevel]['fewestMoves']['moves'] && b:pushes <= b:userData[currentSet][currentLevel]['fewestMoves']['pushes'])
+        let b:userData[currentSet][currentLevel]['fewestMoves'] = thisGame
     endif
 
-    if (b:pushes <= b:scores[b:level]['fewestPushes']['pushes']) ||
-     \ (b:pushes == b:scores[b:level]['fewestPushes']['pushes'] && b:moves <= b:scores[b:level]['fewestPushes']['moves'])
-        let b:scores[b:level]['fewestPushes'] = thisGame
+    if (b:pushes <= b:userData[currentSet][currentLevel]['fewestPushes']['pushes']) ||
+     \ (b:pushes == b:userData[currentSet][currentLevel]['fewestPushes']['pushes'] && b:moves <= b:userData[currentSet][currentLevel]['fewestPushes']['moves'])
+        let b:userData[currentSet][currentLevel]['fewestPushes'] = thisGame
     endif
 
-    if b:scores[b:level]['fewestMoves']['moves'] == b:scores[b:level]['fewestPushes']['moves'] &&
-     \ b:scores[b:level]['fewestMoves']['pushes'] == b:scores[b:level]['fewestPushes']['pushes']
-        call remove(b:scores[b:level], 'fewestPushes')
+    if b:userData[currentSet][currentLevel]['fewestMoves']['moves'] == b:userData[currentSet][currentLevel]['fewestPushes']['moves'] &&
+     \ b:userData[currentSet][currentLevel]['fewestMoves']['pushes'] == b:userData[currentSet][currentLevel]['fewestPushes']['pushes']
+        call remove(b:userData[currentSet][currentLevel], 'fewestPushes')
     endif
-    call s:SaveScoresToFile()
+    call s:WriteUserData()
 endfunction
 
 function! s:CompressMoves()   " Compresses the sequence of moves using run-length-encoding. {{{1
@@ -500,9 +497,10 @@ function! s:CompressMoves()   " Compresses the sequence of moves using run-lengt
     return substitute(moves, ' ', '', 'g')
 endfunction
 
-function! s:SaveCurrentLevelToFile(level)   " Saves the current level to the high scores file. {{{1
-    let b:scores['current'] = a:level
-    call s:SaveScoresToFile()
+function! s:SaveCurrentLevelToFile(currentSet, currentLevel)   " Saves the current level to the high scores file. {{{1
+    let b:userData.currentSet = a:currentSet
+    let b:userData.currentLevel = min([len(b:levelSet.levels), max([1, a:currentLevel])])
+    call s:WriteUserData()
 endfunction
 
 function! s:FindOrCreateBuffer(doSplit)   " Create or go to the window containing the VimSokoban buffer. {{{1
@@ -518,16 +516,16 @@ endfunction
 
 function! Sokoban(splitWindow, ...)   " This is the entry point to the game. {{{1
     call s:FindOrCreateBuffer(a:splitWindow)
-    setlocal modifiable
-    call s:ClearBuffer()
-    let lastRecordedLevel = s:LoadScoresFile()
-    let level = max([1, a:0 ? a:1 : lastRecordedLevel])
-    call s:GetCurrentHighScores(level)
+    call s:ReadUserData()
+    if a:0
+        call s:SaveCurrentLevelToFile(b:userData.currentSet, a:1)
+    endif
+    call s:GetCurrentHighScores()
     let b:moves = 0
     let b:pushes = 0
+    let s:marqueeOffset = 0
     call s:LoadLevelSet()
-    call s:DrawGameBoard(level)
-    setlocal nomodifiable
+    call s:DrawGameBoard()
     call s:SetupMaps(1)
     normal! 1G0
 endfunction
