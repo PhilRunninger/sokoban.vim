@@ -358,7 +358,6 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
         call s:SetupMaps(0)
         call s:DisplayLevelCompleteMessage()
         call s:UpdateHighScores()
-        call s:SaveCurrentLevelToFile(b:userData.currentSet, b:userData.currentLevel + 1)
     endif
 
     setlocal nomodifiable
