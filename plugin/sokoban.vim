@@ -90,8 +90,8 @@ let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h')
 " Characters used to draw the maze and objects on the screen.
 let g:charSoko        = get(g:,'charSoko',       '◆') " replaces @ in level file
 let g:charWall        = get(g:,'charWall',       '█') " replaces # in level file
-let g:charPackage     = get(g:,'charPackage',    '☻') " replaces $ in level file
-let g:charHome        = get(g:,'charHome',       '○') " replaces . in level file
+let g:charPackage     = get(g:,'charPackage',    '○') " replaces $ in level file
+let g:charHome        = get(g:,'charHome',       '⊙') " replaces . in level file
 let g:charPackageHome = get(g:,'charPackageHome','●') " replaces * in level file
 
 command! -nargs=? Sokoban call Sokoban('e', <f-args>)
@@ -178,26 +178,19 @@ function! s:UpdatePanel()   " Update the moves and the push scores in the header
 endfunction
 
 function! s:UpdateFooter() " Updates the sequence of moves in the footer {{{1
-    set modifiable
+    setlocal modifiable
     call deletebufline(bufname('%'),s:BoardSize().maxHeight+1,'$')
     call append(line('$'), split(s:CompressMoves(), '.\{80}\zs'))
-    set nomodifiable
+    setlocal nomodifiable
 endfunction
 
 function! s:DisplayLevelCompleteMessage()   " Display the message indicating that the level has been completed {{{1
-    let msg = ['╭──────────────────────────────────╮',
-             \ '│ ╭──────────────────────────────╮ │',
-             \ '│ │        LEVEL COMPLETE        │ │',
-             \ '│ │                              │ │',
-      \ printf('│ │         %6d Moves         │ │', b:moves),
-      \ printf('│ │         %6d Pushes        │ │', b:pushes),
-             \ '│ │                              │ │',
-             \ '│ ╰──────────────────────────────╯ │',
-             \ '╰──────────────────────────────────╯']
+    let msg = ['╔═══════════════════════════════╗',
+             \ '║        LEVEL COMPLETE!        ║',
+             \ '╚═══════════════════════════════╝']
     let left = 29 + (s:BoardSize().maxWidth - max(map(copy(msg),{_,l -> strchars(l)}))) / 2
-    let top = (s:BoardSize().maxHeight - len(msg))/2
     for l in range(len(msg))
-        call s:ReplaceTextInLine([l+top,left], msg[l])
+        call s:ReplaceTextInLine([l+1,left], msg[l])
     endfor
 endfunction
 
