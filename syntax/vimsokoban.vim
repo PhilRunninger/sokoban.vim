@@ -3,7 +3,7 @@ execute 'syn match SokobanPackage /'.g:charPackage.'/'
 execute 'syn match SokobanPackageHome /'.g:charPackageHome.'/'
 execute 'syn match SokobanWall /'.g:charWall.'/'
 execute 'syn match SokobanHome /'.g:charHome.'/'
-syn match SokobanLabels /\(Set\|Level #\|Name\|Score\|Fewest Moves\|Fewest Pushes\|Legend\|Keys\):/
+syn match SokobanLabels /\(Set\|Level #\|Name\|Score\|Fewest Moves\|Fewest Pushes\|Legend\|Keys\|Sequence\):/
 syn match SokobanTitle /VIM SOKOBAN, v\S*/
 
 highlight SokobanTitle guifg=#af0000 ctermfg=124
