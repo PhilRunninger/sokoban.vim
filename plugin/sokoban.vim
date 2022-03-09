@@ -214,6 +214,9 @@ function! s:ProcessLevel(room, top, left)   " Processes a level and populates th
             elseif (ch == '*')
                 call add(b:homeList, location)
                 call add(b:packageList, location)
+            elseif (ch == '+')
+                call add(b:homeList, location)
+                let b:manPos = location
             elseif (ch == '$')
                 call add(b:packageList, location)
             elseif (ch == '@')
@@ -254,6 +257,7 @@ function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting 
     for l in range(level.height)
         let roomline = level.room[l]
         let roomline = substitute(roomline, '\V@', g:charSoko, 'g')
+        let roomline = substitute(roomline, '\V+', g:charSoko, 'g')
         let roomline = substitute(roomline, '\V#', g:charWall, 'g')
         let roomline = substitute(roomline, '\V$', g:charPackage, 'g')
         let roomline = substitute(roomline, '\V.', g:charHome, 'g')
