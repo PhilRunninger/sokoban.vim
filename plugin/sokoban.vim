@@ -141,15 +141,16 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     call s:LoadLevel()
 endfunction
 
-function! s:Marquee(text, width, increment)
+function! s:Marquee(text, width, increment)   " Scroll long text within a given width. {{{1
     let s:marqueeOffset += a:increment
 
     if strchars(a:text) <= a:width
         return a:text
     endif
 
-    let divisor = strchars(a:text) - a:width + 9
-    let l:text = strcharpart(repeat("\x07",5).a:text, s:marqueeOffset % divisor)
+    let delay = 7
+    let divisor = strchars(a:text)+(delay+1)
+    let l:text = strcharpart(repeat("\x07",delay).a:text, s:marqueeOffset % divisor)
     let l:text = substitute(l:text, "\x07", '', 'g')
     if strchars(l:text) > a:width
         return strcharpart(l:text, 0, a:width-1) . '…'
