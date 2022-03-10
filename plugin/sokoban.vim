@@ -99,7 +99,7 @@ command! -nargs=? SokobanH call Sokoban('h', <f-args>)
 command! -nargs=? SokobanV call Sokoban('v', <f-args>)
 
 function! s:BoardSize()   " Returns a dictionary of game board dimensions, a minimum of 51 columns and 30 lines. {{{1
-    return {'maxWidth': max([52, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
+    return {'maxWidth': max([54, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
          \  'maxHeight': max([30, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
 endfunction
 
@@ -108,42 +108,42 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     setlocal modifiable
     silent normal! 1GdG
     call append(0, repeat([''],board.maxHeight))
-    call setline( 1,       '   ╭───────────────────╮    ' . repeat(' ',board.maxWidth))
-    call setline( 2,       '═══╡ VIM SOKOBAN, v2.0 ╞═══╗' . repeat(' ',board.maxWidth))
-    call setline( 3,       '   ╰───────────────────╯   ║' . repeat(' ',board.maxWidth))
-    call setline( 4,       ' Set:                      ║' . repeat(' ',board.maxWidth))
-    call setline( 5,       ' Level #:                  ║' . repeat(' ',board.maxWidth))
-    call setline( 6,       ' Name:                     ║' . repeat(' ',board.maxWidth))
-    call setline( 7,       '═══════════════════════════╣' . repeat(' ',board.maxWidth))
-    call setline( 8,       ' Score:                    ║' . repeat(' ',board.maxWidth))
-    call setline( 9,       '     0 moves      0 pushes ║' . repeat(' ',board.maxWidth))
-    call setline(10,       '═══════════════════════════╣' . repeat(' ',board.maxWidth))
-    call setline(11,       ' Fewest Moves:             ║' . repeat(' ',board.maxWidth))
-    call setline(12,       '       moves        pushes ║' . repeat(' ',board.maxWidth))
-    call setline(13,       '                           ║' . repeat(' ',board.maxWidth))
-    call setline(14,       '                           ║' . repeat(' ',board.maxWidth))
-    call setline(15,       ' Fewest Pushes:            ║' . repeat(' ',board.maxWidth))
-    call setline(16,       '       moves        pushes ║' . repeat(' ',board.maxWidth))
-    call setline(17,       '                           ║' . repeat(' ',board.maxWidth))
-    call setline(18,       '═══════════════════════════╣' . repeat(' ',board.maxWidth))
-    call setline(19,printf(' Legend:  %s     Player     ║', g:charSoko) . repeat(' ',board.maxWidth))
-    call setline(20,printf('         %s %s    Package    ║', g:charPackage, g:charPackageHome) . repeat(' ',board.maxWidth))
-    call setline(21,printf('          %s     Wall       ║', g:charWall) . repeat(' ',board.maxWidth))
-    call setline(22,printf('          %s     Home       ║', g:charHome) . repeat(' ',board.maxWidth))
-    call setline(23,       '═══════════════════════════╣' . repeat(' ',board.maxWidth))
-    call setline(24,       ' Keys: h j k l  Move       ║' . repeat(' ',board.maxWidth))
-    call setline(25,       '          u     Undo       ║' . repeat(' ',board.maxWidth))
-    call setline(26,       '          r     Restart    ║' . repeat(' ',board.maxWidth))
-    call setline(27,       '          n     Next Level ║' . repeat(' ',board.maxWidth))
-    call setline(28,       '          p     Prev Level ║' . repeat(' ',board.maxWidth))
-    call setline(29,       '          c     Choose Set ║' . repeat(' ',board.maxWidth))
+    call setline( 1,       '  ╭───────────────────╮    ' . repeat(' ',board.maxWidth))
+    call setline( 2,       '══╡ VIM SOKOBAN, v2.0 ╞══╗' . repeat(' ',board.maxWidth))
+    call setline( 3,       '  ╰───────────────────╯  ║' . repeat(' ',board.maxWidth))
+    call setline( 4,       'Set:                     ║' . repeat(' ',board.maxWidth))
+    call setline( 5,       'Level #:                 ║' . repeat(' ',board.maxWidth))
+    call setline( 6,       'Name:                    ║' . repeat(' ',board.maxWidth))
+    call setline( 7,       '═════════════════════════╣' . repeat(' ',board.maxWidth))
+    call setline( 8,       'Score:                   ║' . repeat(' ',board.maxWidth))
+    call setline( 9,       '    0 moves      0 pushes║' . repeat(' ',board.maxWidth))
+    call setline(10,       '═════════════════════════╣' . repeat(' ',board.maxWidth))
+    call setline(11,       'Fewest Moves:            ║' . repeat(' ',board.maxWidth))
+    call setline(12,       '      moves        pushes║' . repeat(' ',board.maxWidth))
+    call setline(13,       '                         ║' . repeat(' ',board.maxWidth))
+    call setline(14,       '                         ║' . repeat(' ',board.maxWidth))
+    call setline(15,       'Fewest Pushes:           ║' . repeat(' ',board.maxWidth))
+    call setline(16,       '      moves        pushes║' . repeat(' ',board.maxWidth))
+    call setline(17,       '                         ║' . repeat(' ',board.maxWidth))
+    call setline(18,       '═════════════════════════╣' . repeat(' ',board.maxWidth))
+    call setline(19,printf('Legend:  %s     Player    ║', g:charSoko) . repeat(' ',board.maxWidth))
+    call setline(20,printf('        %s %s    Package   ║', g:charPackage, g:charPackageHome) . repeat(' ',board.maxWidth))
+    call setline(21,printf('         %s     Wall      ║', g:charWall) . repeat(' ',board.maxWidth))
+    call setline(22,printf('         %s     Home      ║', g:charHome) . repeat(' ',board.maxWidth))
+    call setline(23,       '═════════════════════════╣' . repeat(' ',board.maxWidth))
+    call setline(24,       'Keys: h j k l  Move      ║' . repeat(' ',board.maxWidth))
+    call setline(25,       '         u     Undo      ║' . repeat(' ',board.maxWidth))
+    call setline(26,       '         r     Restart   ║' . repeat(' ',board.maxWidth))
+    call setline(27,       '         n     Next Level║' . repeat(' ',board.maxWidth))
+    call setline(28,       '         p     Prev Level║' . repeat(' ',board.maxWidth))
+    call setline(29,       '         c     Choose Set║' . repeat(' ',board.maxWidth))
     let l = 30
     while l < board.maxHeight
-        call setline(l,    '                           ║' . repeat(' ',board.maxWidth))
+        call setline(l,    '                         ║' . repeat(' ',board.maxWidth))
         let l += 1
     endwhile
-    call setline(l,        '═══════════════════════════╩' . repeat('═',board.maxWidth))
-    call setline(l+1,      ' Sequence:')
+    call setline(l,        '═════════════════════════╩' . repeat('═',board.maxWidth))
+    call setline(l+1,      'Sequence:')
     setlocal nomodifiable
 
     call s:UpdatePanel()
@@ -168,21 +168,21 @@ function! s:Marquee(text, width, increment)
 endfunction
 
 function! s:UpdatePanel()   " Update the moves and the push scores in the header {{{1
-    call s:ReplaceTextInLine([ 4,0], printf(' Set: %-20s ║', s:Marquee(b:levelSet.title, 20, 1)))
-    call s:ReplaceTextInLine([ 5,0], printf(' Level #: %-5d            ║', b:userData.currentLevel))
-    call s:ReplaceTextInLine([ 6,0], printf(' Name: %-19s ║', s:Marquee(b:levelSet.levels[b:userData.currentLevel-1].id, 19, 0)))
-    call s:ReplaceTextInLine([ 9,0], printf(' %5s moves  %5s pushes ║',b:moves,b:pushes))
-    call s:ReplaceTextInLine([12,0], printf(' %5s moves  %5s pushes ║',b:fewestMovesMoves,b:fewestMovesPushes))
-    call s:ReplaceTextInLine([13,0], printf(' %25s ║',                 b:fewestMovesDate))
-    call s:ReplaceTextInLine([16,0], printf(' %5s moves  %5s pushes ║',b:fewestPushesMoves,b:fewestPushesPushes))
-    call s:ReplaceTextInLine([17,0], printf(' %25s ║',                 b:fewestPushesDate))
+    call s:ReplaceTextInLine([ 4,0], printf('Set: %-20s║', s:Marquee(b:levelSet.title, 20, 1)))
+    call s:ReplaceTextInLine([ 5,0], printf('Level #: %-5d           ║', b:userData.currentLevel))
+    call s:ReplaceTextInLine([ 6,0], printf('Name: %-19s║', s:Marquee(b:levelSet.levels[b:userData.currentLevel-1].id, 19, 0)))
+    call s:ReplaceTextInLine([ 9,0], printf('%5s moves  %5s pushes║',b:moves,b:pushes))
+    call s:ReplaceTextInLine([12,0], printf('%5s moves  %5s pushes║',b:fewestMovesMoves,b:fewestMovesPushes))
+    call s:ReplaceTextInLine([13,0], printf('%25s║',                 b:fewestMovesDate))
+    call s:ReplaceTextInLine([16,0], printf('%5s moves  %5s pushes║',b:fewestPushesMoves,b:fewestPushesPushes))
+    call s:ReplaceTextInLine([17,0], printf('%25s║',                 b:fewestPushesDate))
 endfunction
 
 function! s:UpdateFooter() " Updates the sequence of moves in the footer {{{1
     setlocal modifiable
     let board = s:BoardSize()
     call deletebufline(bufname('%'),board.maxHeight+1,'$')
-    call append(line('$'), split(' Sequence: '.s:CompressMoves(), '.\{'.(28+board.maxWidth).'}\zs'))
+    call append(line('$'), split('Sequence: '.s:CompressMoves(), '.\{'.(26+board.maxWidth).'}\zs'))
     setlocal nomodifiable
 endfunction
 
@@ -191,7 +191,7 @@ function! s:DisplayLevelCompleteMessage()   " Display the message indicating tha
              \ '║        LEVEL COMPLETE!        ║',
              \ '╚═══════════════════════════════╝']
     let board = s:BoardSize()
-    let left = 28 + (board.maxWidth - max(map(copy(msg),{_,l -> strchars(l)}))) / 2
+    let left = 26 + (board.maxWidth - max(map(copy(msg),{_,l -> strchars(l)}))) / 2
     for l in range(len(msg))
         call s:ReplaceTextInLine([l+1,left], msg[l])
     endfor
@@ -246,11 +246,10 @@ function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all l
 endfunction
 
 function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting for the file {{{1
-    let currentLevel = b:userData.currentLevel
-    let level = b:levelSet.levels[currentLevel-1]
+    let level = b:levelSet.levels[b:userData.currentLevel-1]
 
     let board = s:BoardSize()
-    let left = 28 + (board.maxWidth-level.width) / 2
+    let left = 26 + (board.maxWidth-level.width) / 2
     let top = max([1,(board.maxHeight-level.height)/2])
     call s:ProcessLevel(level.room, top, left)
 
@@ -435,38 +434,30 @@ function! s:WriteUserData()   " Saves the current scores to the highscores file.
 endfunction
 
 function! s:GetCurrentHighScores()   " Retrieves the high scores for the current level. {{{1
-    " This is a little tricky as there are two high scores possible for each
-    " level. One for the pushes and one for the moves. This function detemines
-    " both and maintains the information for both
     let b:fewestMovesDate = ''
     let b:fewestMovesMoves = ''
     let b:fewestMovesPushes = ''
     let b:fewestPushesDate = ''
     let b:fewestPushesMoves = ''
     let b:fewestPushesPushes = ''
-    if !has_key(b:userData, b:userData.currentSet)
-        return
-    endif
-
-    if !has_key(b:userData[b:userData.currentSet], b:userData.currentLevel)
+    if !has_key(b:userData, b:userData.currentSet) || !has_key(b:userData[b:userData.currentSet], b:userData.currentLevel)
         return
     endif
 
     let best = b:userData[b:userData.currentSet][b:userData.currentLevel]
-    let b:fewestMovesMoves = best['fewestMoves']['moves']
-    let b:fewestMovesPushes = best['fewestMoves']['pushes']
-    let b:fewestMovesDate = get(best['fewestMoves'],'date','')
+    let b:fewestMovesMoves = best.fewestMoves.moves
+    let b:fewestMovesPushes = best.fewestMoves.pushes
+    let b:fewestMovesDate = get(best.fewestMoves, 'date', '')
 
-    if !has_key(best,'fewestPushes')
-        return
-    endif
-
-    let b:fewestPushesMoves = best['fewestPushes']['moves']
-    let b:fewestPushesPushes = best['fewestPushes']['pushes']
-    let b:fewestPushesDate = get(best['fewestPushes'],'date','')
+    call extend(best, {'fewestPushes':best.fewestMoves}, 'keep')
+    let b:fewestPushesMoves = best.fewestPushes.moves
+    let b:fewestPushesPushes = best.fewestPushes.pushes
+    let b:fewestPushesDate = get(best.fewestPushes, 'date', '')
 endfunction
 
 function! s:UpdateHighScores()   " Determines if a highscore has been beaten, and if so saves it to the highscores file. {{{1
+    " This is a little tricky as there are two high scores possible for each
+    " level. One for the pushes and one for the moves.
     let currentSet = b:userData.currentSet
     let currentLevel = b:userData.currentLevel
     call extend(b:userData, {currentSet: {}}, 'keep')
@@ -478,13 +469,13 @@ function! s:UpdateHighScores()   " Determines if a highscore has been beaten, an
                    \ 'seq':s:CompressMoves(),
                    \ 'date':strftime('%Y-%m-%d %T') }
 
-    if (b:moves < b:userData[currentSet][currentLevel]['fewestMoves']['moves']) ||
-     \ (b:moves == b:userData[currentSet][currentLevel]['fewestMoves']['moves'] && b:pushes < b:userData[currentSet][currentLevel]['fewestMoves']['pushes'])
+    if (b:moves < b:userData[currentSet][currentLevel].fewestMoves.moves) ||
+     \ (b:moves == b:userData[currentSet][currentLevel].fewestMoves.moves && b:pushes < b:userData[currentSet][currentLevel].fewestMoves.pushes)
         let b:userData[currentSet][currentLevel]['fewestMoves'] = thisGame
     endif
 
-    if (b:pushes < b:userData[currentSet][currentLevel]['fewestPushes']['pushes']) ||
-     \ (b:pushes == b:userData[currentSet][currentLevel]['fewestPushes']['pushes'] && b:moves < b:userData[currentSet][currentLevel]['fewestPushes']['moves'])
+    if (b:pushes < b:userData[currentSet][currentLevel].fewestPushes.pushes) ||
+     \ (b:pushes == b:userData[currentSet][currentLevel].fewestPushes.pushes && b:moves < b:userData[currentSet][currentLevel].fewestPushes.moves)
         let b:userData[currentSet][currentLevel]['fewestPushes'] = thisGame
     endif
 
