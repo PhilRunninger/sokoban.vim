@@ -478,20 +478,16 @@ function! s:UpdateHighScores()   " Determines if a highscore has been beaten, an
                    \ 'seq':s:CompressMoves(),
                    \ 'date':strftime('%Y-%m-%d %T') }
 
-    if (b:moves <= b:userData[currentSet][currentLevel]['fewestMoves']['moves']) ||
-     \ (b:moves == b:userData[currentSet][currentLevel]['fewestMoves']['moves'] && b:pushes <= b:userData[currentSet][currentLevel]['fewestMoves']['pushes'])
+    if (b:moves < b:userData[currentSet][currentLevel]['fewestMoves']['moves']) ||
+     \ (b:moves == b:userData[currentSet][currentLevel]['fewestMoves']['moves'] && b:pushes < b:userData[currentSet][currentLevel]['fewestMoves']['pushes'])
         let b:userData[currentSet][currentLevel]['fewestMoves'] = thisGame
     endif
 
-    if (b:pushes <= b:userData[currentSet][currentLevel]['fewestPushes']['pushes']) ||
-     \ (b:pushes == b:userData[currentSet][currentLevel]['fewestPushes']['pushes'] && b:moves <= b:userData[currentSet][currentLevel]['fewestPushes']['moves'])
+    if (b:pushes < b:userData[currentSet][currentLevel]['fewestPushes']['pushes']) ||
+     \ (b:pushes == b:userData[currentSet][currentLevel]['fewestPushes']['pushes'] && b:moves < b:userData[currentSet][currentLevel]['fewestPushes']['moves'])
         let b:userData[currentSet][currentLevel]['fewestPushes'] = thisGame
     endif
 
-    if b:userData[currentSet][currentLevel]['fewestMoves']['moves'] == b:userData[currentSet][currentLevel]['fewestPushes']['moves'] &&
-     \ b:userData[currentSet][currentLevel]['fewestMoves']['pushes'] == b:userData[currentSet][currentLevel]['fewestPushes']['pushes']
-        call remove(b:userData[currentSet][currentLevel], 'fewestPushes')
-    endif
     call s:WriteUserData()
 endfunction
 
