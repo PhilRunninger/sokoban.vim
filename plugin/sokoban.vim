@@ -469,12 +469,8 @@ endfunction
 function! s:UpdateHighScores()   " Determines if a highscore has been beaten, and if so saves it to the highscores file. {{{1
     let currentSet = b:userData.currentSet
     let currentLevel = b:userData.currentLevel
-    if !has_key(b:userData, currentSet)
-        let b:userData[currentSet] = {}
-    endif
-    if !has_key(b:userData[currentSet], currentLevel)
-        let b:userData[currentSet][currentLevel] = {}
-    endif
+    call extend(b:userData, {currentSet: {}}, 'keep')
+    call extend(b:userData[currentSet], {currentLevel: {}}, 'keep')
     call extend(b:userData[currentSet][currentLevel], {'fewestMoves': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
     call extend(b:userData[currentSet][currentLevel], {'fewestPushes': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
 
