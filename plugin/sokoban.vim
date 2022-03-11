@@ -121,8 +121,8 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     call setline(11,       '      moves        pushes║' . repeat(' ',board.maxWidth))
     call setline(12,       '                         ║' . repeat(' ',board.maxWidth))
     call setline(13,       'Legend:══════════════════╣' . repeat(' ',board.maxWidth))
-    call setline(14,printf('  %s Player   %s %s Package ║', g:charSoko, g:charPackage, g:charPackageHome) . repeat(' ',board.maxWidth))
-    call setline(15,printf('  %s Home      %s   Wall   ║', g:charHome, g:charWall) . repeat(' ',board.maxWidth))
+    call setline(14,printf('  %s %s Package   %s Home   ║', g:charSoko, g:charPackage, g:charPackageHome) . repeat(' ',board.maxWidth))
+    call setline(15,printf('  %s   Player    %s Wall   ║', g:charHome, g:charWall) . repeat(' ',board.maxWidth))
     call setline(16,       'Keys:════════════════════╣' . repeat(' ',board.maxWidth))
     call setline(17,       '  h j k l Move           ║' . repeat(' ',board.maxWidth))
     call setline(18,       '  u r     Undo/Restart   ║' . repeat(' ',board.maxWidth))
@@ -161,7 +161,7 @@ endfunction
 
 function! s:UpdatePanel()   " Update the moves and the push scores in the header {{{1
     let name = b:levelSet.levels[b:userData.currentLevel-1].id
-    let level = b:userData.currentLevel . (b:userData.currentLevel == name ? '' : '-'.name)
+    let level = b:userData.currentLevel . (b:userData.currentLevel == name ? '' : ': '.name)
     call s:ReplaceTextInLine([ 3,0], printf('Set: %-20s║',           s:Marquee(b:levelSet.title, 20, 1)))
     call s:ReplaceTextInLine([ 4,0], printf('Level: %-18s║'         ,s:Marquee(level,18, 0)))
     call s:ReplaceTextInLine([ 6,0], printf('%5s moves  %5s pushes║',b:moves,b:pushes))
