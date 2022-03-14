@@ -339,6 +339,8 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
         call s:DisplayLevelCompleteMessage()
         call s:UpdateHighScores()
         call s:WriteUserData()
+        call s:GetCurrentHighScores()
+        call s:UpdatePanel()
     endif
 
     setlocal nomodifiable
