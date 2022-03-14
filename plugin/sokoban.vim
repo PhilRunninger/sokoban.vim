@@ -76,28 +76,6 @@
 " }}}
 " }}}
 
-" Initial setup   {{{1
-" Allow the user to specify the location of the sokoban levels
-let g:SokobanLevelDirectory = get(g:,'SokobanLevelDirectory',resolve(fnamemodify(expand('<sfile>:p:h') . '/../levels/','p:')))
-if !isdirectory(g:SokobanLevelDirectory)
-    echoerr 'g:SokobanLevelDirectory ('.g:SokobanLevelDirectory.') contains an invalid path.'
-    finish
-endif
-
-" Allow the user to specify the location of the score file.
-let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h') . '/../.VimSokobanScores'))
-
-" Characters used to draw the maze and objects on the screen.
-let g:charSoko        = get(g:,'charSoko',       '◆') " replaces @ in level file
-let g:charWall        = get(g:,'charWall',       '█') " replaces # in level file
-let g:charPackage     = get(g:,'charPackage',    '○') " replaces $ in level file
-let g:charHome        = get(g:,'charHome',       '⊙') " replaces . in level file
-let g:charPackageHome = get(g:,'charPackageHome','●') " replaces * in level file
-
-command! -nargs=? Sokoban call Sokoban('e', <f-args>)
-command! -nargs=? SokobanH call Sokoban('h', <f-args>)
-command! -nargs=? SokobanV call Sokoban('v', <f-args>)
-
 function! s:BoardSize()   " Returns a dictionary of game board dimensions. {{{1
     return {'maxWidth': max([54, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
          \  'maxHeight': max([21, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
@@ -160,10 +138,10 @@ function! s:Marquee(text, width, increment)   " Scroll long text within a given 
 endfunction
 
 function! s:UpdatePanel()   " Update the moves and the push scores in the header {{{1
-    let name = b:levelSet.levels[b:userData.currentLevel-1].id
-    let level = b:userData.currentLevel . (b:userData.currentLevel == name ? '' : ': '.name)
+    let levelName = b:levelSet.levels[b:currentLevel-1].id
+    let displayLevel = b:currentLevel . (string(b:currentLevel) == levelName ? '' : ': '.levelName)
     call s:ReplaceTextInLine([ 3,0], printf('Set: %-20s║',           s:Marquee(b:levelSet.title, 20, 1)))
-    call s:ReplaceTextInLine([ 4,0], printf('Level: %-18s║'         ,s:Marquee(level,18, 0)))
+    call s:ReplaceTextInLine([ 4,0], printf('Level: %-18s║'         ,s:Marquee(displayLevel,18, 0)))
     call s:ReplaceTextInLine([ 6,0], printf('%5s moves  %5s pushes║',b:moves,b:pushes))
     call s:ReplaceTextInLine([ 8,0], printf('%5s moves  %5s pushes║',b:fewestMovesMoves,b:fewestMovesPushes))
     call s:ReplaceTextInLine([ 9,0], printf('%25s║',                 b:fewestMovesDate))
@@ -219,18 +197,18 @@ function! s:ProcessLevel(room, top, left)   " Processes a level and populates th
     endfor
 endfunction
 
-function! s:ChangeLevelSet()
+function! s:ChangeLevelSet()   " Presents a list of level sets for the player to choose from. {{{1
     let levelSets = map(readdir(g:SokobanLevelDirectory, {f -> f =~ '\.json$'}), {i,g -> printf('%2d: %s',i+1,fnamemodify(g, ':r'))})
     call insert(levelSets, 'Choose a level set (by number) from this list.')
     let choice = inputlist(levelSets)
     if choice > 0 && choice < len(levelSets)
-        call s:SaveCurrentLevelToFile(levelSets[choice][4:], 1)
+        call s:SaveCurrentLevelToFile(levelSets[choice][4:])
         call Sokoban('')
     endif
 endfunction
 
 function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all levels in the set. {{{1
-    let levelFile = g:SokobanLevelDirectory . '/' . b:userData.currentSet . '.json'
+    let levelFile = g:SokobanLevelDirectory . '/' . b:currentSet . '.json'
     if filereadable(levelFile)
         let b:levelSet = eval(join(readfile(levelFile),''))
     else
@@ -239,7 +217,7 @@ function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all l
 endfunction
 
 function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting for the file {{{1
-    let level = b:levelSet.levels[b:userData.currentLevel-1]
+    let level = b:levelSet.levels[b:currentLevel-1]
 
     let board = s:BoardSize()
     let left = 26 + (board.maxWidth-level.width) / 2
@@ -351,6 +329,7 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
         call s:SetupMaps(0)
         call s:DisplayLevelCompleteMessage()
         call s:UpdateHighScores()
+        call s:WriteUserData()
     endif
 
     setlocal nomodifiable
@@ -402,28 +381,33 @@ function! s:SetupMaps(enable)   " Sets up the various maps to control the moveme
         nnoremap <buffer> <Right> <Nop>
         nnoremap <buffer> u       <Nop>
     endif
-    nnoremap <silent> <buffer> r :call Sokoban('', b:userData.currentLevel)<CR>
-    nnoremap <silent> <buffer> n :call Sokoban('', b:userData.currentLevel + 1)<CR>
-    nnoremap <silent> <buffer> p :call Sokoban('', b:userData.currentLevel - 1)<CR>
+    nnoremap <silent> <buffer> r :call Sokoban('', b:currentLevel)<CR>
+    nnoremap <silent> <buffer> n :call Sokoban('', b:currentLevel + 1)<CR>
+    nnoremap <silent> <buffer> p :call Sokoban('', b:currentLevel - 1)<CR>
     nnoremap <silent> <buffer> s :call <SID>ChangeLevelSet()<CR>
 endfunction
 
 function! s:ReadUserData()   " Loads the highscores file if it exists. Determines the last level played. {{{1
     if filereadable(g:SokobanScoreFile)
         let b:userData = eval(join(readfile(g:SokobanScoreFile),''))
-
-        " Convert old score file format.
-        if !has_key(b:userData, 'version')
-            let currentLevel=remove(b:userData, 'current')
-            let b:userData = {'version':'2.0', 'currentSet':'Original', 'currentLevel':currentLevel, 'Original': b:userData }
-        endif
     else
-        let b:userData = {'version':'2.0', 'currentSet':'Original', 'currentLevel':1, 'Original': {}}
+        let b:userData = {'version':'2.0', 'currentSet':'Original', 'Original': {'currentLevel':1}}
     endif
+
+    let b:currentSet = b:userData.currentSet
+    let b:currentLevel = b:userData[b:currentSet].currentLevel
 endfunction
 
 function! s:WriteUserData()   " Saves the current scores to the highscores file. {{{1
     call writefile([json_encode(b:userData)], g:SokobanScoreFile)
+endfunction
+
+function! s:MigrateUserData()   " Migrate user data file to the current version. {{{1
+    if !has_key(b:userData, 'version')
+        let currentLevel=remove(b:userData, 'current')
+        let b:userData = {'version':'2.0', 'currentSet':'Original', 'Original': extend(b:userData, {'currentLevel':currentLevel})}
+        call s:WriteUserData()
+    endif
 endfunction
 
 function! s:GetCurrentHighScores()   " Retrieves the high scores for the current level. {{{1
@@ -433,11 +417,12 @@ function! s:GetCurrentHighScores()   " Retrieves the high scores for the current
     let b:fewestPushesDate = ''
     let b:fewestPushesMoves = ''
     let b:fewestPushesPushes = ''
-    if !has_key(b:userData, b:userData.currentSet) || !has_key(b:userData[b:userData.currentSet], b:userData.currentLevel)
+
+    if !has_key(b:userData[b:currentSet], b:currentLevel)
         return
     endif
 
-    let best = b:userData[b:userData.currentSet][b:userData.currentLevel]
+    let best = b:userData[b:currentSet][b:currentLevel]
     let b:fewestMovesMoves = best.fewestMoves.moves
     let b:fewestMovesPushes = best.fewestMoves.pushes
     let b:fewestMovesDate = get(best.fewestMoves, 'date', '')
@@ -451,28 +436,25 @@ endfunction
 function! s:UpdateHighScores()   " Determines if a highscore has been beaten, and if so saves it to the highscores file. {{{1
     " This is a little tricky as there are two high scores possible for each
     " level. One for the pushes and one for the moves.
-    let currentSet = b:userData.currentSet
-    let currentLevel = b:userData.currentLevel
-    call extend(b:userData, {currentSet: {}}, 'keep')
-    call extend(b:userData[currentSet], {currentLevel: {}}, 'keep')
-    call extend(b:userData[currentSet][currentLevel], {'fewestMoves': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
-    call extend(b:userData[currentSet][currentLevel], {'fewestPushes': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
+    call extend(b:userData, {b:currentSet:{}}, 'keep')
+    call extend(b:userData[b:currentSet], {b:currentLevel:{}}, 'keep')
+    call extend(b:userData[b:currentSet][b:currentLevel], {'fewestMoves': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
+    call extend(b:userData[b:currentSet][b:currentLevel], {'fewestPushes': {'seq':'','moves':999999999,'pushes':999999999}}, 'keep')
 
-    let thisGame = { 'moves':b:moves, 'pushes':b:pushes,
-                   \ 'seq':s:CompressMoves(),
-                   \ 'date':strftime('%Y-%m-%d %T') }
+    let thisGame = { 'moves':b:moves, 'pushes':b:pushes, 'seq':s:CompressMoves(), 'date':strftime('%Y-%m-%d %T') }
+    let best = b:userData[b:currentSet][b:currentLevel]
 
-    if (b:moves < b:userData[currentSet][currentLevel].fewestMoves.moves) ||
-     \ (b:moves == b:userData[currentSet][currentLevel].fewestMoves.moves && b:pushes < b:userData[currentSet][currentLevel].fewestMoves.pushes)
-        let b:userData[currentSet][currentLevel]['fewestMoves'] = thisGame
+    if (b:moves < best.fewestMoves.moves) || (b:moves == best.fewestMoves.moves && b:pushes < best.fewestMoves.pushes)
+        let best.fewestMoves = thisGame
     endif
 
-    if (b:pushes < b:userData[currentSet][currentLevel].fewestPushes.pushes) ||
-     \ (b:pushes == b:userData[currentSet][currentLevel].fewestPushes.pushes && b:moves < b:userData[currentSet][currentLevel].fewestPushes.moves)
-        let b:userData[currentSet][currentLevel]['fewestPushes'] = thisGame
+    if (b:pushes < best.fewestPushes.pushes) || (b:pushes == best.fewestPushes.pushes && b:moves < best.fewestPushes.moves)
+        let best.fewestPushes = thisGame
     endif
 
-    call s:WriteUserData()
+    if best.fewestMoves.moves == best.fewestPushes.moves && best.fewestMoves.pushes == best.fewestPushes.pushes
+        call remove(best, 'fewestPushes')
+    endif
 endfunction
 
 function! s:CompressMoves()   " Compresses the sequence of moves using run-length-encoding. {{{1
@@ -487,9 +469,14 @@ function! s:CompressMoves()   " Compresses the sequence of moves using run-lengt
     return substitute(moves, ' ', '', 'g')
 endfunction
 
-function! s:SaveCurrentLevelToFile(currentSet, currentLevel)   " Saves the current level to the high scores file. {{{1
+function! s:SaveCurrentLevelToFile(currentSet, currentLevel=-1)   " Saves the current level so to start next time where user left off. {{{1
     let b:userData.currentSet = a:currentSet
-    let b:userData.currentLevel = min([len(b:levelSet.levels), max([1, a:currentLevel])])
+    call extend(b:userData, {a:currentSet:{}}, 'keep')
+    call extend(b:userData[a:currentSet], {'currentLevel':1}, 'keep')
+    if a:currentLevel != -1
+        let b:currentLevel = min([len(b:levelSet.levels), max([1, a:currentLevel])])
+        let b:userData[a:currentSet].currentLevel = b:currentLevel
+    endif
     call s:WriteUserData()
 endfunction
 
@@ -504,20 +491,41 @@ function! s:FindOrCreateBuffer(doSplit)   " Create or go to the window containin
     endif
 endfunction
 
-function! Sokoban(splitWindow, ...)   " This is the entry point to the game. {{{1
+function! Sokoban(splitWindow, currentLevel=-1)   " This is the entry point to the game. {{{1
     call s:FindOrCreateBuffer(a:splitWindow)
     call s:ReadUserData()
-    if a:0
-        call s:SaveCurrentLevelToFile(b:userData.currentSet, a:1)
-    endif
+    call s:MigrateUserData()
+    call s:SaveCurrentLevelToFile(b:currentSet, a:currentLevel)
     call s:GetCurrentHighScores()
+    call s:LoadLevelSet()
     let b:moves = 0
     let b:pushes = 0
     let s:marqueeOffset = 0
-    call s:LoadLevelSet()
     call s:DrawGameBoard()
     call s:SetupMaps(1)
     normal! 1G0
 endfunction
+
+" Setup   {{{1
+" Allow the user to specify the location of the sokoban levels
+let g:SokobanLevelDirectory = get(g:,'SokobanLevelDirectory',resolve(fnamemodify(expand('<sfile>:p:h') . '/../levels/','p:')))
+if !isdirectory(g:SokobanLevelDirectory)
+    echoerr 'g:SokobanLevelDirectory ('.g:SokobanLevelDirectory.') contains an invalid path.'
+    finish
+endif
+
+" Allow the user to specify the location of the score file.
+let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h') . '/../.VimSokobanScores'))
+
+" Characters used to draw the maze and objects on the screen.
+let g:charSoko        = get(g:,'charSoko',       '◆') " replaces @ in level file
+let g:charWall        = get(g:,'charWall',       '█') " replaces # in level file
+let g:charPackage     = get(g:,'charPackage',    '○') " replaces $ in level file
+let g:charHome        = get(g:,'charHome',       '⊙') " replaces . in level file
+let g:charPackageHome = get(g:,'charPackageHome','●') " replaces * in level file
+
+command! -nargs=? Sokoban call Sokoban('e', <f-args>)
+command! -nargs=? SokobanH call Sokoban('h', <f-args>)
+command! -nargs=? SokobanV call Sokoban('v', <f-args>)
 
 " vim: foldmethod=marker
