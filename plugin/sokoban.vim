@@ -78,7 +78,7 @@
 
 function! s:BoardSize()   " Returns a dictionary of game board dimensions. {{{1
     return {'maxWidth': max([54, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
-         \  'maxHeight': max([21, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
+         \  'maxHeight': max([22, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
 endfunction
 
 function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
@@ -104,9 +104,10 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     call setline(16,       'Keys:════════════════════╣' . repeat(' ',board.maxWidth))
     call setline(17,       '  h j k l Move           ║' . repeat(' ',board.maxWidth))
     call setline(18,       '  u r     Undo/Restart   ║' . repeat(' ',board.maxWidth))
-    call setline(19,       '  n p     Next/Prev Level║' . repeat(' ',board.maxWidth))
-    call setline(20,       '  s       Pick a Set     ║' . repeat(' ',board.maxWidth))
-    let l = 21
+    call setline(19,       '  s       Pick a Set     ║' . repeat(' ',board.maxWidth))
+    call setline(20,       '  0-9     Pick a Level   ║' . repeat(' ',board.maxWidth))
+    call setline(21,       '  n p     Next/Prev Level║' . repeat(' ',board.maxWidth))
+    let l = 22
     while l < board.maxHeight
         call setline(l,    '                         ║' . repeat(' ',board.maxWidth))
         let l += 1
@@ -205,6 +206,14 @@ function! s:ChangeLevelSet()   " Presents a list of level sets for the player to
         call s:SaveCurrentLevelToFile(levelSets[choice][4:])
         call Sokoban('')
     endif
+endfunction
+
+function! s:SelectLevelByNumber(num)   " {{{1
+    let s:levelSearch = get(s:, 'levelSearch', 0)*10 + a:num
+    while s:levelSearch >= len(b:levelSet.levels)
+        let s:levelSearch = str2nr(s:levelSearch[1:])
+    endwhile
+    call Sokoban('', s:levelSearch)
 endfunction
 
 function! s:LoadLevelSet()   " Load the JSON file into memory. It contains all levels in the set. {{{1
@@ -385,6 +394,9 @@ function! s:SetupMaps(enable)   " Sets up the various maps to control the moveme
     nnoremap <silent> <buffer> n :call Sokoban('', b:currentLevel + 1)<CR>
     nnoremap <silent> <buffer> p :call Sokoban('', b:currentLevel - 1)<CR>
     nnoremap <silent> <buffer> s :call <SID>ChangeLevelSet()<CR>
+    for key in range(10)
+        execute "nnoremap <silent> <buffer> ".key." :call <SID>SelectLevelByNumber(".key.")<CR>"
+    endfor
 endfunction
 
 function! s:ReadUserData()   " Loads the highscores file if it exists. Determines the last level played. {{{1
