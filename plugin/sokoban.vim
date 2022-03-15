@@ -86,8 +86,8 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     setlocal modifiable
     silent normal! 1GdG
     call append(0, repeat([''],board.maxHeight))
-    call setline( 1,       '══╡ VIM SOKOBAN, v2.0 ╞══╗' . repeat(' ',board.maxWidth))
-    call setline( 2,       '  ╰───────────────────╯  ║' . repeat(' ',board.maxWidth))
+    call setline( 1,       ' ╞═╡ VIM SOKOBAN, v2.0 ╞═╗' . repeat(' ',board.maxWidth))
+    call setline( 2,       '─╯ ╰───────────────────╯ ║' . repeat(' ',board.maxWidth))
     call setline( 3,       'Set:                     ║' . repeat(' ',board.maxWidth))
     call setline( 4,       'Level:                   ║' . repeat(' ',board.maxWidth))
     call setline( 5,       'Score:═══════════════════╣' . repeat(' ',board.maxWidth))
@@ -404,6 +404,7 @@ endfunction
 function! s:ReadUserData()   " Loads the highscores file if it exists. Determines the last level played. {{{1
     if filereadable(g:SokobanScoreFile)
         let b:userData = eval(join(readfile(g:SokobanScoreFile),''))
+        call s:MigrateUserData()
     else
         let b:userData = {'version':'2.0', 'currentSet':'Original', 'Original': {'currentLevel':1}}
     endif
@@ -508,7 +509,6 @@ endfunction
 function! Sokoban(splitWindow, currentLevel=-1)   " This is the entry point to the game. {{{1
     call s:FindOrCreateBuffer(a:splitWindow)
     call s:ReadUserData()
-    call s:MigrateUserData()
     call s:SaveCurrentLevelToFile(b:currentSet, a:currentLevel)
     call s:GetCurrentHighScores()
     call s:LoadLevelSet()
