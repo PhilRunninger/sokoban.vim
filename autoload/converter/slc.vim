@@ -1,16 +1,16 @@
 " A zip file of many collections of sokoban levels can be downloaded from
 " here: http://www.sourcecode.se/sokoban/download/Levels. They are XML files
-" with the extension "slc". The SLCtoJSON function does a good job of
-" converting them to JSON format with mostly search and replace commands. You
-" will need to replace any XML character entity references: &apos; &quot;
-" &amp; &lt; &gt;. The rest of the file should be OK, but it doesn't hurt to
-" give it a once-over to be sure.
+" with the extension "slc". The converter#slc#ToJSON() function does a good
+" job of converting them to JSON format with mostly search and replace
+" commands. You will need to replace any XML character entity references:
+" &apos; &quot; &amp; &lt; &gt;. The rest of the file should be OK, but it
+" doesn't hurt to give it a once-over to be sure.
 
 " This function assumes the following workflow:
 "       :e FooBar.json
 "       :r Foobar.slc
 "       :call SLCtoJSON()
-function! SLCtoJSON()
+function! converter#slc#ToJSON()
     " Outer tag becomes start/end of JSON object.
     %s/<SokobanLevels.*/{/
     %s/<\/SokobanLevels>/}/

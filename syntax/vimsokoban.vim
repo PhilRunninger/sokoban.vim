@@ -6,7 +6,7 @@ execute 'syn match SokobanHome /'.g:charHome.'/'
 syn match SokobanLabels /\(Set\|Level\|Score\|Fewest Moves\|Fewest Pushes\|Legend\|Keys\|Sequence\):/
 syn match SokobanTitle /VIM SOKOBAN, v\S*/
 syn match SokobanWinner / \zs *LEVEL COMPLETE! *\ze /
-syn match SokobanBox /[╔═╡╞╗╚╝╰─╯║╣╩]/
+syn match SokobanBox /[╔═╗╚╝╩║╣╡╞╰─╯]/
 syn match SokobanKeys /^  \(h j k l\|u r\|s\|0-9\|n p\) /
 
 if &background == 'dark'
