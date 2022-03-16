@@ -87,11 +87,11 @@ endif
 let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h') . '/../.VimSokobanScores'))
 
 " Characters used to draw the maze and objects on the screen.
-let g:charSoko        = get(g:,'charSoko',       '◆') " replaces @ in level file
 let g:charWall        = get(g:,'charWall',       '█') " replaces # in level file
+let g:charSoko        = get(g:,'charSoko',       '◆') " replaces @ and + in level file
+let g:charHome        = get(g:,'charHome',       '◻') " replaces . in level file
+let g:charPackageHome = get(g:,'charPackageHome','◼') " replaces * in level file
 let g:charPackage     = get(g:,'charPackage',    '○') " replaces $ in level file
-let g:charHome        = get(g:,'charHome',       '⊙') " replaces . in level file
-let g:charPackageHome = get(g:,'charPackageHome','●') " replaces * in level file
 
 command! -nargs=? Sokoban call sokoban#PlaySokoban('e', <f-args>)
 command! -nargs=? SokobanH call sokoban#PlaySokoban('h', <f-args>)

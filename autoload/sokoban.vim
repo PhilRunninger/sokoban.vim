@@ -103,18 +103,18 @@ function! s:ProcessLevel(room, top, left)   " Processes a level and populates th
             let location = [l+a:top,c+a:left]
             if (ch == '#')
                 call add(b:wallList, location)
+            elseif (ch == '@')
+                let b:manPos = location
+            elseif (ch == '+')
+                let b:manPos = location
+                call add(b:homeList, location)
             elseif (ch == '.')
                 call add(b:homeList, location)
             elseif (ch == '*')
                 call add(b:homeList, location)
                 call add(b:packageList, location)
-            elseif (ch == '+')
-                call add(b:homeList, location)
-                let b:manPos = location
             elseif (ch == '$')
                 call add(b:packageList, location)
-            elseif (ch == '@')
-                let b:manPos = location
             endif
         endfor
     endfor
