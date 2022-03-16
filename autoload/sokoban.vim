@@ -133,7 +133,7 @@ endfunction
 function! s:SelectLevelByNumber(num)   " {{{1
     let s:levelSearch = get(s:, 'levelSearch', 0)*10 + a:num
     while s:levelSearch > len(b:levelSet.levels)
-        let s:levelSearch = str2nr(s:levelSearch[1:])
+        let s:levelSearch = str2nr(string(s:levelSearch)[1:])
     endwhile
     call sokoban#PlaySokoban('', s:levelSearch)
 endfunction
