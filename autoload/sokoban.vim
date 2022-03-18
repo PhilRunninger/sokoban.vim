@@ -421,9 +421,9 @@ endfunction
 function! s:ChangeLevelSet()   " Presents a list of level sets for the player to choose from. {{{1
     call s:GetLevelSets()
     let choices = ['Choose a level set (by number) from this list.']
-                \ + map(copy(s:levelSets), {i,v -> printf('%2d: %s -- %s (%s)', i+1, v.title, v.description, v.copyright)})
+                \ + map(copy(s:levelSets), {i,v -> printf('%2d: %s -- [%s] © %s', i+1, v.title, v.description, v.copyright)})
     let choice = inputlist(choices)
-    if choice > 0 && choice < len(s:levelSets)
+    if choice > 0 && choice <= len(s:levelSets)
         call s:SaveCurrentLevelToFile(s:levelSets[choice-1].file)
         call sokoban#PlaySokoban('')
     endif

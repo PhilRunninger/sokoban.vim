@@ -24,14 +24,16 @@ These are the keys you need to use when playing the game.
 ## Customizing
 * The plugin uses Unicode characters that may not display well in your font. You can customize them in your `.vimrc` file like so:
 ```
-let g:charSoko    = '@'
-let g:charWall    = '#'
-let g:charPackage = '$'
-let g:charHome    = '.'
+let g:charWall        = '#'     " Default: '█'
+let g:charSoko        = '@'     " Default: '◆'
+let g:charPackage     = '$'     " Default: '○'
+let g:charHome        = '.'     " Default: '◻'
+let g:charPackageHome = '*'     " Default: '◼'
 ```
 * The path and name of the high score file is in the variable `g:SokobanScoreFile`. It defaults to *.VimSokobanScores* in the plugin's root folder.
 
-## Reference
+## More Levels
 The level sets were derived from the zip file at the [Download all levels in a ZIP file](http://www.sourcecode.se/sokoban/download/Levels.zip) link on the [http://www.sourcecode.se/sokoban/levels](http://www.sourcecode.se/sokoban/levels) webpage. Each `*.slc` file in that zip file is a level set ranging wildly in terms of size, difficulty and number of levels. The function named `converter#slc#ToJSON()` in [autoload/converter/slc.vim](https://github.com/PhilRunninger/sokoban.vim/tree/master/autoload/converter/slc.vim) converts an `*.slc` file to JSON format so it can be used by this plugin. Read the documentation that comes with it before using it. If you would like to contribute by converting more `*.slc` files to JSON, please do and submit a pull request.
 
+## Reference
 More information about Sokoban can be found on its [Wikipedia page](https://en.wikipedia.org/wiki/Sokoban).
