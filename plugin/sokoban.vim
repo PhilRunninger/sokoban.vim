@@ -40,10 +40,8 @@
 " Install according to the directions found in any of the various Vim Plugin
 " managers, such as: pathogen, Vundle, vim-plug, etc.
 "
-" The locations of the levels direcory and the scores file are configurable. If
-" not set in your .vimrc,
-"   1) g:SokobanLevelDirectory defaults to the plugin's levels folder.
-"   2) g:SokobanScoreFile defaults to .VimSokobanScores in the plugin's root folder.
+" The location of the scores file is configurable. If not set in your .vimrc,
+" g:SokobanScoreFile defaults to .VimSokobanScores in the plugin's root folder.
 "
 " The characters used to display the level are configurable. By default, they
 " are set to some Unicode characters, so if your terminal is incompatible, you
@@ -77,11 +75,7 @@
 " }}}
 
 " Allow the user to specify the location of the sokoban levels
-let g:SokobanLevelDirectory = get(g:,'SokobanLevelDirectory',resolve(fnamemodify(expand('<sfile>:p:h') . '/../levels/','p:')))
-if !isdirectory(g:SokobanLevelDirectory)
-    echoerr 'g:SokobanLevelDirectory ('.g:SokobanLevelDirectory.') contains an invalid path.'
-    finish
-endif
+let g:SokobanLevelDirectory = resolve(fnamemodify(expand('<sfile>:p:h') . '/../levels/','p:'))
 
 " Allow the user to specify the location of the score file.
 let g:SokobanScoreFile = get(g:,'SokobanScoreFile',resolve(expand('<sfile>:p:h') . '/../.VimSokobanScores'))

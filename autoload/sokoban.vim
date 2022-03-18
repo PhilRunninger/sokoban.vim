@@ -120,16 +120,6 @@ function! s:ProcessLevel(room, top, left)   " Processes a level and populates th
     endfor
 endfunction
 
-function! s:ChangeLevelSet()   " Presents a list of level sets for the player to choose from. {{{1
-    let levelSets = map(readdir(g:SokobanLevelDirectory, {f -> f =~ '\.json$'}), {i,g -> printf('%2d: %s',i+1,fnamemodify(g, ':r'))})
-    call insert(levelSets, 'Choose a level set (by number) from this list.')
-    let choice = inputlist(levelSets)
-    if choice > 0 && choice < len(levelSets)
-        call s:SaveCurrentLevelToFile(levelSets[choice][4:])
-        call sokoban#PlaySokoban('')
-    endif
-endfunction
-
 function! s:SelectLevelByNumber(num)   " {{{1
     let s:levelSearch = get(s:, 'levelSearch', 0)*10 + a:num
     while s:levelSearch > len(b:levelSet.levels)
@@ -425,6 +415,31 @@ function! s:FindOrCreateBuffer(doSplit)   " Create or go to the window containin
         execute {'h': 'sbuffer', 'v':'vert sbuffer', 'e':'buffer'}[a:doSplit] . filename
     else
         execute winNum.'wincmd w'
+    endif
+endfunction
+
+function! s:ChangeLevelSet()   " Presents a list of level sets for the player to choose from. {{{1
+    call s:GetLevelSets()
+    let choices = ['Choose a level set (by number) from this list.']
+                \ + map(copy(s:levelSets), {i,v -> printf('%2d: %s -- %s (%s)', i+1, v.title, v.description, v.copyright)})
+    let choice = inputlist(choices)
+    if choice > 0 && choice < len(s:levelSets)
+        call s:SaveCurrentLevelToFile(s:levelSets[choice-1].file)
+        call sokoban#PlaySokoban('')
+    endif
+endfunction
+
+function! s:GetLevelSets()   " Get the list of available level sets. {{{1
+    let levelSetFiles = map(globpath(g:SokobanLevelDirectory,'*.json',0,1), {_,v -> fnamemodify(v,':p')})
+    if !exists('s:levelSets') || len(s:levelSets) != len(levelSetFiles)
+        let s:levelSets = []
+        for levelSetFile in levelSetFiles
+            let levelSet = eval(join(readfile(levelSetFile),''))
+            let s:levelSets += [ {'file': fnamemodify(levelSetFile,':t:r'),
+                               \  'title':levelSet.title,
+                               \  'description':get(levelSet, 'description', ''),
+                               \  'copyright':get(levelSet, 'copyright', '')} ]
+        endfor
     endif
 endfunction
 
