@@ -90,5 +90,6 @@ let g:charPackage       = get(g:,'charPackage',    '○') " replaces $ in level 
 command! -nargs=? Sokoban call sokoban#PlaySokoban('e', <f-args>)
 command! -nargs=? SokobanH call sokoban#PlaySokoban('h', <f-args>)
 command! -nargs=? SokobanV call sokoban#PlaySokoban('v', <f-args>)
+command! -nargs=0 SokobanConvertSLC call converter#slc#ToJSON()
 
 " vim: foldmethod=marker
