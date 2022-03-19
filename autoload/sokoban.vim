@@ -21,7 +21,7 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     call setline(11,       '      moves        pushes║' . repeat(' ',board.maxWidth))
     call setline(12,       '                         ║' . repeat(' ',board.maxWidth))
     call setline(13,       'Legend:══════════════════╣' . repeat(' ',board.maxWidth))
-    call setline(14,printf('  %s %s Package   %s Home   ║', g:charPackage, g:charPackageHome, g:charHome) . repeat(' ',board.maxWidth))
+    call setline(14,printf('  %s %s Package   %s Home   ║', g:charPackage, g:charPackageAtHome, g:charHome) . repeat(' ',board.maxWidth))
     call setline(15,printf('  %s   Player    %s Wall   ║', g:charSoko, g:charWall) . repeat(' ',board.maxWidth))
     call setline(16,       'Keys:════════════════════╣' . repeat(' ',board.maxWidth))
     call setline(17,       '  h j k l Move           ║' . repeat(' ',board.maxWidth))
@@ -152,7 +152,7 @@ function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting 
         let roomline = substitute(roomline, '\V#', g:charWall, 'g')
         let roomline = substitute(roomline, '\V$', g:charPackage, 'g')
         let roomline = substitute(roomline, '\V.', g:charHome, 'g')
-        let roomline = substitute(roomline, '\V*', g:charPackageHome, 'g')
+        let roomline = substitute(roomline, '\V*', g:charPackageAtHome, 'g')
         call s:ReplaceTextInLine([l+top,left], roomline)
     endfor
 
@@ -233,7 +233,7 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
             return
         endif
 
-        call s:Move(newManPos, newPkgPos, s:IsHome(newPkgPos) ? g:charPackageHome : g:charPackage)
+        call s:Move(newManPos, newPkgPos, s:IsHome(newPkgPos) ? g:charPackageAtHome : g:charPackage)
         call s:UpdatePackageList(newManPos, newPkgPos)
         let b:pushes = b:pushes + 1
         let undo .= 'p'
@@ -270,7 +270,7 @@ function! s:UndoMove()   " Called when the u key is hit to handle the undo move 
         call s:Move(b:manPos, priorManPos, g:charSoko)
         if prevMove =~ 'p$'
             let currPkgPos = s:SubtractVectors(b:manPos, delta)
-            call s:Move(currPkgPos, b:manPos, s:IsHome(b:manPos) ? g:charPackageHome : g:charPackage)
+            call s:Move(currPkgPos, b:manPos, s:IsHome(b:manPos) ? g:charPackageAtHome : g:charPackage)
             let b:pushes = b:pushes - 1
             call s:UpdatePackageList(currPkgPos, b:manPos)
         endif

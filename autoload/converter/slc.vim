@@ -17,8 +17,8 @@ function! converter#slc#ToJSON()
 
     " Uppermost elements to JSON data.
     %s/<Title>\(.*\)<\/Title>/"title":"\1",/
-    %s/<Email>\(.*\)<\/Email>/"email":"\1",/
-    %s/<Url>\(.*\)<\/Url>/"url":"\1",/
+    %s/<Email>\(.*\)<\/Email>/"email":"\1",/e
+    %s/<Url>\(.*\)<\/Url>/"url":"\1",/e
     /<Description>/,/<\/Description>/join
     %s/<Description>\s*/"description":"/
     %s/\s*<\/Description>/",/
