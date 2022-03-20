@@ -1,16 +1,17 @@
-" A zip file of many collections of sokoban levels can be downloaded from
-" here: http://www.sourcecode.se/sokoban/download/Levels. They are XML files
-" with the extension "slc". The converter#slc#ToJSON() function does a good
-" job of converting them to JSON format with mostly search and replace
-" commands. You will need to replace any XML character entity references:
-" &apos; &quot; &amp; &lt; &gt;. The rest of the file should be OK, but it
-" doesn't hurt to give it a once-over to be sure.
+" Additional level sets can be downloaded from
+" http://www.sourcecode.se/sokoban/levels. The files are in XML format with
+" the extension "slc". The converter#slc#ToJSON() function, and the associated
+" :SokobanConvertSLC command, does a good job of converting them to JSON
+" format with mostly search and replace commands. You will need to replace any
+" XML character entity references: &apos; &quot; &amp; &lt; &gt;. The rest of
+" the file should be OK, but it doesn't hurt to give it a once-over to be
+" sure.
 
-" This function assumes the following workflow:
-"       :e FooBar.json
-"       :r Foobar.slc
-"       :call SLCtoJSON()
 function! converter#slc#ToJSON()
+    if bufname() !~? '\.slc$' && confirm('This is not an SLC file. Continue? ', "&Yes\n&No", 2) != 1
+        return
+    endif
+
     " Outer tag becomes start/end of JSON object.
     %s/<SokobanLevels.*/{/
     %s/<\/SokobanLevels>/}/
@@ -56,4 +57,8 @@ function! converter#slc#ToJSON()
     g/^$/d
     g/^\s*,$/d
     g/<?xml/d
+
+    echohl WarningMsg
+    echomsg 'All Done. Review the modifications. To play these levels, save as a JSON file in'
+    echomsg g:SokobanLevelDirectory
 endfunction
