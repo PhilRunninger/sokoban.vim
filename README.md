@@ -26,7 +26,7 @@ Key | Function
 
 ## Customizing
 * The plugin uses Unicode characters that may not display well in your font. You can customize them in your `.vimrc` file like so:
-```
+```vim
 let g:charWall          = '#'     " Default: '█'
 let g:charSoko          = '@'     " Default: '◆'
 let g:charPackage       = '$'     " Default: '○'
@@ -38,7 +38,7 @@ let g:charPackageAtHome = '*'     " Default: '◼'
 ## More Levels
 Additional level sets can be downloaded from the very long list on the [http://www.sourcecode.se/sokoban/levels](http://www.sourcecode.se/sokoban/levels) webpage. Choose the option to download as an XML file; it will have an extension of SLC. These collections range wildly in terms of size, difficulty and number of levels.
 
-The SLC file needs to be converted before it can used by this plugin. Run the `:SokobanConvertSLC` command while your cursor is in the SLC buffer. Finally, save it as a JSON file in the plugin's `levels` folder. If you would like to contribute to **VimSokoban** by converting more SLC files to JSON, please do by submitting a pull request.
+The SLC file needs to be converted before it can used by this plugin. Run the `:SokobanConvertSLC` command while your cursor is in the SLC buffer. Check the resulting JSON for errors, and then save the buffer as a JSON file in the plugin's `levels` folder. If you would like to contribute to **VimSokoban** by converting more SLC files to JSON, please do by submitting a pull request.
 
 ## Reference
 More information about Sokoban can be found on its [Wikipedia page](https://en.wikipedia.org/wiki/Sokoban).
