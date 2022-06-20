@@ -24,12 +24,7 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     call setline(14,printf('  %s %s Package   %s Home   ║', g:charPackage, g:charPackageAtHome, g:charHome) . repeat(' ',board.maxWidth))
     call setline(15,printf('  %s   Player    %s Wall   ║', g:charSoko, g:charWall) . repeat(' ',board.maxWidth))
     call setline(16,       'Keys:════════════════════╣' . repeat(' ',board.maxWidth))
-    call setline(17,       '  h j k l Move           ║' . repeat(' ',board.maxWidth))
-    call setline(18,       '  u r     Undo/Restart   ║' . repeat(' ',board.maxWidth))
-    call setline(19,       '  s       Pick a Set     ║' . repeat(' ',board.maxWidth))
-    call setline(20,       '  0-9     Pick a Level   ║' . repeat(' ',board.maxWidth))
-    call setline(21,       '  n p     Next/Prev Level║' . repeat(' ',board.maxWidth))
-    let l = 22
+    let l = 17
     while l < board.maxHeight
         call setline(l,    '                         ║' . repeat(' ',board.maxWidth))
         let l += 1
@@ -38,7 +33,7 @@ function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     call setline(l+1,      'Sequence:')
     setlocal nomodifiable
 
-    call s:UpdatePanel()
+    call s:UpdatePanel(1)
     call s:LoadLevel()
 endfunction
 
@@ -60,7 +55,7 @@ function! s:Marquee(text, width, increment)   " Scroll long text within a given 
     endif
 endfunction
 
-function! s:UpdatePanel()   " Update the moves and the push scores in the header {{{1
+function! s:UpdatePanel(gameInProgress = 1)   " Update the moves and the push scores in the header {{{1
     let levelName = b:levelSet.levels[b:currentLevel-1].id
     let displayLevel = b:currentLevel . (string(b:currentLevel) == levelName ? '' : ': '.levelName)
     call s:ReplaceTextInLine([ 3,0], printf('Set: %-20s║',           s:Marquee(b:levelSet.title, 20, 1)))
@@ -70,6 +65,11 @@ function! s:UpdatePanel()   " Update the moves and the push scores in the header
     call s:ReplaceTextInLine([ 9,0], printf('%25s║',                 b:fewestMovesDate))
     call s:ReplaceTextInLine([11,0], printf('%5s moves  %5s pushes║',b:fewestPushesMoves,b:fewestPushesPushes))
     call s:ReplaceTextInLine([12,0], printf('%25s║',                 b:fewestPushesDate))
+    call s:ReplaceTextInLine([17,0], a:gameInProgress ? '  h j k l Move           ║' : '  r       Restart        ║')
+    call s:ReplaceTextInLine([18,0], a:gameInProgress ? '  u r     Undo/Restart   ║' : '  s       Pick a Set     ║')
+    call s:ReplaceTextInLine([19,0], a:gameInProgress ? '  s       Pick a Set     ║' : '  0-9     Pick a Level   ║')
+    call s:ReplaceTextInLine([20,0], a:gameInProgress ? '  0-9     Pick a Level   ║' : '  n p     Next/Prev Level║')
+    call s:ReplaceTextInLine([21,0], a:gameInProgress ? '  n p     Next/Prev Level║' : '                         ║' )
 endfunction
 
 function! s:UpdateFooter() " Updates the sequence of moves in the footer {{{1
@@ -243,7 +243,7 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
     call insert(b:undoList, undo)
     let b:moves = b:moves + 1
     let b:manPos = newManPos
-    call s:UpdatePanel()
+    call s:UpdatePanel(1)
     call s:UpdateFooter()
 
     if s:AreAllPackagesHome()
@@ -252,7 +252,7 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
         call s:UpdateHighScores()
         call s:WriteUserData()
         call s:GetCurrentHighScores()
-        call s:UpdatePanel()
+        call s:UpdatePanel(0)
     endif
 
     setlocal nomodifiable
@@ -277,13 +277,13 @@ function! s:UndoMove()   " Called when the u key is hit to handle the undo move 
 
         let b:manPos = priorManPos
         let b:moves = b:moves - 1
-        call s:UpdatePanel()
+        call s:UpdatePanel(1)
         call s:UpdateFooter()
     endif
 endfunction
 
-function! s:SetupMaps(enable)   " Sets up the various maps to control the movement of the game. {{{1
-    if a:enable
+function! s:SetupMaps(gameInProgress)   " Sets up the various maps to control the movement of the game. {{{1
+    if a:gameInProgress
         nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], 'h')<CR>
         nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], 'h')<CR>
         nnoremap <silent> <buffer> j       :call <SID>MakeMove([1, 0], 'j')<CR>

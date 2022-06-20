@@ -7,7 +7,7 @@ syn match SokobanLabels /\(Set\|Level\|Score\|Fewest Moves\|Fewest Pushes\|Legen
 syn match SokobanTitle /VIM SOKOBAN, v\S*/
 syn match SokobanWinner / \zs *LEVEL COMPLETE! *\ze /
 syn match SokobanBox /[╔═╗╚╝╩║╣╡╞╰─╯]/
-syn match SokobanKeys /^  \(h j k l\|u r\|s\|0-9\|n p\) /
+syn match SokobanKeys /^  \(h j k l\|u r\|r\|s\|0-9\|n p\) /
 
 if &background == 'dark'
     highlight SokobanTitle       guifg=#0087ff ctermfg=33
@@ -16,10 +16,10 @@ if &background == 'dark'
     highlight SokobanKeys        guifg=#ffd700 ctermfg=220
     highlight SokobanBox         guifg=#3e3e3e ctermfg=236
     highlight SokobanPackage     guifg=#ff005f ctermfg=197
-    highlight SokobanPackageHome guifg=#00d700 ctermfg=28  guibg=#005f00 ctermbg=22
+    highlight SokobanPackageHome guifg=#00d700 ctermfg=28
     highlight SokobanMan         guifg=#ffd700 ctermfg=220
     highlight SokobanWall        guifg=#808080 ctermfg=244
-    highlight SokobanHome        guifg=#000000 ctermfg=172 guibg=#005f00 ctermbg=22
+    highlight SokobanHome        guifg=#005f00 ctermfg=22
 else
     highlight SokobanTitle       guifg=#0087ff ctermfg=33
     highlight SokobanWinner      guifg=#000000 ctermfg=16  guibg=#00d700 ctermbg=40
@@ -27,8 +27,8 @@ else
     highlight SokobanKeys        guifg=#af00af ctermfg=220
     highlight SokobanBox         guifg=#c6c6c6 ctermfg=236
     highlight SokobanPackage     guifg=#ff005f ctermfg=197
-    highlight SokobanPackageHome guifg=#005700 ctermfg=28  guibg=#00d700 ctermbg=40
+    highlight SokobanPackageHome guifg=#005700 ctermfg=28
     highlight SokobanMan         guifg=#0000af ctermfg=19
     highlight SokobanWall        guifg=#808080 ctermfg=244
-    highlight SokobanHome        guifg=#000000 ctermfg=16  guibg=#00d700 ctermbg=40
+    highlight SokobanHome        guifg=#00d700 ctermfg=40
 endif
