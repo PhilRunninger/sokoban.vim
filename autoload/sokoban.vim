@@ -1,5 +1,7 @@
+let s:panelWidth = 26
+
 function! s:BoardSize()   " Returns a dictionary of game board dimensions. {{{1
-    return {'maxWidth': max([54, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
+    return {'maxWidth': max([min([80,winwidth(0)])-s:panelWidth, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
          \  'maxHeight': max([22, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
 endfunction
 
@@ -58,36 +60,36 @@ endfunction
 function! s:UpdatePanel(gameInProgress = 1)   " Update the moves and the push scores in the header {{{1
     let levelName = b:levelSet.levels[b:currentLevel-1].id
     let displayLevel = b:currentLevel . (string(b:currentLevel) == levelName ? '' : ': '.levelName)
-    call s:ReplaceTextInLine([ 3,0], printf('Set: %-20s║',           s:Marquee(b:levelSet.title, 20, 1)))
-    call s:ReplaceTextInLine([ 4,0], printf('Level: %-18s║'         ,s:Marquee(displayLevel,18, 0)))
-    call s:ReplaceTextInLine([ 6,0], printf('%5s moves  %5s pushes║',b:moves,b:pushes))
-    call s:ReplaceTextInLine([ 8,0], printf('%5s moves  %5s pushes║',b:fewestMovesMoves,b:fewestMovesPushes))
-    call s:ReplaceTextInLine([ 9,0], printf('%25s║',                 b:fewestMovesDate))
-    call s:ReplaceTextInLine([11,0], printf('%5s moves  %5s pushes║',b:fewestPushesMoves,b:fewestPushesPushes))
-    call s:ReplaceTextInLine([12,0], printf('%25s║',                 b:fewestPushesDate))
-    call s:ReplaceTextInLine([17,0], a:gameInProgress ? '  h j k l Move           ║' : '  r       Restart        ║')
-    call s:ReplaceTextInLine([18,0], a:gameInProgress ? '  u r     Undo/Restart   ║' : '  s       Pick a Set     ║')
-    call s:ReplaceTextInLine([19,0], a:gameInProgress ? '  s       Pick a Set     ║' : '  0-9     Pick a Level   ║')
-    call s:ReplaceTextInLine([20,0], a:gameInProgress ? '  0-9     Pick a Level   ║' : '  n p     Next/Prev Level║')
-    call s:ReplaceTextInLine([21,0], a:gameInProgress ? '  n p     Next/Prev Level║' : '                         ║' )
+    call s:ReplaceTextAt([ 3,0], printf('Set: %-20s║',           s:Marquee(b:levelSet.title, 20, 1)))
+    call s:ReplaceTextAt([ 4,0], printf('Level: %-18s║'         ,s:Marquee(displayLevel,18, 0)))
+    call s:ReplaceTextAt([ 6,0], printf('%5s moves  %5s pushes║',b:moves,b:pushes))
+    call s:ReplaceTextAt([ 8,0], printf('%5s moves  %5s pushes║',b:fewestMovesMoves,b:fewestMovesPushes))
+    call s:ReplaceTextAt([ 9,0], printf('%25s║',                 b:fewestMovesDate))
+    call s:ReplaceTextAt([11,0], printf('%5s moves  %5s pushes║',b:fewestPushesMoves,b:fewestPushesPushes))
+    call s:ReplaceTextAt([12,0], printf('%25s║',                 b:fewestPushesDate))
+    call s:ReplaceTextAt([17,0], a:gameInProgress ? '  h j k l Move           ║' : '  r       Restart        ║')
+    call s:ReplaceTextAt([18,0], a:gameInProgress ? '  u r     Undo/Restart   ║' : '  s       Pick a Set     ║')
+    call s:ReplaceTextAt([19,0], a:gameInProgress ? '  s       Pick a Set     ║' : '  0-9     Pick a Level   ║')
+    call s:ReplaceTextAt([20,0], a:gameInProgress ? '  0-9     Pick a Level   ║' : '  n p     Next/Prev Level║')
+    call s:ReplaceTextAt([21,0], a:gameInProgress ? '  n p     Next/Prev Level║' : '                         ║' )
 endfunction
 
 function! s:UpdateFooter() " Updates the sequence of moves in the footer {{{1
     setlocal modifiable
     let board = s:BoardSize()
     call deletebufline(bufname('%'),board.maxHeight+1,'$')
-    call append(line('$'), split('Sequence: '.s:CompressMoves(), '.\{'.(26+board.maxWidth).'}\zs'))
+    call append(line('$'), split('Sequence: '.s:CompressMoves(), '.\{'.(s:panelWidth+board.maxWidth).'}\zs'))
     setlocal nomodifiable
 endfunction
 
 function! s:DisplayLevelCompleteMessage()   " Display the message indicating that the level has been completed {{{1
-    let msg = ['╔═══════════════════════════════╗',
-             \ '║        LEVEL COMPLETE!        ║',
-             \ '╚═══════════════════════════════╝']
+    let msg = ['╔═════════════════════╗',
+             \ '║   LEVEL COMPLETE!   ║',
+             \ '╚═════════════════════╝']
     let board = s:BoardSize()
-    let left = 26 + (board.maxWidth - max(map(copy(msg),{_,l -> strchars(l)}))) / 2
+    let left = s:panelWidth + (board.maxWidth - max(map(copy(msg),{_,l -> strchars(l)}))) / 2
     for l in range(len(msg))
-        call s:ReplaceTextInLine([l+1,left], msg[l])
+        call s:ReplaceTextAt([l+1,left], msg[l])
     endfor
 endfunction
 
@@ -141,7 +143,7 @@ function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting 
     let level = b:levelSet.levels[b:currentLevel-1]
 
     let board = s:BoardSize()
-    let left = 26 + (board.maxWidth-level.width) / 2
+    let left = s:panelWidth + (board.maxWidth-level.width) / 2
     let top = max([1,(board.maxHeight-level.height)/2])
     call s:ProcessLevel(level.room, top, left)
 
@@ -153,14 +155,14 @@ function! s:LoadLevel()   " Loads the level and sets up the syntax highlighting 
         let roomline = substitute(roomline, '\V$', g:charPackage, 'g')
         let roomline = substitute(roomline, '\V.', g:charHome, 'g')
         let roomline = substitute(roomline, '\V*', g:charPackageAtHome, 'g')
-        call s:ReplaceTextInLine([l+top,left], roomline)
+        call s:ReplaceTextAt([l+top,left], roomline)
     endfor
 
     setlocal buftype=nofile filetype=vimsokoban
     setlocal nolist nonumber nowrap signcolumn=no
 endfunction
 
-function! s:ReplaceTextInLine(cell, text)   " Puts text at a specific position in the buffer {{{1
+function! s:ReplaceTextAt(cell, text)   " Puts text at a specific position in the buffer {{{1
     let [theLine,theCol] = a:cell
     let ln = getline(theLine)
     let leftStr = strcharpart(ln, 0, theCol)
@@ -189,11 +191,11 @@ endfunction
 
 function! s:Move(from, to, item)   " Moves the item (man or package) in the buffer. Home squares are handled correctly in this function too. {{{1
     if s:IsHome(a:from)
-        call s:ReplaceTextInLine(a:from, g:charHome)
+        call s:ReplaceTextAt(a:from, g:charHome)
     else
-        call s:ReplaceTextInLine(a:from, ' ')
+        call s:ReplaceTextAt(a:from, ' ')
     endif
-    call s:ReplaceTextInLine(a:to, a:item)
+    call s:ReplaceTextAt(a:to, a:item)
 endfunction
 
 function! s:UpdatePackageList(old, new)   " Updates the package list when a package is moved {{{1
@@ -247,7 +249,7 @@ function! s:MakeMove(delta, moveDirection)   " This is the core function which i
     call s:UpdateFooter()
 
     if s:AreAllPackagesHome()
-        call s:SetupMaps(0)
+        call s:MapKeys(0)
         call s:DisplayLevelCompleteMessage()
         call s:UpdateHighScores()
         call s:WriteUserData()
@@ -282,7 +284,7 @@ function! s:UndoMove()   " Called when the u key is hit to handle the undo move 
     endif
 endfunction
 
-function! s:SetupMaps(gameInProgress)   " Sets up the various maps to control the movement of the game. {{{1
+function! s:MapKeys(gameInProgress)   " Sets up the various maps to control the movement of the game. {{{1
     if a:gameInProgress
         nnoremap <silent> <buffer> h       :call <SID>MakeMove([0, -1], 'h')<CR>
         nnoremap <silent> <buffer> <Left>  :call <SID>MakeMove([0, -1], 'h')<CR>
@@ -453,7 +455,7 @@ function! sokoban#PlaySokoban(splitWindow, currentLevel=-1)   " This is the entr
     let b:pushes = 0
     let s:marqueeOffset = 0
     call s:DrawGameBoard()
-    call s:SetupMaps(1)
+    call s:MapKeys(1)
     normal! 1G0
 endfunction
 
