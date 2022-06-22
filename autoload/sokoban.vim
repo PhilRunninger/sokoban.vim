@@ -1,12 +1,17 @@
 let s:panelWidth = 26
 
 function! s:BoardSize()   " Returns a dictionary of game board dimensions. {{{1
-    return {'maxWidth': max([min([80,winwidth(0)])-s:panelWidth, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
+    return {'maxWidth': max([winwidth(0)-s:panelWidth, empty(b:levelSet) ? 0 : b:levelSet.maxWidth]),
          \  'maxHeight': max([22, empty(b:levelSet) ? 0 : b:levelSet.maxHeight])}
 endfunction
 
 function! s:DrawGameBoard()   " Draws the game board in the buffer. {{{1
     let board = s:BoardSize()
+    if board.maxWidth + s:panelWidth > winwidth(0) || board.maxHeight > winheight(0)
+        echomsg 'Your window is too small to display the entire board.'
+        echomsg 'Try resizing the window or using a smaller text size.'
+    endif
+
     setlocal modifiable
     silent normal! 1GdG
     call append(0, repeat([''],board.maxHeight))
