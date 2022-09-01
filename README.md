@@ -1,5 +1,7 @@
 # VimSokoban
 
+![image](https://user-images.githubusercontent.com/5598066/187976411-52d830b3-b371-48bb-82cf-aebf928b1e82.png)
+
 The goal of **VimSokoban** is to push all the packages into the home area of each level using the cursor movement keys. The keys move the player in the corresponding direction. If a package is in the way it will be moved too, if there's an empty space beyond it. Packages can only be pushed. If you get stuck, you can undo your moves or restart the level.
 
 ## Starting the Game
