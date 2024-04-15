@@ -322,7 +322,7 @@ endfunction
 
 function! s:ReadUserData()   " Loads the highscores file if it exists. Determines the last level played. {{{1
     if filereadable(g:SokobanScoreFile)
-        let b:userData = eval(join(readfile(g:SokobanScoreFile),''))
+        let b:userData = json_decode(readfile(g:SokobanScoreFile))
         call s:MigrateUserData()
     else
         let b:userData = {'version':'2.0', 'currentSet':'Original', 'Original': {'currentLevel':1}}
